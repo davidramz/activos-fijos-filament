@@ -16,13 +16,13 @@ return new class extends Migration
 
             $table->foreignId('area_id')->constrained('areas');
             $table->foreignId('puesto_id')->constrained('puestos');
-            $table->foreignId('campus_id')->nullable()->constrained('campus');
+            $table->foreignId('campus_id')->constrained('campus');
 
             $table->integer('numero')->unique();
             $table->string('nombre');
-            
+
             $table->unique(['numero', 'nombre'], 'empleados_numero_nombre_unique');
-            
+
             $table->timestamps();
         });
     }

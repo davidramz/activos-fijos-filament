@@ -22,10 +22,10 @@ return new class extends Migration
 
             $table->enum('tipo', [
                 'CREATE',
-                'ASSIGN',
-                'TRANSFER',
-                'RETURN',
-                'ADJUST',
+                'ASIGNADO',
+                'TRANSFERIDO',
+                'DEVOLUCION',
+                'AJUSTE',
                 'BAJA'
             ]);
 
@@ -54,7 +54,7 @@ return new class extends Migration
             ])->nullable();
 
             $table->text('notes')->nullable();
-            
+
             $table->index('activo_id');
             $table->index('created_at');
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Resguardo extends Model
 {
     use HasFactory;
-
+    protected $table = 'resguardos';
     protected $fillable = [
         'folio',
         'anio',
