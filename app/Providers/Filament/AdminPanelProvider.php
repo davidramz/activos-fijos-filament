@@ -18,6 +18,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Support\Enums\Width;
+use Filament\Pages\Enums\SubNavigationPosition;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -29,9 +31,13 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                //'primary' => Color::Amber,
-                'primary' => '#5eb28c',
+                //'primary' => Color::Emerald,
+                'primary' => '#539b7a',
             ])
+            ->maxContentWidth(Width::Full)
+            ->subNavigationPosition(SubNavigationPosition::End)
+            ->sidebarCollapsibleOnDesktop()
+            ->sidebarWidth('12rem')
             ->brandLogo(asset('images/logo.png'))
             ->brandLogoHeight('3rem')
             ->brandName('Activos Fijos')

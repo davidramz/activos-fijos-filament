@@ -12,7 +12,14 @@ class UnidadForm
         return $schema
             ->components([
                 TextInput::make('nombre')
-                    ->required(),
+                    ->required()
+                    ->afterStateUpdated(function ($state, $set) {
+                        $set('nombre', preg_replace('/\s+/', ' ', trim($state)));
+                    })
+                    ->unique(ignoreRecord: true)
+                    ->validationMessages([
+                        'unique' => 'Ya se encuentra registrado.',
+                    ]),
             ]);
     }
 }

@@ -11,22 +11,25 @@ class MaterialInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('partida_id')
-                    ->numeric(),
-                TextEntry::make('unidad_id')
-                    ->numeric(),
-                TextEntry::make('codigo'),
-                TextEntry::make('nombre'),
-                TextEntry::make('marca'),
-                TextEntry::make('modelo'),
                 TextEntry::make('tipo')
                     ->placeholder('-'),
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
+                TextEntry::make('partida.descripcion')
+                    ->label('Partida')
+                    ->columnSpanFull(),
+                TextEntry::make('unidad.nombre')
+                    ->label('Unidad'),
+                TextEntry::make('codigo'),
+                TextEntry::make('nombre')
+                    ->label('Nombre del material')
+                    ->columnSpanFull(),
+                TextEntry::make('marca'),
+                TextEntry::make('modelo'),
+                // TextEntry::make('created_at')
+                //     ->dateTime()
+                //     ->placeholder('-'),
+                // TextEntry::make('updated_at')
+                //     ->dateTime()
+                //     ->placeholder('-'),
             ]);
     }
 }

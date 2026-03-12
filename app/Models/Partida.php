@@ -14,4 +14,8 @@ class Partida extends Model
     {
         return $this->hasMany(Material::class);
     }
+    public function getDescripcionAttribute()
+    {
+        return "{$this->codigo} | {$this->nombre}";
+    }
 }

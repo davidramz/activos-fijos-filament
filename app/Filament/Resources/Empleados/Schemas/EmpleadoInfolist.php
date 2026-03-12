@@ -11,19 +11,16 @@ class EmpleadoInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('area_id')
-                    ->numeric(),
-                TextEntry::make('puesto_id')
-                    ->numeric(),
-                TextEntry::make('campus_id')
-                    ->numeric(),
-                TextEntry::make('numero')
-                    ->numeric(),
                 TextEntry::make('nombre'),
+                TextEntry::make('numero'),
+                TextEntry::make('area.nombre')
+                    ->label('Área'),
+                TextEntry::make('puesto.nombre')
+                    ->label('Puesto'),
+                TextEntry::make('campus.nombre')
+                    ->label('Campus'),
                 TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
+                    ->label('Fecha de creación')
                     ->dateTime()
                     ->placeholder('-'),
             ]);

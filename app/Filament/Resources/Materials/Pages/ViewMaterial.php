@@ -16,4 +16,8 @@ class ViewMaterial extends ViewRecord
             EditAction::make(),
         ];
     }
+    public function getTitle(): string
+    {
+        return 'Detalle del Material';
+    }
 }

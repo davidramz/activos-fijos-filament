@@ -2,8 +2,11 @@
 
 namespace App\Filament\Resources\Materials\Schemas;
 
+use App\Models\Partida;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 
 class MaterialForm
 {
@@ -11,22 +14,75 @@ class MaterialForm
     {
         return $schema
             ->components([
-                TextInput::make('partida_id')
+                Select::make('tipo')
+                    ->required()
+                    ->options([
+                        'Activo fijo' => 'Activo fijo',
+                        'Consumible' => 'Consumible'
+                    ]),
+                Select::make('partida_id')
                     ->label('Partida')
                     ->required()
-                    ->numeric(),
-                TextInput::make('unidad_id')
+                    ->relationship('partida', 'descripcion')
+                    ->searchable(['codigo', 'nombre'])
+                    ->getOptionLabelFromRecordUsing(fn($record) => $record->descripcion)
+                    ->searchPrompt('Buscar por código o nombre...')
+                    ->searchDebounce(500)
+                    ->columnSpanFull()
+                    ->createOptionForm([
+                        TextInput::make('codigo')
+                            ->required(),
+                        Select::make('tipo')
+                            ->required()
+                            ->options([
+                                'Interno' => 'Interno',
+                                'Patrimonio' => 'Patrimonio'
+                            ]),
+                        TextInput::make('nombre')
+                            ->required()
+                            ->columnSpanFull(),
+                        Textarea::make('detalle')
+                            ->columnSpan(2),
+                    ]),
+                Select::make('unidad_id')
                     ->required()
-                    ->numeric(),
+                    ->relationship('unidad', 'nombre')
+                    ->searchable()
+                    ->searchPrompt('Buscar por nombre...')
+                    ->searchDebounce(500)
+                    ->createOptionForm([
+                        TextInput::make('nombre')
+                            ->required()
+                            ->afterStateUpdated(function ($state, $set) {
+                                $set('nombre', preg_replace('/\s+/', ' ', trim($state)));
+                            })
+                            ->unique(ignoreRecord: true)
+                            ->validationMessages([
+                                'unique' => 'Ya se encuentra registrado.',
+                            ]),
+                    ]),
                 TextInput::make('codigo')
-                    ->required(),
+                    ->required()
+                    ->extraAttributes([
+                        'autocomplete' => 'off',
+                    ]),
                 TextInput::make('nombre')
-                    ->required(),
+                    ->required()
+                    ->placeholder('Nombre del material')
+                    ->extraAttributes([
+                        'autocomplete' => 'off',
+                    ])
+                    ->columnSpanFull(),
                 TextInput::make('marca')
-                    ->required(),
+                    ->required()
+                    ->extraAttributes([
+                        'autocomplete' => 'off',
+                    ]),
                 TextInput::make('modelo')
-                    ->required(),
-                TextInput::make('tipo'),
+                    ->required()
+                    ->extraAttributes([
+                        'autocomplete' => 'off',
+                    ]),
             ]);
     }
 }

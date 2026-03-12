@@ -14,4 +14,15 @@ class Area extends Model
     {
         return $this->hasMany(Empleado::class);
     }
+
+    protected static function booted()
+    {
+        static::creating(function ($area) {
+            $area->nombre = preg_replace('/\s+/', ' ', trim($area->nombre));
+        });
+
+        static::updating(function ($area) {
+            $area->nombre = preg_replace('/\s+/', ' ', trim($area->nombre));
+        });
+    }
 }

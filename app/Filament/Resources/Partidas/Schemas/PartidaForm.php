@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Partidas\Schemas;
 
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -13,11 +15,17 @@ class PartidaForm
             ->components([
                 TextInput::make('codigo')
                     ->required(),
-                TextInput::make('tipo')
-                    ->required(),
+                Select::make('tipo')
+                    ->required()
+                    ->options([
+                        'Interno' => 'Interno',
+                        'Patrimonio' => 'Patrimonio'
+                    ]),
                 TextInput::make('nombre')
-                    ->required(),
-                TextInput::make('detalle'),
+                    ->required()
+                    ->columnSpanFull(),
+                Textarea::make('detalle')
+                    ->columnSpan(2),
             ]);
     }
 }

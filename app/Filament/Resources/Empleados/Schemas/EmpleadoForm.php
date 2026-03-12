@@ -25,12 +25,40 @@ class EmpleadoForm
                     ->numeric(),
                 Select::make('area_id')
                     ->label('Área')
-                    ->options(Area::query()->pluck('nombre', 'id'))
+                    //->options(Area::query()->pluck('nombre', 'id'))
+                    ->relationship('area', 'nombre')
                     ->searchable('nombre')
-                    ->required(),
+                    ->required()
+                    ->createOptionForm([
+                        TextInput::make('nombre')
+                            ->placeholder('Nombre del área')
+                            ->required()
+                            ->afterStateUpdated(function ($state, $set) {
+                                $set('nombre', preg_replace('/\s+/', ' ', trim($state)));
+                            })
+                            ->unique(ignoreRecord: true)
+                            ->validationMessages([
+                                'unique' => 'Ya se encuentra registrado.',
+                            ]),
+                    ])
+                    ->preload(),
                 Select::make('puesto_id')
                     ->label('Puesto')
-                    ->options(Puesto::query()->pluck('nombre', 'id'))
+                    ->relationship('puesto', 'nombre')
+                    ->createOptionForm([
+                        TextInput::make('nombre')
+                            ->placeholder('Nombre del pusto')
+                            ->required()
+                            ->afterStateUpdated(function ($state, $set) {
+                                $set('nombre', preg_replace('/\s+/', ' ', trim($state)));
+                            })
+                            ->unique(ignoreRecord: true)
+                            ->validationMessages([
+                                'unique' => 'Ya se encuentra registrado.',
+                            ]),
+                    ])
+                    ->preload()
+                    //->options(Puesto::query()->pluck('nombre', 'id'))
                     ->searchable('nombre')
                     ->required(),
                 Select::make('campus_id')

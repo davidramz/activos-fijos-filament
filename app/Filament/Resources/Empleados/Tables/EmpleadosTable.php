@@ -17,16 +17,20 @@ class EmpleadosTable
             ->columns([
                 TextColumn::make('numero')
                     //->numeric()
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('nombre')
                     ->searchable(),
                 TextColumn::make('area.nombre')
+                    ->searchable()
                     //->numeric()
                     ->sortable(),
                 TextColumn::make('puesto.nombre')
+                    ->searchable()
                     //->numeric()
                     ->sortable(),
                 TextColumn::make('campus.nombre')
+                    ->searchable()
                     //->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
