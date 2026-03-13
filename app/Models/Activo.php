@@ -10,12 +10,14 @@ class Activo extends Model
 
     protected $fillable = [
         'material_id', 'entrada_id', 'detalles',
+        'imagenes',
         'costo', 'numero_inventario', 'numero_serie',
         'garantia', 'status', 'current_empleado_id',
     ];
 
     protected $casts = [
         'garantia' => 'datetime',
+        'imagenes' => 'array',
     ];
 
     public function material()
