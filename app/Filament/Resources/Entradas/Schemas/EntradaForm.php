@@ -79,7 +79,14 @@ class EntradaForm
                             ->label('Imágenes')
                             ->multiple()
                             ->reorderable()
+                            ->disk('public')
                             ->directory('activos')
+                            ->visibility('public')
+                            ->image()
+                            ->maxSize(5120)
+                            ->getUploadedFileNameUsing(function ($file) {
+                                return md5(uniqid()) . '.' . $file->getClientOriginalExtension();
+                            })
                             ->columnSpanFull(),
 
                         Select::make('status')
@@ -96,7 +103,7 @@ class EntradaForm
                     ->columns(2)
                     ->minItems(0)
                     ->collapsible()
-                    ->collapsed()
+                    //->collapsed()
                     ->addActionLabel('Agregar Activo'),
             ]);
     }
