@@ -20,7 +20,7 @@ class ProveedorResource extends Resource
 {
     protected static ?string $model = Proveedor::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTruck;
     //protected static ?string $navigationLabel = 'ProveedoresNav';
     protected static ?string $pluralModelLabel  = 'Proveedores';
     protected static ?string $recordTitleAttribute = 'nombre';

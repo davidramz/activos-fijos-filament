@@ -19,10 +19,9 @@ use Filament\Tables\Table;
 class MaterialResource extends Resource
 {
     protected static ?string $model = Material::class;
-    //protected static ?string $navigationLabel = 'MaterialesNav';
     protected static ?string $pluralModelLabel  = 'Materiales';
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedInboxStack;
 
     protected static ?string $recordTitleAttribute = 'nombre';
 

@@ -20,7 +20,7 @@ class PuestoResource extends Resource
 {
     protected static ?string $model = Puesto::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentCheck;
 
     protected static ?string $recordTitleAttribute = 'nombre';
 

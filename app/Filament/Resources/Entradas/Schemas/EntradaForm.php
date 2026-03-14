@@ -9,6 +9,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 
 class EntradaForm
 {
@@ -78,15 +79,17 @@ class EntradaForm
                         FileUpload::make('imagenes')
                             ->label('Imágenes')
                             ->multiple()
+                            ->appendFiles()
                             ->reorderable()
                             ->disk('public')
                             ->directory('activos')
                             ->visibility('public')
                             ->image()
-                            ->maxSize(5120)
-                            ->getUploadedFileNameUsing(function ($file) {
-                                return md5(uniqid()) . '.' . $file->getClientOriginalExtension();
+                            ->getUploadedFileNameForStorageUsing(function ($file) {
+                                return Str::uuid() . '.' . $file->getClientOriginalExtension();
                             })
+                            //->preserveFilenames()
+                            ->maxSize(5120)
                             ->columnSpanFull(),
 
                         Select::make('status')
@@ -103,7 +106,7 @@ class EntradaForm
                     ->columns(2)
                     ->minItems(0)
                     ->collapsible()
-                    //->collapsed()
+                    ->collapsed()
                     ->addActionLabel('Agregar Activo'),
             ]);
     }

@@ -68,9 +68,6 @@ class ActivosRelationManager extends RelationManager
                         ->visibility('public')
                         ->image()
                         ->maxSize(5120)
-                        ->getUploadedFileNameUsing(function ($file) {
-                            return md5(uniqid()) . '.' . $file->getClientOriginalExtension();
-                        })
                         ->columnSpanFull(),
 
                     Select::make('status')
@@ -170,9 +167,6 @@ class ActivosRelationManager extends RelationManager
                             ->visibility('public')
                             ->image()
                             ->maxSize(5120)
-                            ->getUploadedFileNameUsing(function ($file) {
-                                return md5(uniqid()) . '.' . $file->getClientOriginalExtension();
-                            })
                             ->columnSpanFull(),
 
                         Select::make('status')

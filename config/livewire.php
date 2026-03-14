@@ -5,7 +5,7 @@ return [
         'disk' => 'local',
         'directory' => 'livewire-tmp',
         'rules' => 'file|max:102400', // 100MB
-        'directory_visibility' => 'private',
+        'directory_visibility' => 'public',
         'delete_uploaded_base_temporary_files_after_hours' => 24,
     ],
 

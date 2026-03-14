@@ -20,7 +20,7 @@ class PartidaResource extends Resource
 {
     protected static ?string $model = Partida::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedFolder;
 
     protected static ?string $recordTitleAttribute = 'nombre';
 
