@@ -104,7 +104,8 @@ class EntradaForm
                             ]),
                     ])
                     ->columns(2)
-                    ->minItems(0)
+                    ->minItems(1)
+                    ->defaultItems(0)
                     ->collapsible()
                     ->collapsed()
                     ->addActionLabel('Agregar Activo'),

@@ -15,6 +15,7 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+//use Filament\Actions\BulkAction;
 
 class ActivosRelationManager extends RelationManager
 {
