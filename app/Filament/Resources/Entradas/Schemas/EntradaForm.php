@@ -88,7 +88,6 @@ class EntradaForm
                             ->getUploadedFileNameForStorageUsing(function ($file) {
                                 return Str::uuid() . '.' . $file->getClientOriginalExtension();
                             })
-                            //->preserveFilenames()
                             ->maxSize(5120)
                             ->columnSpanFull(),
 
