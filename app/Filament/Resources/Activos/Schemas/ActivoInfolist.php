@@ -15,84 +15,80 @@ class ActivoInfolist
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(2)
+            ->columns(3)
             ->components([
-                Section::make('Información del Activo')
-                    ->columns(2)
-                    ->schema([
-                        TextEntry::make('numero_inventario')
-                            ->label('Número de Inventario'),
+                TextEntry::make('material.nombre')
+                    ->label('Material')
+                    ->columnSpanFull(),
+                TextEntry::make('numero_inventario')
+                    ->label('Número de Inventario'),
 
-                        TextEntry::make('numero_serie')
-                            ->label('Número de Serie'),
+                TextEntry::make('numero_serie')
+                    ->label('Número de Serie'),
+                TextEntry::make('material.marca')
+                    ->label('Marca'),
 
-                        TextEntry::make('material.nombre')
-                            ->label('Material'),
+                TextEntry::make('material.modelo')
+                    ->label('Modelo'),
 
-                        TextEntry::make('material.marca')
-                            ->label('Marca'),
+                TextEntry::make('material.codigo')
+                    ->label('Código del Material'),
 
-                        TextEntry::make('material.modelo')
-                            ->label('Modelo'),
+                TextEntry::make('costo')
+                    ->label('Costo')
+                    ->money('MXN'),
 
-                        TextEntry::make('material.codigo')
-                            ->label('Código del Material'),
+                TextEntry::make('garantia')
+                    ->label('Garantía')
+                    ->dateTime('d/m/Y'),
 
-                        TextEntry::make('costo')
-                            ->label('Costo')
-                            ->money('MXN'),
+                TextEntry::make('status')
+                    ->label('Estado')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'Disponible' => 'success',
+                        'En uso' => 'info',
+                        'Dañado' => 'danger',
+                        'Fuera de servicio' => 'warning',
+                        default => 'gray',
+                    }),
 
-                        TextEntry::make('garantia')
-                            ->label('Garantía')
-                            ->dateTime('d/m/Y'),
+                TextEntry::make('empleadoActual.nombre')
+                    ->label('Asignado a'),
 
-                        TextEntry::make('status')
-                            ->label('Estado')
-                            ->badge()
-                            ->color(fn(string $state): string => match ($state) {
-                                'Disponible' => 'success',
-                                'En uso' => 'info',
-                                'Dañado' => 'danger',
-                                'Fuera de servicio' => 'warning',
-                                default => 'gray',
-                            }),
+                TextEntry::make('entrada.folio')
+                    ->label('Entrada (Folio)'),
 
-                        TextEntry::make('empleadoActual.nombre')
-                            ->label('Asignado a'),
+                TextEntry::make('created_at')
+                    ->label('Creado')
+                    ->dateTime('d/m/Y H:i'),
 
-                        TextEntry::make('entrada.folio')
-                            ->label('Entrada (Folio)'),
+                TextEntry::make('detalles')
+                    ->label('Detalles')
+                    ->columnSpanFull(),
 
-                        TextEntry::make('created_at')
-                            ->label('Creado')
-                            ->dateTime('d/m/Y H:i'),
-
-                        TextEntry::make('detalles')
-                            ->label('Detalles')
-                            ->columnSpanFull(),
-
-                        ImageEntry::make('imagenes')
-                            ->label('Imágenes')
-                            ->columnSpanFull()
-                            ->disk('public')
-                            ->visibility('public'),
-                        Action::make('imagenes')
-                            ->label('Ver imágenes')
-                            ->action(fn() => null) // opcional
-                            ->modalContent(function (Activo $record) {
-                                return view('filament.infolists.components.galeria-lightbox', [
-                                    'img' => collect($record->imagenes ?? [])
-                                        ->map(fn($path) => [
-                                            'url' => asset('storage/' . $path),
-                                            'thumbnailUrl' => asset('storage/' . $path),
-                                        ])
-                                        ->values()
-                                        ->toArray(),
-                                ]);
-                            })
-                            ->modalCancelAction(fn(Action $action) => $action->label('Cerrar'))
-                            ->modalSubmitAction(false),
-                    ]),
+                ImageEntry::make('imagenes')
+                    ->label('Imágenes')
+                    ->columnSpanFull()
+                    ->disk('public')
+                    ->visibility('public')
+                    ->columns(4),
+                Action::make('imagenes')
+                    ->label('Ver imágenes')
+                    ->action(fn() => null) // opcional
+                    ->modalContent(function (Activo $record) {
+                        return view('filament.infolists.components.galeria-lightbox', [
+                            'img' => collect($record->imagenes ?? [])
+                                ->map(fn($path) => [
+                                    'url' => asset('storage/' . $path),
+                                    'thumbnailUrl' => asset('storage/' . $path),
+                                ])
+                                ->values()
+                                ->toArray(),
+                        ]);
+                    })
+                    ->modalCancelAction(fn(Action $action) => $action->label('Cerrar'))
+                    ->modalSubmitAction(false),
             ]);
     }
 }

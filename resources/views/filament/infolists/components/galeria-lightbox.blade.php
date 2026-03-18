@@ -20,7 +20,8 @@
     zoomOut() {
         this.zoom = Math.max(this.zoom - 0.2, 1)
     }
-}" class="w-full">
+}" class="w-full" @keydown.window.prevent.arrow-right="next()"
+    @keydown.window.prevent.arrow-left="prev()" @keydown.window.escape="closeModal ? closeModal() : null">
 
     <!-- IMAGEN PRINCIPAL -->
     <div class="relative flex justify-center items-center mb-4 overflow-hidden">
