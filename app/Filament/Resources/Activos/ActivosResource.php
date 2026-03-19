@@ -21,7 +21,7 @@ class ActivosResource extends Resource
     protected static ?string $pluralModelLabel = 'Activos';
     protected static ?string $modelLabel = 'Activo';
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArchiveBox;
 
     protected static ?string $recordTitleAttribute = 'numero_inventario';
 

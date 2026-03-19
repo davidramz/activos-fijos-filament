@@ -21,15 +21,27 @@ class EntradaForm
                 Select::make('proveedor_id')
                     ->label('Proveedor')
                     ->required()
+                    ->validationMessages([
+                        'required' => 'Se requiere un proveedor.',
+                    ])
                     ->relationship('proveedor', 'nombre')
                     ->searchable(['nombre', 'codigo', 'rfc'])
                     ->columnSpan(2),
 
                 TextInput::make('folio')
                     ->required()
-                    ->unique(ignoreRecord: true),
+                    ->unique(ignoreRecord: true)
+                    ->validationMessages([
+                        'required' => 'Se requiere un folio.',
+                        'unique' => 'El folio ya existe.',
+                    ]),
 
-                TextInput::make('requisicion'),
+                TextInput::make('requisicion')
+                    ->label('Requisición')
+                    ->required()
+                    ->validationMessages([
+                        'required' => 'Se requiere una requisición.',
+                    ]),
 
                 Select::make('tipo_compra')
                     ->options([
@@ -39,13 +51,24 @@ class EntradaForm
                         'donación' => 'donación',
                         'promoción' => 'promoción',
                         'otra' => 'otra',
+                    ])
+                    ->validationMessages([
+                        'required' => 'Seleccione una opción tipo de compra.',
                     ]),
 
                 DatePicker::make('fecha_factura')
-                    ->label('Fecha de Factura'),
+                    ->label('Fecha de Factura')
+                    ->required()
+                    ->validationMessages([
+                        'required' => 'Se requiere una fecha de factura.',
+                    ]),
 
                 Repeater::make('activos')
                     ->label('Activos')
+                    ->required()
+                    ->validationMessages([
+                        'required' => 'Se requiere un activo.',
+                    ])
                     ->relationship('activos')
                     ->columnSpanFull()
                     ->schema([

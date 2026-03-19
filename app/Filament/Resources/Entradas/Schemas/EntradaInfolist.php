@@ -10,7 +10,7 @@ class EntradaInfolist
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(2)
+            ->columns(3)
             ->components([
                 TextEntry::make('folio')
                     ->label('Folio'),
