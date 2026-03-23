@@ -55,4 +55,8 @@ class PuestoResource extends Resource
             'edit' => EditPuesto::route('/{record}/edit'),
         ];
     }
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }  
 }
