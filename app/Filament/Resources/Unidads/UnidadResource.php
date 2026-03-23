@@ -56,4 +56,8 @@ class UnidadResource extends Resource
             'edit' => EditUnidad::route('/{record}/edit'),
         ];
     }
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }   
 }
