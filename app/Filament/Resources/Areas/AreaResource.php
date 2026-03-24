@@ -55,8 +55,4 @@ class AreaResource extends Resource
             'edit' => EditArea::route('/{record}/edit'),
         ];
     }
-    public static function shouldRegisterNavigation(): bool
-    {
-        return false;
-    }  
 }

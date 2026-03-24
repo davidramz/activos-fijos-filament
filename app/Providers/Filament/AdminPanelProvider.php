@@ -20,6 +20,9 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Support\Enums\Width;
 use Filament\Pages\Enums\SubNavigationPosition;
+use Filament\FontProviders\GoogleFontProvider;
+use Filament\Navigation\NavigationGroup;
+use Filament\Support\Icons\Heroicon;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -34,10 +37,11 @@ class AdminPanelProvider extends PanelProvider
                 //'primary' => Color::Emerald,
                 'primary' => '#539b7a',
             ])
+            ->font('Roboto Mono', provider: GoogleFontProvider::class)
             ->maxContentWidth(Width::Full)
             ->subNavigationPosition(SubNavigationPosition::End)
             ->sidebarCollapsibleOnDesktop()
-            ->sidebarWidth('12rem')
+            ->sidebarWidth('13rem')
             ->brandLogo(asset('images/logo.png'))
             ->brandLogoHeight('3rem')
             ->brandName('Activos Fijos')
