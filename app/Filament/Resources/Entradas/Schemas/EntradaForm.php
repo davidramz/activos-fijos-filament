@@ -78,7 +78,8 @@ class EntradaForm
                             ->relationship('material', 'nombre')
                             ->searchable(['nombre', 'codigo', 'marca'])
                             ->getOptionLabelFromRecordUsing(fn($record) => "{$record->nombre} - {$record->marca} ({$record->modelo})")
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->live(onBlur: true),
 
                         TextInput::make('numero_inventario')
                             ->label('Número de Inventario')
@@ -130,7 +131,9 @@ class EntradaForm
                     ->defaultItems(0)
                     ->collapsible()
                     ->collapsed()
-                    ->addActionLabel('Agregar Activo'),
+                    ->addActionLabel('Agregar Activo')
+                    //->itemLabel(fn($state) => $state['material_id'] ? "Activo: {$state['material_id']}" : 'Nuevo Activo')
+                    ->itemLabel(fn($record) => $record->material ? "Activo: {$record->material->nombre}" : 'Nuevo Activo'),
             ]);
     }
 }
