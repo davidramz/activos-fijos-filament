@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Entradas\Schemas;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
+use App\Models\Material;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -65,6 +66,7 @@ class EntradaForm
 
                 Repeater::make('activos')
                     ->label('Activos')
+                    ->itemLabel(fn($state): string => is_array($state) && filled($state['material_id']) ? optional(Material::find($state['material_id']))->nombre : 'Seleccionar Activo')
                     ->required()
                     ->validationMessages([
                         'required' => 'Se requiere un activo.',
@@ -131,9 +133,7 @@ class EntradaForm
                     ->defaultItems(0)
                     ->collapsible()
                     ->collapsed()
-                    ->addActionLabel('Agregar Activo')
-                    //->itemLabel(fn($state) => $state['material_id'] ? "Activo: {$state['material_id']}" : 'Nuevo Activo')
-                    ->itemLabel(fn($record) => $record->material ? "Activo: {$record->material->nombre}" : 'Nuevo Activo'),
+                    ->addActionLabel('Agregar Activo'),
             ]);
     }
 }
