@@ -20,6 +20,7 @@ use Filament\Schemas\Components\Section as ComponentsSection;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Infolists\Components\ViewEntry;
 //use Filament\Actions\BulkAction;
 
 class ActivosRelationManager extends RelationManager
@@ -136,9 +137,9 @@ class ActivosRelationManager extends RelationManager
                     ->limit(50)
                     ->tooltip(fn(Activo $record) => $record->detalles),
 
-                ImageColumn::make('imagenes')
-                    ->label('Imágenes')
-                    ->circular(),
+                // ImageColumn::make('imagenes')
+                //     ->label('Imágenes')
+                //     ->circular(),
             ])
             ->filters([
                 //
@@ -162,6 +163,7 @@ class ActivosRelationManager extends RelationManager
 
                                     TextEntry::make('material.nombre')
                                         ->label('Material')
+                                        ->columnSpanFull()
                                         ->state($record->material?->nombre),
 
                                     TextEntry::make('material.marca')
@@ -207,9 +209,15 @@ class ActivosRelationManager extends RelationManager
                                         ->columnSpanFull()
                                         ->state($record->detalles),
 
-                                    ImageEntry::make('imagenes')
+                                    // ImageEntry::make('imagenes')
+                                    //     ->label('Imágenes')
+                                    //     ->columnSpanFull(),
+                                    ViewEntry::make('imagenes')
                                         ->label('Imágenes')
-                                        ->columnSpanFull(),
+                                        ->columnSpanFull()
+                                        ->view('filament.infolists.components.image-gallery', [
+                                            // Images will be passed via the record
+                                        ]),
                                 ]),
                         ];
                     }),

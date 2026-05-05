@@ -67,28 +67,28 @@ class ActivoInfolist
                     ->label('Detalles')
                     ->columnSpanFull(),
 
-                ImageEntry::make('imagenes')
+                ViewEntry::make('imagenes')
                     ->label('Imágenes')
                     ->columnSpanFull()
-                    ->disk('public')
-                    ->visibility('public')
-                    ->columns(4),
-                Action::make('imagenes')
-                    ->label('Ver imágenes')
-                    ->action(fn() => null) // opcional
-                    ->modalContent(function (Activo $record) {
-                        return view('filament.infolists.components.galeria-lightbox', [
-                            'img' => collect($record->imagenes ?? [])
-                                ->map(fn($path) => [
-                                    'url' => asset('storage/' . $path),
-                                    'thumbnailUrl' => asset('storage/' . $path),
-                                ])
-                                ->values()
-                                ->toArray(),
-                        ]);
-                    })
-                    ->modalCancelAction(fn(Action $action) => $action->label('Cerrar'))
-                    ->modalSubmitAction(false),
+                    ->view('filament.infolists.components.image-gallery', [
+                        // Images will be passed via the record
+                    ]),
+                // Action::make('imagenes')
+                //     ->label('Ver imágenes')
+                //     ->action(fn() => null) // opcional
+                //     ->modalContent(function (Activo $record) {
+                //         return view('filament.infolists.components.galeria-lightbox', [
+                //             'img' => collect($record->imagenes ?? [])
+                //                 ->map(fn($path) => [
+                //                     'url' => asset('storage/' . $path),
+                //                     'thumbnailUrl' => asset('storage/' . $path),
+                //                 ])
+                //                 ->values()
+                //                 ->toArray(),
+                //         ]);
+                //     })
+                //     ->modalCancelAction(fn(Action $action) => $action->label('Cerrar'))
+                //     ->modalSubmitAction(false),
             ]);
     }
 }
