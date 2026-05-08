@@ -27,7 +27,6 @@ class ActivoForm
                 TextInput::make('numero_inventario')
                     ->label('Número de Inventario')
                     ->required(),
-
                 TextInput::make('numero_serie')
                     ->label('Número de Serie'),
 
