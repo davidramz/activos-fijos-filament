@@ -15,18 +15,22 @@ class ResguardosTable
     {
         return $table
             ->columns([
-                TextColumn::make('folio')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make('folioFormateado')
+                    ->label('Folio')
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('anio')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('empleado_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
+                    ->label('Año')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('empleado.nombre')
+                    ->label('Empleado')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('user.name')
+                    ->label('Creado por')
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -37,7 +41,7 @@ class ResguardosTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                
             ])
             ->recordActions([
                 ViewAction::make(),

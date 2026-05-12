@@ -10,7 +10,7 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-
+use Filament\Tables\Columns\IconColumn;
 class ActivosTable
 {
     public static function configure(Table $table): Table
@@ -48,7 +48,7 @@ class ActivosTable
                     ->label('Estado')
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
-                        'Disponible' => 'success',
+                        'RESGUARDADO' => 'success',
                         'En uso' => 'info',
                         'Dañado' => 'danger',
                         'Fuera de servicio' => 'warning',
@@ -73,10 +73,17 @@ class ActivosTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
-                ImageColumn::make('imagenes')
-                    ->label('Imágenes')
-                    ->circular(),
+                IconColumn::make('imagenes_exists')
+                    ->label('Imagen')
+                    ->getStateUsing(fn ($record) => $record->imagenes[0] ?? null)
+                    ->icon(fn (bool $state) => $state
+                        ? 'heroicon-o-photo'
+                        : 'heroicon-o-x-circle'
+                    ),
+                   
+                // ImageColumn::make('imagenes')
+                //     ->label('Imágenes')
+                //     ->circular(),
             ])
             ->filters([
                 //

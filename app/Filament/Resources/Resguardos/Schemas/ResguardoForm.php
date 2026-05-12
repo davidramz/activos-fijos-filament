@@ -14,14 +14,14 @@ class ResguardoForm
     {
         return $schema
             ->components([
-                TextInput::make('folio')
-                    ->required()
-                    ->numeric(),
+                // TextInput::make('folio')
+                //     ->required()
+                //     ->numeric(),
                 // TextInput::make('anio')
                 //     ->required()
                 //     ->numeric(),
-                Hidden::make('anio')
-                    ->default(fn() => date('Y')),
+                // Hidden::make('anio')
+                //     ->default(fn() => date('Y')),
                 Select::make('empleado_id')
                     ->label('Empleado')
                     ->required()
