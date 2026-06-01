@@ -15,6 +15,7 @@ class Resguardo extends Model
         'empleado_id',
         'user_id',
         'observaciones',
+        'resguardo_tipo_id'
     ];
 
     /*
@@ -22,7 +23,10 @@ class Resguardo extends Model
     | RELACIONES
     |--------------------------------------------------------------------------
     */
-
+    public function tipo()
+    {
+        return $this->belongsTo(ResguardoTipo::class);
+    }   
     public function empleado()
     {
         return $this->belongsTo(Empleado::class);

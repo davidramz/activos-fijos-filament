@@ -20,40 +20,24 @@ return new class extends Migration
             // No confundir con responsable del bien
             $table->foreignId('user_id')->constrained();
 
-            $table->enum('tipo', [
-                'CREATE',
-                'ASIGNADO',
-                'TRANSFERIDO',
-                'DEVOLUCION',
-                'AJUSTE',
-                'BAJA'
-            ]);
+            $table->foreignId('tipo_id')->constrained('movimiento_tipos');
 
-            $table->foreignId('empleado_from_id')
+            $table->foreignId('empleado_origen_id')
                 ->nullable()
                 ->constrained('empleados');
 
-            $table->foreignId('empleado_to_id')
+            $table->foreignId('empleado_destino_id')
                 ->nullable()
                 ->constrained('empleados');
 
-            $table->enum('status_before', [
-                'ALMACEN',
-                'RESGUARDADO',
-                'BAJA',
-                'EXTRAVIADO',
-                'DANADO'
-            ])->nullable();
+            $table->foreignId('status_antes_id')
+                ->nullable()
+                ->constrained('activo_status');
+            $table->foreignId('status_despues_id')
+                ->nullable()
+                ->constrained('activo_status');
 
-            $table->enum('status_after', [
-                'ALMACEN',
-                'RESGUARDADO',
-                'BAJA',
-                'EXTRAVIADO',
-                'DANADO'
-            ])->nullable();
-
-            $table->text('notes')->nullable();
+            $table->text('notas')->nullable();
 
             $table->index('activo_id');
             $table->index('created_at');

@@ -10,7 +10,7 @@ class ActivoMovimiento extends Model
 
     protected $fillable = [
         'activo_id', 'empleado_id', 'user_id',
-        'tipo', 'observaciones',
+        'tipo', 'observaciones','activo_status_id','movimiento_tipo_id'
     ];
 
     public function activo()
@@ -26,5 +26,13 @@ class ActivoMovimiento extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function status()
+    {
+        return $this->belongsTo(ActivoStatus::class);
+    }
+    public function tipo()
+    {
+        return $this->belongsTo(MovimientoTipo::class);     
     }
 }

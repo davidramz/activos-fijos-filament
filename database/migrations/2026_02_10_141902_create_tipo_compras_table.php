@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('activos', function (Blueprint $table) {
-            $table->json('imagenes')->nullable()->after('detalles');
+        Schema::create('tipo_compras', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre')->unique();
+            $table->boolean('disponible')->default(true);
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('activos', function (Blueprint $table) {
-            $table->dropColumn('imagenes');
-        });
+        Schema::dropIfExists('tipo_compras');
     }
 };

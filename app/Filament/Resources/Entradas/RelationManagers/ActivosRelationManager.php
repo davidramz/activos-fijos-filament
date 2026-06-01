@@ -78,14 +78,10 @@ class ActivosRelationManager extends RelationManager
                             ->maxSize(5120)
                             ->columnSpanFull(),
 
-                        Select::make('status')
+                        hidden::make('status_id')
                             ->label('Estado')
-                            ->options([
-                                'Disponible' => 'Disponible',
-                                'En uso' => 'En uso',
-                                'Dañado' => 'Dañado',
-                                'Fuera de servicio' => 'Fuera de servicio',
-                            ]),
+                            ->relationship('status', 'nombre')
+                            ->default(1), // Asumiendo que '1' es el ID del estado "En Almacén"
                     ])
                 //->columns(2),
             ])
@@ -261,14 +257,10 @@ class ActivosRelationManager extends RelationManager
                             ->maxSize(5120)
                             ->columnSpanFull(),
 
-                        Select::make('status')
+                        Select::make('status_id')
                             ->label('Estado')
-                            ->options([
-                                'Disponible' => 'Disponible',
-                                'En uso' => 'En uso',
-                                'Dañado' => 'Dañado',
-                                'Fuera de servicio' => 'Fuera de servicio',
-                            ]),
+                            ->relationship('status', 'nombre')
+                            ->default(1), // Asumiendo que '1' es el ID del estado
                     ]),
                 DeleteAction::make(),
             ])

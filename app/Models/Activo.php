@@ -9,10 +9,10 @@ class Activo extends Model
     protected $table = 'activos';
 
     protected $fillable = [
-        'material_id', 'entrada_id', 'detalles',
+        'material_id', 'entrada_id','status_id', 'detalles',
         'imagenes',
         'costo', 'numero_inventario', 'numero_serie',
-        'garantia', 'status', 'current_empleado_id',
+        'garantia', 'status', 'empleado_actual_id',
     ];
 
     protected $casts = [
@@ -32,7 +32,7 @@ class Activo extends Model
 
     public function empleadoActual()
     {
-        return $this->belongsTo(Empleado::class, 'current_empleado_id');
+        return $this->belongsTo(Empleado::class, 'empleado_actual_id');
     }
 
     public function movimientos()
@@ -46,5 +46,9 @@ class Activo extends Model
             Resguardo::class,
             'resguardo_activo'
         )->withTimestamps();
+    }
+    public function status()
+    {
+        return $this->belongsTo(ActivoStatus::class, 'status');
     }
 }

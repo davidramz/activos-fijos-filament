@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('entrada_id')->constrained('entradas');
 
             $table->longText('detalles')->nullable();
+            $table->json('imagenes')->nullable();
             $table->decimal('costo', 9, 2)->nullable();
 
             $table->string('numero_inventario',50)->unique();
@@ -25,23 +26,19 @@ return new class extends Migration
 
             $table->date('garantia')->nullable();
             //Nunca cambiar status sin crear movimiento.
-            $table->enum('status', [
-                'ALMACEN',
-                'RESGUARDADO',
-                'BAJA',
-                'EXTRAVIADO',
-                'DANADO'
-            ])->default('ALMACEN');
-            //current_empleado_id Null = ALMACEN
+            $table->foreignId('status_id')
+                ->constrained('activo_status')
+                ->default(1); // Asumiendo que '1' es el ID del estado "En Almacén"
+            //empleado_actual_id Null = ALMACEN
             //Si no es null → status debe ser RESGUARDADO
-            $table->foreignId('current_empleado_id')
+            $table->foreignId('empleado_actual_id')
                 ->nullable()
                 ->constrained('empleados');
            
             $table->timestamps();     
             
-            $table->index('status');
-            $table->index('current_empleado_id');
+            $table->index('status_id');
+            $table->index('empleado_actual_id');
         });
     }
 

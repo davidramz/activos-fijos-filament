@@ -14,12 +14,9 @@ class MaterialForm
     {
         return $schema
             ->components([
-                Select::make('tipo')
+                Select::make('tipo_id')
                     ->required()
-                    ->options([
-                        'Activo fijo' => 'Activo fijo',
-                        'Consumible' => 'Consumible'
-                    ]),
+                    ->relationship('tipo', 'nombre'),
                 Select::make('partida_id')
                     ->label('Partida')
                     ->required()

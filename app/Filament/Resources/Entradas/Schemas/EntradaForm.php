@@ -9,6 +9,7 @@ use App\Models\Material;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Hidden;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
 
@@ -44,18 +45,12 @@ class EntradaForm
                         'required' => 'Se requiere una requisición.',
                     ]),
 
-                Select::make('tipo_compra')
-                    ->options([
-                        'directa' => 'directa',
-                        'licitación' => 'licitación',
-                        'consolidada' => 'consolidada',
-                        'donación' => 'donación',
-                        'promoción' => 'promoción',
-                        'otra' => 'otra',
-                    ])
+                Select::make('tipo_compra_id')
+                    ->relationship('tipoCompra', 'nombre')
+                    ->required()
                     ->validationMessages([
                         'required' => 'Seleccione una opción tipo de compra.',
-                    ]),
+                    ]) ->native(false),
 
                 DatePicker::make('fecha_factura')
                     ->label('Fecha de Factura')
@@ -117,16 +112,11 @@ class EntradaForm
                             ->maxSize(5120)
                             ->columnSpanFull(),
 
-                        Select::make('status')
+                        Select::make('status_id')
                             ->label('Estado')
-                            ->default('Disponible')
-                            ->options([
-                                'ALMACEN' => 'ALMACEN',
-                                'RESGUARDADO' => 'RESGUARDADO',
-                                'BAJA' => 'BAJA',
-                                'EXTRAVIADO' => 'EXTRAVIADO',
-                                'DANADO' => 'DAÑADO',
-                            ]),
+                            ->relationship('status', 'nombre')
+                            ->default('1') // Asumiendo que '1' es el ID del estado "En Almacén"
+                            ->hidden()
                     ])
                     ->columns(2)
                     ->minItems(1)

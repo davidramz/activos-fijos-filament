@@ -38,17 +38,12 @@ class ActivoForm
                 DatePicker::make('garantia')
                     ->label('Garantía'),
 
-                Select::make('status')
+                Select::make('status_id')
                     ->label('Estado')
                     ->required()
-                    ->options([
-                        'Disponible' => 'Disponible',
-                        'En uso' => 'En uso',
-                        'Dañado' => 'Dañado',
-                        'Fuera de servicio' => 'Fuera de servicio',
-                    ]),
+                    ->relationship('status', 'nombre'),
 
-                Select::make('current_empleado_id')
+                Select::make('empleado_actual_id')
                     ->label('Asignado a')
                     ->relationship('empleadoActual', 'nombre')
                     ->searchable(['nombre', 'cedula'])

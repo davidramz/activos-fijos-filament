@@ -15,12 +15,9 @@ class PartidaForm
             ->components([
                 TextInput::make('codigo')
                     ->required(),
-                Select::make('tipo')
+                Select::make('tipo_id')
                     ->required()
-                    ->options([
-                        'Interno' => 'Interno',
-                        'Patrimonio' => 'Patrimonio'
-                    ]),
+                    ->relationship('tipo', 'nombre'),
                 TextInput::make('nombre')
                     ->required()
                     ->columnSpanFull(),

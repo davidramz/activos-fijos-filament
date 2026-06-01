@@ -22,6 +22,11 @@ class ResguardoForm
                 //     ->numeric(),
                 // Hidden::make('anio')
                 //     ->default(fn() => date('Y')),
+                Select::make('tipo_id')
+                    ->label('Tipo de Resguardo')
+                    ->required()
+                    ->relationship('tipo', 'nombre')
+                    ->searchable(['nombre']),
                 Select::make('empleado_id')
                     ->label('Empleado')
                     ->required()

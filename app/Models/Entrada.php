@@ -9,8 +9,8 @@ class Entrada extends Model
     protected $table = 'entradas';
 
     protected $fillable = [
-        'proveedor_id', 'user_id', 'folio',
-        'requisicion', 'tipo_compra', 'fecha_factura',
+        'proveedor_id', 'user_id', 'tipo_compra_id', 'folio',
+        'requisicion', 'fecha_factura',
     ];
 
     protected $casts = [
@@ -30,5 +30,10 @@ class Entrada extends Model
     public function activos()
     {
         return $this->hasMany(Activo::class);
+    }
+    
+    public function tipoCompra()
+    {
+        return $this->belongsTo(TipoCompra::class);
     }
 }

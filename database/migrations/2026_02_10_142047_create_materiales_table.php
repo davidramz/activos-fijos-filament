@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('partida_id')->constrained('partidas');
             $table->foreignId('unidad_id')->constrained('unidades');
+            $table->foreignId('tipo_id')->constrained('material_tipos');
 
             $table->string('codigo')->unique();
             $table->string('nombre');
             $table->string('marca');
             $table->string('modelo');
-            $table->string('tipo')->nullable();
             $table->timestamps();
             $table->unique(['partida_id', 'codigo'], 'materiales_partida_codigo_unique');
         });

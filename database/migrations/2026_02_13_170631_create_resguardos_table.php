@@ -25,6 +25,8 @@ return new class extends Migration
                 ->constrained('users')
                 ->cascadeOnDelete();
 
+            $table->foreignId('tipo_id')
+                ->constrained('resguardo_tipos');
             $table->text('observaciones')->nullable();
 
             $table->index(['anio', 'folio']);

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('partidas', function (Blueprint $table) {
             $table->id();
             $table->string('codigo')->unique();
-            $table->string('tipo');
+            $table->foreignId('tipo_id')->constrained('partida_tipos');
             $table->string('nombre');
             $table->string('detalle')->nullable();
             $table->timestamps();

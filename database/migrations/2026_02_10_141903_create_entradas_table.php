@@ -15,13 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('proveedor_id')->constrained('proveedores');
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('tipo_compra_id')->constrained('tipo_compras');
 
             $table->string('folio')->unique();
             $table->string('requisicion');
-            $table->enum('tipo_compra', [
-                'directa', 'licitación', 'consolidada',
-                'donación', 'promoción', 'otra'
-            ]);
 
             $table->date('fecha_factura');
 

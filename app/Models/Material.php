@@ -10,7 +10,7 @@ class Material extends Model
 
     protected $fillable = [
         'partida_id', 'unidad_id', 'codigo',
-        'nombre', 'marca', 'modelo', 'tipo',
+        'nombre', 'marca', 'modelo', 'material_tipo_id',
     ];
 
     public function partida()
@@ -26,5 +26,9 @@ class Material extends Model
     public function activos()
     {
         return $this->hasMany(Activo::class);
+    }
+    public function tipo()
+    {
+        return $this->belongsTo(MaterialTipo::class);
     }
 }
