@@ -29,10 +29,10 @@ class EditResguardo extends EditRecord
         foreach ($activos as $activo) {
             // Si el activo aún está en ALMACEN (no fue actualizado en creación),
             // actualizar su status a RESGUARDADO y asignar empleado
-            if ($activo->status !== 'RESGUARDADO' || $activo->current_empleado_id !== $resguardo->empleado_id) {
+            if ($activo->status_id !== 2 || $activo->empleado_actual_id !== $resguardo->empleado_id) {
                 $activo->update([
-                    'status' => 'RESGUARDADO',
-                    'current_empleado_id' => $resguardo->empleado_id,
+                    'status_id' => 2,
+                    'empleado_actual_id' => $resguardo->empleado_id,
                 ]);
             }
         }

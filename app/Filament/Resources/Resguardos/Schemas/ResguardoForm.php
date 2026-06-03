@@ -48,7 +48,7 @@ class ResguardoForm
                         modifyQueryUsing: fn($query) => $query->where('status_id', 1)
                     )
                     ->multiple()
-                    ->searchable(['numero_inventario', 'numero_serie'])
+                    ->searchable(['numero_inventario', 'numero_serie', 'nombre'])
                     ->columnSpanFull(),
             ]);
     }
