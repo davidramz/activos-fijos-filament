@@ -19,7 +19,7 @@ class CreateResguardo extends CreateRecord
 
         foreach ($activos as $activo) {
             $activo->update([
-                'status' => 'RESGUARDADO',
+                'status_id' => 2,
                 'current_empleado_id' => $resguardo->empleado_id,
             ]);
         }
