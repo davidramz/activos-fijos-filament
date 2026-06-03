@@ -23,12 +23,24 @@ class EditResguardo extends EditRecord
     {
         $resguardo = $this->record;
 
-        // Actualizar el status y empleado_id de los activos del resguardo
-        $activos = $resguardo->activos()->get();
+        // Obtener los activos previamente asignados
+        $activosActuales = $resguardo->activos()->pluck('activos.id')->toArray();
 
+        // Obtener los activos que se acaban de asignar en el formulario
+        $activosNuevos = $this->data['activos'] ?? [];
+
+        // Activos que fueron desasignados (actualizar su status a 1 = ALMACEN)
+        $activosADesasignar = array_diff($activosActuales, $activosNuevos);
+        if (!empty($activosADesasignar)) {
+            \App\Models\Activo::whereIn('id', $activosADesasignar)->update([
+                'status_id' => 1,
+                'empleado_actual_id' => null,
+            ]);
+        }
+
+        // Activos que se mantienen o se acaban de asignar
+        $activos = $resguardo->activos()->get();
         foreach ($activos as $activo) {
-            // Si el activo aún está en ALMACEN (no fue actualizado en creación),
-            // actualizar su status a RESGUARDADO y asignar empleado
             if ($activo->status_id !== 2 || $activo->empleado_actual_id !== $resguardo->empleado_id) {
                 $activo->update([
                     'status_id' => 2,

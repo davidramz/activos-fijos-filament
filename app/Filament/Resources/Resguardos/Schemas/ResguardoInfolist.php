@@ -2,12 +2,12 @@
 
 namespace App\Filament\Resources\Resguardos\Schemas;
 
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\RepeatableEntry;
 //use Filament\Infolists\Components\Section;
 use Filament\Schemas\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Infolists\Infolist;
 use Filament\Schemas\Schema;
-use Filament\Infolists\Components\ViewEntry;
 
 class ResguardoInfolist
 {
@@ -15,57 +15,50 @@ class ResguardoInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('folioFormateado')
-                    ->label('Folio'),
-                // TextEntry::make('anio')
-                //     ->label('Año'),
-                TextEntry::make('empleado.nombre')
-                    ->label('Empleado'),
-                
-                Section::make('Activos')
+                Section::make('Información del Resguardo')
+                    ->columnSpanFull()
+                    ->columns(2)
+                    ->schema([
+                        TextEntry::make('folio_formateado')
+                            ->label('Folio')
+                            ->copyable(),
+                        TextEntry::make('tipo.nombre')
+                            ->label('Tipo de Resguardo'),
+                        TextEntry::make('empleado.nombre')
+                            ->label('Empleado'),
+                        TextEntry::make('empleado.numero')
+                            ->label('Número de Empleado'),
+                        TextEntry::make('user.name')
+                            ->label('Creado por'),
+                        TextEntry::make('created_at')
+                            ->label('Fecha de Creación')
+                            ->dateTime(),
+                    ]),
+                Section::make('Activos Resguardados')                
                     ->columnSpanFull()
                     ->schema([
                         RepeatableEntry::make('activos')
-                            ->hiddenLabel()
                             ->schema([
                                 TextEntry::make('material.nombre')
                                     ->label('Material')
                                     ->columnSpanFull(),
                                 TextEntry::make('numero_inventario')
-                                    ->label('Inventario'),
+                                    ->label('Número de Inventario'),
                                 TextEntry::make('numero_serie')
-                                    ->label('Serie'),
+                                    ->label('Número de Serie'),
                                 TextEntry::make('costo')
                                     ->label('Costo')
                                     ->money('MXN'),
-                                TextEntry::make('status')
-                                    ->label('Status')
-                                    ->badge(),
-                                    TextEntry::make('garantia')
-                                    ->dateTime('d/m/Y')
-                                    ->label('garantia'),
-                                    ViewEntry::make('imagenes')
-                    ->label('Imágenes')
-                    ->columnSpanFull()
-                    ->view('filament.infolists.components.image-gallery', [
-                        // Images will be passed via the record
-                    ]),
                             ])
-                            ->columns(5),
+                            ->columns(4),
                     ]),
-                    
-                TextEntry::make('observaciones')
-                    ->placeholder('-'),
-                TextEntry::make('user.name')
-                    ->label('Creado por'),
-                TextEntry::make('created_at')
-                    ->label('Creado el')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->label('Actualizado el')
-                    ->dateTime()
-                    ->placeholder('-'),
+                Section::make('Observaciones')
+                    ->collapsed()
+                    ->schema([
+                        TextEntry::make('observaciones')
+                            ->label('')
+                            ->prose(),
+                    ]),                    
             ]);
     }
 }

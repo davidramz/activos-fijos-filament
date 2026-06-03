@@ -14,6 +14,7 @@ use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
 use Filament\Schemas\Components\Grid;
 
+
 class EntradaForm
 {
     public static function configure(Schema $schema): Schema
@@ -158,11 +159,10 @@ class EntradaForm
                             ->maxSize(5120)
                             ->columnSpanFull(),
 
-                        Select::make('status_id')
-                            ->label('Estado')
-                            ->relationship('status', 'nombre')
+                        Hidden::make('status_id')
+                            //->label('Estado')
+                            //->relationship('status', 'nombre')
                             ->default(1) // Asumiendo que '1' es el ID del estado "En Almacén"
-                            ->hidden()
                     ])
                     ->columns(2)
                     ->minItems(1)

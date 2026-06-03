@@ -15,33 +15,36 @@ class ResguardosTable
     {
         return $table
             ->columns([
-                TextColumn::make('folioFormateado')
+                TextColumn::make('folio_formateado')
                     ->label('Folio')
-                    ->sortable()
-                    ->searchable(),
-                TextColumn::make('anio')
-                    ->label('Año')
-                    ->sortable()
-                    ->searchable(),
+                    ->searchable(['folio', 'anio'])
+                    ->sortable(),
                 TextColumn::make('empleado.nombre')
                     ->label('Empleado')
-                    ->sortable()
-                    ->searchable(),
+                    ->searchable(['nombre', 'numero'])
+                    ->sortable(),
+                TextColumn::make('empleado.numero')
+                    ->label('No. Empleado')
+                    ->sortable(),
+                TextColumn::make('tipo.nombre')
+                    ->label('Tipo')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('activos_count')
+                    ->label('Cantidad de Activos')
+                    ->counts('activos')
+                    ->sortable(),
+                TextColumn::make('created_at')
+                    ->label('Fecha')
+                    ->dateTime('d/m/Y H:i')
+                    ->sortable(),
                 TextColumn::make('user.name')
                     ->label('Creado por')
-                    ->sortable()
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
+                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                
+                //
             ])
             ->recordActions([
                 ViewAction::make(),

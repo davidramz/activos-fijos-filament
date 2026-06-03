@@ -36,4 +36,5 @@ class Entrada extends Model
     {
         return $this->belongsTo(TipoCompra::class);
     }
+  
 }
