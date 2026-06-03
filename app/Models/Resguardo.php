@@ -15,7 +15,7 @@ class Resguardo extends Model
         'empleado_id',
         'user_id',
         'observaciones',
-        'resguardo_tipo_id'
+        'tipo_id'
     ];
 
     /*

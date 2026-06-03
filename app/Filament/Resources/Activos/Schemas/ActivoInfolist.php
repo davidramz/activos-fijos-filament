@@ -42,14 +42,13 @@ class ActivoInfolist
                     ->label('Garantía')
                     ->dateTime('d/m/Y'),
 
-                TextEntry::make('status')
+                TextEntry::make('status.nombre')
                     ->label('Estado')
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
-                        'RESGUARDADO' => 'success',
-                        'En uso' => 'info',
-                        'Dañado' => 'danger',
-                        'Fuera de servicio' => 'warning',
+                         'almacen' => 'warning',
+                        'resguardado' => 'success',
+                        'baja' => 'danger',
                         default => 'gray',
                     }),
 

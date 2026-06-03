@@ -10,7 +10,7 @@ class Material extends Model
 
     protected $fillable = [
         'partida_id', 'unidad_id', 'codigo',
-        'nombre', 'marca', 'modelo', 'material_tipo_id',
+        'nombre', 'marca', 'modelo', 'tipo_id',
     ];
 
     public function partida()

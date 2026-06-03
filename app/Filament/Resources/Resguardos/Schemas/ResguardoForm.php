@@ -22,11 +22,13 @@ class ResguardoForm
                 //     ->numeric(),
                 // Hidden::make('anio')
                 //     ->default(fn() => date('Y')),
-                Select::make('tipo_id')
-                    ->label('Tipo de Resguardo')
-                    ->required()
-                    ->relationship('tipo', 'nombre')
-                    ->searchable(['nombre']),
+                // Select::make('tipo_id')
+                //     ->label('Tipo de Resguardo')
+                //     ->required()
+                //     ->relationship('tipo', 'nombre')
+                //     ->searchable(['nombre']),
+                Hidden::make('tipo_id')
+                    ->default(1),
                 Select::make('empleado_id')
                     ->label('Empleado')
                     ->required()
@@ -41,7 +43,7 @@ class ResguardoForm
                     ->relationship(
                         'activos',
                         'numero_inventario',
-                        modifyQueryUsing: fn($query) => $query->where('status', 'ALMACEN')
+                        modifyQueryUsing: fn($query) => $query->where('status_id', 1)
                     )
                     ->multiple()
                     ->searchable(['numero_inventario', 'numero_serie'])

@@ -44,14 +44,13 @@ class ActivosTable
                     ->label('Garantía')
                     ->dateTime('d/m/Y'),
 
-                TextColumn::make('status')
+                TextColumn::make('status.nombre')
                     ->label('Estado')
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
-                        'RESGUARDADO' => 'success',
-                        'En uso' => 'info',
-                        'Dañado' => 'danger',
-                        'Fuera de servicio' => 'warning',
+                         'almacen' => 'warning',
+                        'resguardado' => 'success',
+                        'baja' => 'danger',
                         default => 'gray',
                     }),
 

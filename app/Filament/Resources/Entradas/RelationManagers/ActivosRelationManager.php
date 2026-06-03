@@ -78,10 +78,10 @@ class ActivosRelationManager extends RelationManager
                             ->maxSize(5120)
                             ->columnSpanFull(),
 
-                        hidden::make('status_id')
-                            ->label('Estado')
+                        Select::make('status_id')
+                            ->label('Estadox')
                             ->relationship('status', 'nombre')
-                            ->default(1), // Asumiendo que '1' es el ID del estado "En Almacén"
+                            //->default(1), // Asumiendo que '1' es el ID del estado "En Almacén"
                     ])
                 //->columns(2),
             ])
@@ -113,14 +113,13 @@ class ActivosRelationManager extends RelationManager
                     ->label('Garantía')
                     ->dateTime('d/m/Y'),
 
-                TextColumn::make('status')
+                TextColumn::make('status.nombre')
                     ->label('Estado')
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
-                        'Disponible' => 'success',
-                        'En uso' => 'info',
-                        'Dañado' => 'danger',
-                        'Fuera de servicio' => 'warning',
+                        'almacen' => 'warning',
+                        'resguardado' => 'success',
+                        'baja' => 'danger',
                         default => 'gray',
                     }),
 
@@ -258,7 +257,7 @@ class ActivosRelationManager extends RelationManager
                             ->columnSpanFull(),
 
                         Select::make('status_id')
-                            ->label('Estado')
+                            ->label('Estadow')
                             ->relationship('status', 'nombre')
                             ->default(1), // Asumiendo que '1' es el ID del estado
                     ]),

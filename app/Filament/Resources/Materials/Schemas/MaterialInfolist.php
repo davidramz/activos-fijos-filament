@@ -11,7 +11,8 @@ class MaterialInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('tipo')
+                TextEntry::make('tipo.nombre')
+                    ->label('Tipo de material')
                     ->placeholder('-'),
                 TextEntry::make('partida.descripcion')
                     ->label('Partida')

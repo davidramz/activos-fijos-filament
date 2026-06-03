@@ -12,6 +12,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Hidden;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
+use Filament\Schemas\Components\Grid;
 
 class EntradaForm
 {
@@ -28,7 +29,52 @@ class EntradaForm
                     ])
                     ->relationship('proveedor', 'nombre')
                     ->searchable(['nombre', 'codigo', 'rfc'])
-                    ->columnSpan(2),
+                    ->columnSpan(2)
+                    ->createOptionForm([
+                        Grid::make(2)
+                            ->schema([
+                                TextInput::make('nombre')
+                            ->placeholder('Nombre del proveedor')
+                            ->required()
+                            ->afterStateUpdated(function ($state, $set) {
+                                $set('nombre', preg_replace('/\s+/', ' ', trim($state)));
+                            })
+                            ->unique(ignoreRecord: true)
+                            ->validationMessages([
+                                'unique' => 'Ya se encuentra registrado.',
+                            ]),
+                        TextInput::make('codigo')
+                            ->placeholder('Código del proveedor')
+                            ->required()
+                            ->afterStateUpdated(function ($state, $set) {
+                                $set('codigo', preg_replace('/\s+/', ' ', trim($state)));
+                            })
+                            ->unique(ignoreRecord: true)
+                            ->validationMessages([
+                                'unique' => 'Ya se encuentra registrado.',
+                            ]),
+                        TextInput::make('rfc')
+                            ->placeholder('RFC del proveedor')
+                            ->required()
+                            ->afterStateUpdated(function ($state, $set) {
+                                $set('rfc', preg_replace('/\s+/', ' ', trim($state)));
+                            })
+                            ->unique(ignoreRecord: true)
+                            ->validationMessages([
+                                'unique' => 'Ya se encuentra registrado.',
+                            ])
+                            ->maxLength(13),
+                        TextInput::make('calle'),
+                        TextInput::make('colonia'),
+                        TextInput::make('cp'),
+                        TextInput::make('ciudad'),
+                        TextInput::make('estado'),
+                        TextInput::make('telefono')
+                            ->tel()
+                            ->maxLength(10),
+                        TextInput::make('giro'),
+                            ])
+                    ]),
 
                 TextInput::make('folio')
                     ->required()
@@ -115,7 +161,7 @@ class EntradaForm
                         Select::make('status_id')
                             ->label('Estado')
                             ->relationship('status', 'nombre')
-                            ->default('1') // Asumiendo que '1' es el ID del estado "En Almacén"
+                            ->default(1) // Asumiendo que '1' es el ID del estado "En Almacén"
                             ->hidden()
                     ])
                     ->columns(2)

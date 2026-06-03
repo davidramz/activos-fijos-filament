@@ -12,7 +12,7 @@ class Activo extends Model
         'material_id', 'entrada_id','status_id', 'detalles',
         'imagenes',
         'costo', 'numero_inventario', 'numero_serie',
-        'garantia', 'status', 'empleado_actual_id',
+        'garantia', 'empleado_actual_id',
     ];
 
     protected $casts = [
@@ -49,6 +49,6 @@ class Activo extends Model
     }
     public function status()
     {
-        return $this->belongsTo(ActivoStatus::class, 'status');
+        return $this->belongsTo(ActivoStatus::class, 'status_id');
     }
 }
