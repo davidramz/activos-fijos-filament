@@ -52,12 +52,11 @@ class ResguardoInfolist
                             ])
                             ->columns(4),
                     ]),
-                Section::make('Observaciones')
-                    ->collapsed()
+                Section::make('')
+                    ->columnSpanFull()
                     ->schema([
                         TextEntry::make('observaciones')
                             ->label('')
-                            ->prose(),
                     ]),                    
             ]);
     }

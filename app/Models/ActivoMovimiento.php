@@ -9,8 +9,14 @@ class ActivoMovimiento extends Model
     protected $table = 'activo_movimientos';
 
     protected $fillable = [
-        'activo_id', 'empleado_id', 'user_id',
-        'tipo', 'observaciones','activo_status_id','movimiento_tipo_id'
+        'activo_id', 
+        'user_id', 
+        'tipo_id', 
+        'empleado_origen_id',
+        'empleado_destino_id', 
+        'status_antes_id',
+        'status_despues_id',
+        'notas',
     ];
 
     public function activo()

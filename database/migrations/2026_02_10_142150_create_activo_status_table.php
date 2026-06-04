@@ -17,6 +17,12 @@ return new class extends Migration
             $table->boolean('disponible')->default(true);
             $table->timestamps();
         });
+        
+        DB::table('activo_status')->insert([
+            ['nombre' => 'almacen', 'disponible' => true],
+            ['nombre' => 'resguardado', 'disponible' => true],
+            ['nombre' => 'baja', 'disponible' => true],
+        ]);
     }
 
     /**

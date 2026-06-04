@@ -17,6 +17,13 @@ return new class extends Migration
             $table->boolean('disponible')->default(true);
             $table->timestamps();
         });
+
+        DB::table('resguardo_tipos')->insert([
+            ['nombre' => 'resguardo de activos', 'disponible' => true],
+            ['nombre' => 'devolución por resguardo', 'disponible' => true],
+            ['nombre' => 'resguardo entre empleados', 'disponible' => true],
+            
+        ]);
     }
 
     /**

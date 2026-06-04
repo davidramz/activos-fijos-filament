@@ -17,8 +17,16 @@ return new class extends Migration
             $table->boolean('disponible')->default(true);
             $table->timestamps();
         });
-    }
 
+         DB::table('movimiento_tipos')->insert([
+            ['nombre' => 'creado', 'disponible' => true],
+            ['nombre' => 'asignado', 'disponible' => true],
+            ['nombre' => 'transferido', 'disponible' => true],
+            ['nombre' => 'devolucion', 'disponible' => true],
+            ['nombre' => 'baja', 'disponible' => true],
+        ]);
+    }
+   
     /**
      * Reverse the migrations.
      */
