@@ -24,7 +24,7 @@ class ResguardoResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArchiveBox;
 
     protected static ?string $recordTitleAttribute = 'folio_formateado';
-    protected static ?string $pluralModelLabel = 'Resguardos de Activos';
+    protected static ?string $pluralModelLabel = 'Resguardos';
     protected static ?string $singular = 'Resguardo';
     protected static string | UnitEnum | null $navigationGroup = 'Movimientos';
     protected static ?int $navigationSort = 1;
