@@ -17,6 +17,11 @@ return new class extends Migration
             $table->boolean('disponible')->default(true);
             $table->timestamps();
         });
+
+        DB::table('material_tipos')->insert([
+            ['nombre' => 'Activo Fijo', 'disponible' => true],
+            ['nombre' => 'Consumible', 'disponible' => true],
+        ]);
     }
 
     /**

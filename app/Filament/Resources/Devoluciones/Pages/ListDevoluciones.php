@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Devoluciones\Pages;
 use App\Filament\Resources\Devoluciones\DevolucionesResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Database\Eloquent\Builder;
 
 class ListDevoluciones extends ListRecords
 {
@@ -16,5 +17,10 @@ class ListDevoluciones extends ListRecords
             CreateAction::make('create')
                 ->label('Crear Devolución')
         ];
+    }
+
+    protected function getTableQuery(): Builder
+    {
+        return parent::getTableQuery()->where('tipo_id', 2);
     }
 }

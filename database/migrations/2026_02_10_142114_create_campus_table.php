@@ -16,6 +16,10 @@ return new class extends Migration
             $table->string('nombre')->unique();
             $table->timestamps();
         });
+        DB::table('campus')->insert([
+            ['nombre' => 'Loma Bonita'],
+            ['nombre' => 'Tuxtepec']
+        ]);
     }
 
     /**

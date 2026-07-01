@@ -17,4 +17,7 @@ class Proveedor extends Model
     {
         return $this->hasMany(Entrada::class);
     }
+    public function getNombreAttribute($value){
+        return ucwords(strtolower($value));
+    }
 }

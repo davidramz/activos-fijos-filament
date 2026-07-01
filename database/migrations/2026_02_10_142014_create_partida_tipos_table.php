@@ -17,6 +17,11 @@ return new class extends Migration
             $table->boolean('disponible')->default(true);
             $table->timestamps();
         });
+
+        DB::table('partida_tipos')->insert([
+            ['nombre' => 'interno', 'disponible' => true],
+            ['nombre' => 'patrimonio', 'disponible' => true],
+        ]);
     }
 
     /**

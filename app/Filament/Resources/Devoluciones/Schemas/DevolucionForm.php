@@ -17,13 +17,17 @@ class DevolucionForm
             ->columns(2)
             ->components([
                 Hidden::make('tipo_id')
-                    ->default(1),
+                    ->default(2),
                 Select::make('empleado_id')
                     ->label('Empleado')
                     ->relationship('empleado', 'nombre')
                     ->searchable(['nombre', 'numero'])
                     ->required()
-                    ->columnSpan(1),
+                    ->columnSpan(1)
+                    ->reactive()
+                    ->afterStateUpdated(function ($livewire) {
+                        $livewire->validateOnly('empleado_id');
+                    }),
                 Hidden::make('user_id')
                     ->default(fn() => auth()->id()),
                 Textarea::make('observaciones')
@@ -34,16 +38,23 @@ class DevolucionForm
                     ->label('Activos a Devolver')
                     ->relationship('activos', 'numero_inventario')
                     ->multiple()
-                    ->getSearchResultsUsing(function(string $search): array {
-                        return \App\Models\Activo::query()
-                            ->where('status_id', 2)// Solo activos asignados
-                            ->with('material')
-                            ->where(function($q) use ($search) {
-                                $q->where('numero_inventario', 'like', "%{$search}%")
-                                    ->orWhere('numero_serie', 'like', "%{$search}%")
-                                    ->orWhereHas('material', fn($q) => $q->where('nombre', 'like', "%{$search}%"));
-                            })
-                            ->limit(20)
+                    ->getSearchResultsUsing(function(string $search, $state): array {
+                        $query = \App\Models\Activo::query()
+                            ->where('status_id', 2)
+                            ->with('material');
+
+                        // Filtrar por empleado seleccionado si existe
+                        if ($state && isset($state['empleado_id'])) {
+                            $query->where('empleado_actual_id', $state['empleado_id']);
+                        }
+
+                        $query->where(function($q) use ($search) {
+                            $q->where('numero_inventario', 'like', "%{$search}%")
+                                ->orWhere('numero_serie', 'like', "%{$search}%")
+                                ->orWhereHas('material', fn($q) => $q->where('nombre', 'like', "%{$search}%"));
+                        });
+
+                        return $query->limit(20)
                             ->get()
                             ->mapWithKeys(fn($record) => [
                                 $record->id => "{$record->numero_inventario} - {$record->material?->nombre} ({$record->numero_serie})"

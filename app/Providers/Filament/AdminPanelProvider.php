@@ -38,7 +38,10 @@ class AdminPanelProvider extends PanelProvider
                 //'primary' => Color::Emerald,
                 'primary' => '#539b7a',
             ])
-            ->font('Roboto Mono', provider: GoogleFontProvider::class)
+            //->font('Poppins')
+            //->font('Roboto Mono', provider: GoogleFontProvider::class)
+            ->font('Azeret Mono', provider: GoogleFontProvider::class)
+            //->font('Roboto', provider: GoogleFontProvider::class)
             ->maxContentWidth(Width::Full)
             ->subNavigationPosition(SubNavigationPosition::End)
             ->sidebarCollapsibleOnDesktop()

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('codigo')->unique();
             $table->foreignId('tipo_id')->constrained('partida_tipos');
             $table->string('nombre');
-            $table->string('detalle')->nullable();
+            $table->text('detalle')->nullable();
             $table->timestamps();
         });
     }

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('giro')->nullable();
             $table->timestamps();
 
-            $table->unique(['rfc'], 'proveedores_rfc_unique');
+            //$table->unique(['rfc'], 'proveedores_rfc_unique');
         });
     }
 
