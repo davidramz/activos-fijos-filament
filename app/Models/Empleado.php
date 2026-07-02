@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+//use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Empleado extends Model
@@ -9,8 +9,11 @@ class Empleado extends Model
     protected $table = 'empleados';
 
     protected $fillable = [
-        'area_id', 'puesto_id', 'campus_id',
-        'numero', 'nombre',
+        'area_id', 
+        'puesto_id', 
+        'campus_id',
+        'numero', 
+        'nombre',
     ];
 
     public function area()
@@ -36,5 +39,10 @@ class Empleado extends Model
     public function movimientos()
     {
         return $this->hasMany(ActivoMovimiento::class);
+    }
+    
+    //Accesor
+    public function getNombreAttribute($value){
+        return ucwords(strtolower($value));
     }
 }

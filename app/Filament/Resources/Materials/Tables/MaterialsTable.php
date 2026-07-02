@@ -27,7 +27,7 @@ class MaterialsTable
                     ->searchable(),
                 TextColumn::make('modelo')
                     ->searchable(),
-                TextColumn::make('tipo')
+                TextColumn::make('tipo.nombre')
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -42,8 +42,8 @@ class MaterialsTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
+                // ViewAction::make(),
+                // EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

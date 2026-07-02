@@ -14,4 +14,8 @@ class Unidad extends Model
     {
         return $this->hasMany(Material::class);
     }
+    //Accesor
+    public function getNombreAttribute($value){
+        return ucwords(strtolower($value));
+    }
 }

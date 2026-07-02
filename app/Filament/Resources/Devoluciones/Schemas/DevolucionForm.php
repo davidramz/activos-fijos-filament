@@ -38,14 +38,17 @@ class DevolucionForm
                     ->label('Activos a Devolver')
                     ->relationship('activos', 'numero_inventario')
                     ->multiple()
-                    ->getSearchResultsUsing(function(string $search, $state): array {
+                    ->reactive()
+                    ->disabled(fn (callable $get) => !$get('empleado_id'))
+                    ->getSearchResultsUsing(function(string $search, $state, callable $get): array {
                         $query = \App\Models\Activo::query()
                             ->where('status_id', 2)
                             ->with('material');
 
-                        // Filtrar por empleado seleccionado si existe
-                        if ($state && isset($state['empleado_id'])) {
-                            $query->where('empleado_actual_id', $state['empleado_id']);
+                        $empleadoId = $get('empleado_id') ?? ($state['empleado_id'] ?? null);
+
+                        if ($empleadoId) {
+                            $query->where('empleado_actual_id', $empleadoId);
                         }
 
                         $query->where(function($q) use ($search) {
@@ -54,7 +57,7 @@ class DevolucionForm
                                 ->orWhereHas('material', fn($q) => $q->where('nombre', 'like', "%{$search}%"));
                         });
 
-                        return $query->limit(20)
+                        return $query->limit(50)
                             ->get()
                             ->mapWithKeys(fn($record) => [
                                 $record->id => "{$record->numero_inventario} - {$record->material?->nombre} ({$record->numero_serie})"

@@ -20,4 +20,16 @@ class Proveedor extends Model
     public function getNombreAttribute($value){
         return ucwords(strtolower($value));
     }
+    public function getCalleAttribute($value){
+        return ucfirst(strtolower($value));
+    }
+    public function getColoniaAttribute($value){
+        return ucfirst(strtolower($value));
+    }
+    public function getCiudadAttribute($value){
+        return ucfirst(strtolower($value));
+    }
+    public function getGiroAttribute($value){
+        return ucfirst(strtolower($value));
+    }
 }

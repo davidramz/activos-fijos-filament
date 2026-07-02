@@ -46,6 +46,10 @@ class ResguardoInfolist
                                     ->label('Número de Inventario'),
                                 TextEntry::make('numero_serie')
                                     ->label('Número de Serie'),
+                                TextEntry::make('material.marca')
+                                    ->label('Marca'),
+                                TextEntry::make('material.modelo')
+                                    ->label('Modelo'),
                                 TextEntry::make('costo')
                                     ->label('Costo')
                                     ->money('MXN'),

@@ -24,7 +24,8 @@ class ActivosTable
 
                 TextColumn::make('material.nombre')
                     ->label('Material')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
 
                 TextColumn::make('material.marca')
                     ->label('Marca'),
@@ -48,9 +49,9 @@ class ActivosTable
                     ->label('Estado')
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
-                         'almacen' => 'warning',
-                        'resguardado' => 'success',
-                        'baja' => 'danger',
+                         'Almacen' => 'info',
+                        'Resguardo' => 'success',
+                        'Baja' => 'danger',
                         default => 'gray',
                     }),
 
@@ -88,8 +89,8 @@ class ActivosTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
+                // ViewAction::make(),
+                // EditAction::make(),
             ]);
     }
 }

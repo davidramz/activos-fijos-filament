@@ -9,10 +9,16 @@ class Activo extends Model
     protected $table = 'activos';
 
     protected $fillable = [
-        'material_id', 'entrada_id','status_id', 'detalles',
+        'material_id', 
+        'entrada_id',
+        'status_id', 
+        'detalles',
         'imagenes',
-        'costo', 'numero_inventario', 'numero_serie',
-        'garantia', 'empleado_actual_id',
+        'costo', 
+        'numero_inventario', 
+        'numero_serie',
+        'garantia', 
+        'empleado_actual_id',
     ];
 
     protected $casts = [

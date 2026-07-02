@@ -25,4 +25,9 @@ class Area extends Model
             $area->nombre = preg_replace('/\s+/', ' ', trim($area->nombre));
         });
     }
+
+    //Accesor
+    public function getNombreAttribute($value){
+        return ucwords(strtolower($value));
+    }
 }

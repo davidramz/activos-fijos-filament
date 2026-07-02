@@ -31,4 +31,12 @@ class Material extends Model
     {
         return $this->belongsTo(MaterialTipo::class);
     }
+    //Accesor
+    public function getNombreAttribute($value){
+        return ucwords(strtolower($value));
+    }
+    //Accesor
+    public function getMarcaAttribute($value){
+        return ucwords(strtolower($value));
+    }
 }

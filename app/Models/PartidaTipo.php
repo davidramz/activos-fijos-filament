@@ -13,4 +13,8 @@ class PartidaTipo extends Model
     {
         return $this->hasMany(Partida::class);
     }
+     //Accesor
+    public function getNombreAttribute($value){
+        return ucwords(strtolower($value));
+    }
 }
