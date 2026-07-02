@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Devoluciones\Schemas;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Hidden;
 use Filament\Schemas\Schema;
@@ -25,8 +26,9 @@ class DevolucionForm
                     ->required()
                     ->columnSpan(1)
                     ->reactive()
-                    ->afterStateUpdated(function ($livewire) {
-                        $livewire->validateOnly('empleado_id');
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        $set('activos', []);
+                        $set('activos_search', '');
                     }),
                 Hidden::make('user_id')
                     ->default(fn() => auth()->id()),
@@ -34,44 +36,55 @@ class DevolucionForm
                     ->label('Observaciones')
                     ->placeholder('Observaciones adicionales')
                     ->columnSpanFull(),
-                Select::make('activos')
+                TextInput::make('activos_search')
+                    ->label('Buscar Activos')
+                    ->placeholder('Número inventario, serie o nombre del material')
+                    ->reactive()
+                    ->columnSpanFull(),
+
+                CheckboxList::make('activos')
                     ->label('Activos a Devolver')
-                    ->relationship('activos', 'numero_inventario')
-                    ->multiple()
                     ->reactive()
                     ->disabled(fn (callable $get) => !$get('empleado_id'))
-                    ->getSearchResultsUsing(function(string $search, $state, callable $get): array {
+                    ->columns(2)
+                    ->options(function (callable $get) {
+                        $search = $get('activos_search') ?? '';
+
                         $query = \App\Models\Activo::query()
                             ->where('status_id', 2)
                             ->with('material');
 
-                        $empleadoId = $get('empleado_id') ?? ($state['empleado_id'] ?? null);
-
+                        $empleadoId = $get('empleado_id');
                         if ($empleadoId) {
                             $query->where('empleado_actual_id', $empleadoId);
                         }
 
-                        $query->where(function($q) use ($search) {
-                            $q->where('numero_inventario', 'like', "%{$search}%")
-                                ->orWhere('numero_serie', 'like', "%{$search}%")
-                                ->orWhereHas('material', fn($q) => $q->where('nombre', 'like', "%{$search}%"));
-                        });
-
-                        return $query->limit(50)
+                        if ($search) {
+                            $query->where(function($q) use ($search) {
+                                $q->where('numero_inventario', 'like', "%{$search}%")
+                                  ->orWhere('numero_serie', 'like', "%{$search}%")
+                                  ->orWhereHas('material', fn($q) => $q->where('nombre', 'like', "%{$search}%"));
+                            });
+                            return $query->limit(500)
                             ->get()
                             ->mapWithKeys(fn($record) => [
                                 $record->id => "{$record->numero_inventario} - {$record->material?->nombre} ({$record->numero_serie})"
                             ])
                             ->toArray();
+                        }else{
+                            return $query->where('empleado_actual_id', $empleadoId)
+                            ->limit(500)
+                            ->get()
+                            ->mapWithKeys(fn($record) => [
+                                $record->id => "{$record->numero_inventario} - {$record->material?->nombre} ({$record->numero_serie})"
+                            ])
+                            ->toArray();
+                        }
+
+                        
                     })
-                    ->getOptionLabelUsing(function($value) {
-                        $record = \App\Models\Activo::with('material')->find($value);
-                        return $record ? "{$record->numero_inventario} - {$record->material?->nombre} ({$record->numero_serie})" : $value;
-                    })
-                    ->required()
                     ->columnSpanFull()
-                    ->helperText('Busca por número de inventario, serie o nombre del material')
-                    ->optionsLimit(20),
+                    ->helperText('Activos asignados al empleado. Selecciona uno o varios con las casillas.'),
             ]);
     }
 }
