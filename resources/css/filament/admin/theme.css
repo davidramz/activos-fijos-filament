@@ -1,4 +1,17 @@
-@import '../../../../vendor/filament/filament/resources/css/theme.css';
+@import "../../../../vendor/filament/filament/resources/css/theme.css";
 
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
+
+.fi-size-sm {
+    font-size: 0.775rem;
+}
+.fi-size-md {
+    font-size: 0.775rem;
+}
+.fi-sidebar-item-label {
+    font-size: 0.775rem;
+}
+.fi-header-heading {
+    font-size: 0.975rem;
+}

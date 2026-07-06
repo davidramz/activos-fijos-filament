@@ -15,14 +15,14 @@ class MaterialsTable
     {
         return $table
             ->columns([
+                TextColumn::make('codigo')
+                    ->searchable(),
                 TextColumn::make('nombre')
                     ->searchable(),
                 TextColumn::make('partida.nombre')
                     ->sortable(),
                 TextColumn::make('unidad.nombre')
                     ->sortable(),
-                TextColumn::make('codigo')
-                    ->searchable(),
                 TextColumn::make('marca')
                     ->searchable(),
                 TextColumn::make('modelo')
