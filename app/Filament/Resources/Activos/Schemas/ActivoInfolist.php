@@ -46,9 +46,13 @@ class ActivoInfolist
                     ->label('Estado')
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
-                        'Almacen' => 'warning',
-                        'Resguardo' => 'success',
+                        'Almacen' => 'info',
+                        'Resguardado' => 'success',
                         'Baja' => 'danger',
+                        'Dev. proveedor' => 'orange',
+                        'Suceptible' => 'warning',
+                        'Cancelado' => 'danger',
+                        'Reparacion' => 'secondary',
                         default => 'gray',
                     }),
 

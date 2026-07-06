@@ -40,49 +40,38 @@ class DevolucionForm
                     ->label('Buscar Activos')
                     ->placeholder('Número inventario, serie o nombre del material')
                     ->reactive()
+                    ->disabled(fn (callable $get) => !$get('empleado_id'))
                     ->columnSpanFull(),
 
                 CheckboxList::make('activos')
                     ->label('Activos a Devolver')
-                    ->reactive()
-                    ->disabled(fn (callable $get) => !$get('empleado_id'))
-                    ->columns(2)
-                    ->options(function (callable $get) {
+                    ->relationship('activos', 'numero_inventario', function ($query, callable $get) {
                         $search = $get('activos_search') ?? '';
-
-                        $query = \App\Models\Activo::query()
-                            ->where('status_id', 2)
+                        $query->where('status_id', 2)
                             ->with('material');
 
                         $empleadoId = $get('empleado_id');
-                        if ($empleadoId) {
-                            $query->where('empleado_actual_id', $empleadoId);
+                        if (!$empleadoId) {
+                            $query->whereNull('empleado_actual_id');
+                        }else {
+                            $query->where('empleado_actual_id', $empleadoId);                            
                         }
 
                         if ($search) {
-                            $query->where(function($q) use ($search) {
+                            $query->where(function ($q) use ($search) {
                                 $q->where('numero_inventario', 'like', "%{$search}%")
                                   ->orWhere('numero_serie', 'like', "%{$search}%")
-                                  ->orWhereHas('material', fn($q) => $q->where('nombre', 'like', "%{$search}%"));
+                                  ->orWhereHas('material', fn ($q) => $q->where('nombre', 'like', "%{$search}%"));
                             });
-                            return $query->limit(500)
-                            ->get()
-                            ->mapWithKeys(fn($record) => [
-                                $record->id => "{$record->numero_inventario} - {$record->material?->nombre} ({$record->numero_serie})"
-                            ])
-                            ->toArray();
-                        }else{
-                            return $query->where('empleado_actual_id', $empleadoId)
-                            ->limit(500)
-                            ->get()
-                            ->mapWithKeys(fn($record) => [
-                                $record->id => "{$record->numero_inventario} - {$record->material?->nombre} ({$record->numero_serie})"
-                            ])
-                            ->toArray();
                         }
 
-                        
+                        return $query;
                     })
+                    ->getOptionLabelFromRecordUsing(function ($record) {
+                        return "{$record->numero_inventario} - {$record->material?->nombre} ({$record->numero_serie})";
+                    })
+                    ->reactive()
+                    ->disabled(fn (callable $get) => !$get('empleado_id'))
                     ->columnSpanFull()
                     ->helperText('Activos asignados al empleado. Selecciona uno o varios con las casillas.'),
             ]);

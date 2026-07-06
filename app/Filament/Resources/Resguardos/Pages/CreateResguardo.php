@@ -23,7 +23,7 @@ class CreateResguardo extends CreateRecord
         );
 
         foreach ($activos as $activo) {
-            // Actualizar el status y empleado_id del activo
+            // Actualizar el status_id = 2 (Resguardado) y empleado_id del activo
             $activo->update([
                 'status_id' => 2,
                 'empleado_actual_id' => $resguardo->empleado_id,
@@ -33,9 +33,13 @@ class CreateResguardo extends CreateRecord
             /**
              * table:activo_status
              * status_antes_id,status_despues_id: 
-             * 1 = almacen, 
+             * 1 = Baja, 
              * 2 = resguardado, 
-             * 3 = Baja
+             * 3 = almacen
+             * 4 = Dev. proveedor
+             * 5 = Suceptible
+             * 6 = Cancelado
+             * 7 = Reparacion
              * -------------------------------------
              * table: movimiento_tipos 
              * tipo_id:
@@ -50,7 +54,8 @@ class CreateResguardo extends CreateRecord
                 'user_id' => auth()->id(),
                 'empleado_origen_id' => NULL,
                 'empleado_destino_id' => $resguardo->empleado_id,
-                'status_antes_id' => 1,
+                // status_antes_id = 3 (Almacen), status_despues_id = 2 (Resguardado)
+                'status_antes_id' => 3,
                 'status_despues_id' => 2,
                 'tipo_id' => $movimientoTipo->id,
                 'notas' => $resguardo->observaciones,

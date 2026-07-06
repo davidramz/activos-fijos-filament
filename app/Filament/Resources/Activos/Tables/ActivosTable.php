@@ -11,6 +11,8 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Filters\SelectFilter;
+
 class ActivosTable
 {
     public static function configure(Table $table): Table
@@ -18,9 +20,23 @@ class ActivosTable
         return $table
             ->columns([
                 TextColumn::make('numero_inventario')
-                    ->label('Número Inventario')
+                    ->label('Inventario')
                     ->searchable()
                     ->sortable(),
+
+                TextColumn::make('status.nombre')
+                ->label('Estado')
+                ->badge()
+                ->color(fn(string $state): string => match ($state) {
+                    'Almacen' => 'almacen',
+                    'Resguardado' => 'success',
+                    'Baja' => 'baja',
+                    'Dev. proveedor' => 'dev_proveedor',
+                    'Suceptible' => 'suceptible',
+                    'Cancelado' => 'danger',
+                    'Reparacion' => 'warning',
+                    default => 'gray',
+                }),
 
                 TextColumn::make('material.nombre')
                     ->label('Material')
@@ -34,7 +50,7 @@ class ActivosTable
                     ->label('Modelo'),
 
                 TextColumn::make('numero_serie')
-                    ->label('Número de Serie')
+                    ->label('Serie')
                     ->searchable(),
 
                 TextColumn::make('costo')
@@ -45,15 +61,7 @@ class ActivosTable
                     ->label('Garantía')
                     ->dateTime('d/m/Y'),
 
-                TextColumn::make('status.nombre')
-                    ->label('Estado')
-                    ->badge()
-                    ->color(fn(string $state): string => match ($state) {
-                         'Almacen' => 'info',
-                        'Resguardo' => 'success',
-                        'Baja' => 'danger',
-                        default => 'gray',
-                    }),
+                
 
                 TextColumn::make('empleadoActual.nombre')
                     ->label('Asignado a')
@@ -85,8 +93,20 @@ class ActivosTable
                 //     ->label('Imágenes')
                 //     ->circular(),
             ])
+            ->defaultSort('id', 'desc') // Sets default order
             ->filters([
-                //
+                SelectFilter::make('status.nombre')
+                    ->label('Estado')
+                    ->options([
+                        '1' => 'Baja',
+                        '2' => 'Resguardado',
+                        '3' => 'Almacen',
+                        '4' => 'Dev. proveedor',
+                        '5' => 'Suceptible',
+                        '6' => 'Cancelado',
+                        '7' => 'Reparacion',
+                    ])
+                    ->attribute('status_id')
             ])
             ->recordActions([
                 // ViewAction::make(),

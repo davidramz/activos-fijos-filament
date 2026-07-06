@@ -18,15 +18,16 @@ class CreateDevolucion extends CreateRecord
 
         // Obtener o crear el tipo de movimiento "Resguardo"
         $movimientoTipo = MovimientoTipo::firstOrCreate(
-            ['nombre' => 'asignado'],
+            ['nombre' => 'devolucion'],
             ['disponible' => true]
         );
 
         foreach ($activos as $activo) {
             // Actualizar el status y empleado_id del activo
             $activo->update([
-                'status_id' => 2,
-                'empleado_actual_id' => $resguardo->empleado_id,
+                // status_id = 1 (Almacen), empleado_actual_id = NULL
+                'status_id' => 1,
+                'empleado_actual_id' => NULL,
             ]);
 
             // Registrar el movimiento
@@ -48,10 +49,11 @@ class CreateDevolucion extends CreateRecord
             ActivoMovimiento::create([
                 'activo_id' => $activo->id,
                 'user_id' => auth()->id(),
-                'empleado_origen_id' => NULL,
-                'empleado_destino_id' => $resguardo->empleado_id,
-                'status_antes_id' => 1,
-                'status_despues_id' => 2,
+                'empleado_origen_id' => $resguardo->empleado_id,
+                'empleado_destino_id' => NULL,
+                // status_antes_id = 2 (Resguardado), status_despues_id = 1 (Almacen)
+                'status_antes_id' => 2,
+                'status_despues_id' => 1,
                 'tipo_id' => $movimientoTipo->id,
                 'notas' => $resguardo->observaciones,
             ]);

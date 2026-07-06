@@ -34,7 +34,7 @@ class DevolucionInfolist
                             ->label('Fecha de Creación')
                             ->dateTime(),
                     ]),
-                Section::make('Activos Resguardados')                
+                Section::make('Activos Devueltos')                
                     ->columnSpanFull()
                     ->schema([
                         RepeatableEntry::make('activos')

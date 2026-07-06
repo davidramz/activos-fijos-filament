@@ -16,7 +16,6 @@ class Resguardo extends Model
         'user_id',
         'observaciones',
         'tipo_id',
-        'activos'
     ];
 
     /*

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Resguardos\Tables;
 
+use App\Models\Resguardo;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -14,6 +15,7 @@ class ResguardosTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->query(Resguardo::query()->where('tipo_id', 1))
             ->columns([
                 TextColumn::make('folio_formateado')
                     ->label('Folio')
@@ -23,9 +25,9 @@ class ResguardosTable
                     ->label('Empleado')
                     ->searchable(['nombre', 'numero'])
                     ->sortable(),
-                TextColumn::make('empleado.numero')
-                    ->label('No. Empleado')
-                    ->sortable(),
+                // TextColumn::make('empleado.numero')
+                //     ->label('Número')
+                //     ->sortable(),
                 TextColumn::make('tipo.nombre')
                     ->label('Tipo')
                     ->searchable()

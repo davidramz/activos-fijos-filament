@@ -8,12 +8,14 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use App\Models\Resguardo;
 
 class DevolucionesTable
 {
     public static function configure(Table $table): Table
     {
         return $table
+            ->query(Resguardo::query()->where('tipo_id', 2))
             ->columns([
                 TextColumn::make('folio_formateado')
                     ->label('Folio')

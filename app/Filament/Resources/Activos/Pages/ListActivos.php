@@ -12,7 +12,7 @@ class ListActivos extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            // Sin botón de crear, como se solicitó
+            // Sin botón de crear
         ];
     }
 }

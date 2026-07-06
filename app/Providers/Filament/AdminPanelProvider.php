@@ -37,6 +37,15 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 //'primary' => Color::Emerald,
                 'primary' => '#539b7a',
+                'danger' => Color::Rose,
+                'gray' => Color::Gray,
+                'info' => Color::Blue,
+                'success' => Color::Emerald,
+                'warning' => Color::Orange,
+                'suceptible' => Color::Amber,
+                'baja' => Color::Red,
+                'dev_proveedor' => Color::Sky,
+                'almacen' => Color::Lime,
             ])
             //->font('Poppins')
             //->font('Roboto Mono', provider: GoogleFontProvider::class)
@@ -45,7 +54,7 @@ class AdminPanelProvider extends PanelProvider
             ->maxContentWidth(Width::Full)
             ->subNavigationPosition(SubNavigationPosition::End)
             ->sidebarCollapsibleOnDesktop()
-            ->sidebarWidth('13rem')
+            ->sidebarWidth('14rem')
             ->brandLogo(asset('images/logo.png'))
             ->brandLogoHeight('3rem')
             ->brandName('Activos Fijos')
