@@ -11,6 +11,11 @@ class CreateResguardo extends CreateRecord
 {
     protected static string $resource = ResguardoResource::class;
 
+    public function canCreateAnother(): bool
+    {
+        return false;
+    }
+
     protected function afterCreate(): void
     {
         $resguardo = $this->record;

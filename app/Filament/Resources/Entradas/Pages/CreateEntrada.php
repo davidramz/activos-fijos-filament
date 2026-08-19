@@ -15,4 +15,8 @@ class CreateEntrada extends CreateRecord
         $data['user_id'] = Auth::id();
         return $data;
     }
+    public function canCreateAnother(): bool
+    {
+        return false;
+    }
 }

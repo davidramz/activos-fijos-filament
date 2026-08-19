@@ -11,6 +11,11 @@ class CreateDevolucion extends CreateRecord
 {
     protected static string $resource = DevolucionesResource::class;
 
+    public function canCreateAnother(): bool
+    {
+        return false;
+    }
+
     protected function afterCreate(): void
     {
         $resguardo = $this->record;

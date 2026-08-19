@@ -183,17 +183,20 @@ class ActivosRelationManager extends RelationManager
                                         ->dateTime('d/m/Y')
                                         ->state($record->garantia),
 
-                                    TextEntry::make('status')
+                                    TextEntry::make('status.nombre')
                                         ->label('Estado')
                                         ->badge()
                                         ->color(fn(string $state): string => match ($state) {
-                                            'Disponible' => 'success',
-                                            'En uso' => 'info',
-                                            'Dañado' => 'danger',
-                                            'Fuera de servicio' => 'warning',
+                                            'Almacen' => 'almacen',
+                                            'Resguardado' => 'success',
+                                            'Baja' => 'baja',
+                                            'Dev. proveedor' => 'dev_proveedor',
+                                            'Suceptible' => 'suceptible',
+                                            'Cancelado' => 'danger',
+                                            'Reparacion' => 'warning',
                                             default => 'gray',
                                         })
-                                        ->state($record->status),
+                                        ->state($record->status->nombre),
 
                                     TextEntry::make('empleadoActual.nombre')
                                         ->label('Asignado a')

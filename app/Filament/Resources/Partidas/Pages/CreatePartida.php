@@ -8,4 +8,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreatePartida extends CreateRecord
 {
     protected static string $resource = PartidaResource::class;
+
+    public function canCreateAnother(): bool
+    {
+        return false;
+    }
 }
