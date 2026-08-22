@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('puesto_id')->constrained('puestos');
             $table->foreignId('campus_id')->constrained('campus');
 
-            $table->varchar('numero');
+            $table->string('numero');
             $table->string('nombre');
 
             $table->unique(['numero', 'nombre'], 'empleados_numero_nombre_unique');

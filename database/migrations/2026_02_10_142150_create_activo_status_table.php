@@ -22,6 +22,10 @@ return new class extends Migration
             ['nombre' => 'almacen', 'disponible' => true],
             ['nombre' => 'resguardado', 'disponible' => true],
             ['nombre' => 'baja', 'disponible' => true],
+            ['nombre' => 'Dev. proveedor', 'disponible' => true],
+            ['nombre' => 'SUCEPTIBLE', 'disponible' => true],
+            ['nombre' => 'CANCELADO', 'disponible' => true],
+            ['nombre' => 'REPARACION', 'disponible' => true],
         ]);
     }
 

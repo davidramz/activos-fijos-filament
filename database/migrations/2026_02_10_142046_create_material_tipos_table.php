@@ -21,6 +21,7 @@ return new class extends Migration
         DB::table('material_tipos')->insert([
             ['nombre' => 'Activo Fijo', 'disponible' => true],
             ['nombre' => 'Consumible', 'disponible' => true],
+            ['nombre' => 'Pendiente', 'disponible' => true],
         ]);
     }
 

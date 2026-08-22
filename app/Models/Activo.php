@@ -53,6 +53,13 @@ class Activo extends Model
             'resguardo_activo'
         )->withTimestamps();
     }
+    public function bajas()
+    {
+        return $this->belongsToMany(
+            Baja::class,
+            'baja_activo'
+        )->withTimestamps();
+    }
     public function status()
     {
         return $this->belongsTo(ActivoStatus::class, 'status_id');

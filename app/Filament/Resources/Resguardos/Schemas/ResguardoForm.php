@@ -32,6 +32,7 @@ class ResguardoForm
                 Select::make('activos')
                     ->label('Activos a Resguardar')
                     ->relationship('activos', 'numero_inventario')
+                    ->reorderable()
                     ->multiple()
                     ->getSearchResultsUsing(function(string $search): array {
                         return \App\Models\Activo::query()
