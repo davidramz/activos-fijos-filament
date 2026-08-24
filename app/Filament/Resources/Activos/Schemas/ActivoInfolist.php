@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Activos\Schemas;
 
+use App\Filament\Resources\Bajas\BajaResource;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
@@ -45,6 +46,17 @@ class ActivoInfolist
                 TextEntry::make('status.nombre')
                     ->label('Estado')
                     ->badge()
+                    ->url(function (Activo $record): ?string {
+                        if ((int) $record->status_id !== 3) {
+                            return null;
+                        }
+
+                        $baja = $record->bajas()->latest('bajas.created_at')->first();
+
+                        return $baja
+                            ? BajaResource::getUrl('view', ['record' => $baja])
+                            : null;
+                    })
                     ->color(fn(string $state): string => match ($state) {
                         'Almacen' => 'info',
                         'Resguardado' => 'success',

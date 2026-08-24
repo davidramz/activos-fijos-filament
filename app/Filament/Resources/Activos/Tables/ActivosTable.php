@@ -98,9 +98,9 @@ class ActivosTable
                 SelectFilter::make('status.nombre')
                     ->label('Estado')
                     ->options([
-                        '1' => 'Baja',
+                        '1' => 'Almacen',
                         '2' => 'Resguardado',
-                        '3' => 'Almacen',
+                        '3' => 'Baja',
                         '4' => 'Dev. proveedor',
                         '5' => 'Suceptible',
                         '6' => 'Cancelado',

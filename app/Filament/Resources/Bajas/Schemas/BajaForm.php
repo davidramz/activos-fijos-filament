@@ -35,7 +35,7 @@ class BajaForm
                     ->multiple()
                     ->getSearchResultsUsing(function(string $search): array {
                         return \App\Models\Activo::query()
-                            ->where('status_id', 3)
+                            ->where('status_id','!=', 3)
                             ->with('material')
                             ->where(function($q) use ($search) {
                                 $q->where('numero_inventario', 'like', "%{$search}%")
