@@ -54,7 +54,7 @@ class CreateDevolucion extends CreateRecord
             ActivoMovimiento::create([
                 'activo_id' => $activo->id,
                 'user_id' => auth()->id(),
-                'empleado_origen_id' => $resguardo->empleado_id,
+                'empleado_origen_id' => $resguardo->empleado_origen_id,
                 'empleado_destino_id' => NULL,
                 // status_antes_id = 2 (Resguardado), status_despues_id = 1 (Almacen)
                 'status_antes_id' => 2,

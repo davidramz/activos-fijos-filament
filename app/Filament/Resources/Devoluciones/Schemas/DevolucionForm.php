@@ -19,9 +19,9 @@ class DevolucionForm
             ->components([
                 Hidden::make('tipo_id')
                     ->default(2),
-                Select::make('empleado_id')
+                Select::make('empleado_origen_id')
                     ->label('Empleado')
-                    ->relationship('empleado', 'nombre')
+                    ->relationship('empleadoOrigen', 'nombre')
                     ->searchable(['nombre', 'numero'])
                     ->required()
                     ->columnSpan(1)
@@ -40,7 +40,7 @@ class DevolucionForm
                     ->label('Buscar Activos')
                     ->placeholder('Número inventario, serie o nombre del material')
                     ->reactive()
-                    ->disabled(fn (callable $get) => !$get('empleado_id'))
+                    ->disabled(fn (callable $get) => !$get('empleado_origen_id'))
                     ->columnSpanFull(),
 
                 CheckboxList::make('activos')
@@ -50,9 +50,9 @@ class DevolucionForm
                         $query->where('status_id', 2)
                             ->with('material');
 
-                        $empleadoId = $get('empleado_id');
+                        $empleadoId = $get('empleado_origen_id');
                         if (!$empleadoId) {
-                            $query->whereNull('empleado_actual_id');
+                            $query->where('empleado_actual_id', 'empty');
                         }else {
                             $query->where('empleado_actual_id', $empleadoId);                            
                         }
@@ -71,7 +71,7 @@ class DevolucionForm
                         return "{$record->numero_inventario} - {$record->material?->nombre} ({$record->numero_serie})";
                     })
                     ->reactive()
-                    ->disabled(fn (callable $get) => !$get('empleado_id'))
+                    ->disabled(fn (callable $get) => !$get('empleado_origen_id'))
                     ->columnSpanFull()
                     ->helperText('Activos asignados al empleado. Selecciona uno o varios con las casillas.'),
             ]);

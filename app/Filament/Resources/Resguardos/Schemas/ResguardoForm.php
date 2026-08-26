@@ -17,9 +17,9 @@ class ResguardoForm
             ->components([
                 Hidden::make('tipo_id')
                     ->default(1),
-                Select::make('empleado_id')
+                Select::make('empleado_origen_id')
                     ->label('Empleado')
-                    ->relationship('empleado', 'nombre')
+                    ->relationship('empleadoOrigen', 'nombre')
                     ->searchable(['nombre', 'numero'])
                     ->required()
                     ->columnSpan(1),
@@ -36,7 +36,7 @@ class ResguardoForm
                     ->multiple()
                     ->getSearchResultsUsing(function(string $search): array {
                         return \App\Models\Activo::query()
-                            ->where('status_id', 3)
+                            ->where('status_id', 1)
                             ->with('material')
                             ->where(function($q) use ($search) {
                                 $q->where('numero_inventario', 'like', "%{$search}%")

@@ -27,10 +27,10 @@ class Resguardo extends Model
     {
         return $this->belongsTo(ResguardoTipo::class);
     }   
-    public function empleado()
-    {
-        return $this->belongsTo(Empleado::class);
-    }
+    // public function empleado()
+    // {
+    //     return $this->belongsTo(Empleado::class);
+    // }
 
     public function user()
     {
@@ -43,6 +43,21 @@ class Resguardo extends Model
             Activo::class,
             'resguardo_activo'
         )->withTimestamps();
+    }
+    public function empleadoOrigen()
+    {
+        return $this->belongsTo(
+            Empleado::class,
+            'empleado_origen_id'
+        );
+    }
+
+    public function empleadoDestino()
+    {
+        return $this->belongsTo(
+            Empleado::class,
+            'empleado_destino_id'
+        );
     }
 
     /*

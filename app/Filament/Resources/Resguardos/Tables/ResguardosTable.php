@@ -21,7 +21,7 @@ class ResguardosTable
                     ->label('Folio')
                     ->searchable(['folio', 'anio'])
                     ->sortable(),
-                TextColumn::make('empleado.nombre')
+                TextColumn::make('empleadoOrigen.nombre')
                     ->label('Empleado')
                     ->searchable(['nombre', 'numero'])
                     ->sortable(),
@@ -32,10 +32,10 @@ class ResguardosTable
                     ->label('Tipo')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('activos_count')
-                    ->label('Cantidad de Activos')
-                    ->counts('activos')
-                    ->sortable(),
+                // TextColumn::make('activos_count')
+                //     ->label('Cantidad de Activos')
+                //     ->counts('activos')
+                //     ->sortable(),
                 TextColumn::make('created_at')
                     ->label('Fecha')
                     ->dateTime('d/m/Y H:i')

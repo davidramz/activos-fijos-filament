@@ -17,7 +17,12 @@ return new class extends Migration
             $table->unsignedInteger('folio')->unique(); // consecutivo visible
             $table->unsignedSmallInteger('anio'); // para reiniciar por año (opcional pero recomendado)
 
-            $table->foreignId('empleado_id')
+            $table->foreignId('empleado_origen_id')
+                ->nullable()
+                ->constrained('empleados')
+                ->cascadeOnDelete();
+            $table->foreignId('empleado_destino_id')
+                ->nullable()
                 ->constrained('empleados')
                 ->cascadeOnDelete();
 

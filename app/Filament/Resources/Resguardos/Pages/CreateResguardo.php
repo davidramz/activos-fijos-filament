@@ -31,7 +31,7 @@ class CreateResguardo extends CreateRecord
             // Actualizar el status_id = 2 (Resguardado) y empleado_id del activo
             $activo->update([
                 'status_id' => 2,
-                'empleado_actual_id' => $resguardo->empleado_id,
+                'empleado_actual_id' => $resguardo->empleado_origen_id,
             ]);
 
             // Registrar el movimiento
@@ -58,9 +58,9 @@ class CreateResguardo extends CreateRecord
                 'activo_id' => $activo->id,
                 'user_id' => auth()->id(),
                 'empleado_origen_id' => NULL,
-                'empleado_destino_id' => $resguardo->empleado_id,
-                // status_antes_id = 3 (Almacen), status_despues_id = 2 (Resguardado)
-                'status_antes_id' => 3,
+                'empleado_destino_id' => $resguardo->empleado_origen_id,
+                // status_antes_id = 1 (Almacen), status_despues_id = 2 (Resguardado)
+                'status_antes_id' => 1,
                 'status_despues_id' => 2,
                 'tipo_id' => $movimientoTipo->id,
                 'notas' => $resguardo->observaciones,

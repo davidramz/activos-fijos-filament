@@ -21,11 +21,11 @@ class DevolucionesTable
                     ->label('Folio')
                     ->searchable(['folio', 'anio'])
                     ->sortable(),
-                TextColumn::make('empleado.nombre')
+                TextColumn::make('empleadoOrigen.nombre')
                     ->label('Empleado')
                     ->searchable(['nombre', 'numero'])
                     ->sortable(),
-                TextColumn::make('empleado.numero')
+                TextColumn::make('empleadoOrigen.numero')
                     ->label('No. Empleado')
                     ->sortable(),
                 TextColumn::make('tipo.nombre')
@@ -33,7 +33,7 @@ class DevolucionesTable
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('activos_count')
-                    ->label('Cantidad de Activos')
+                    ->label('Activos')
                     ->counts('activos')
                     ->sortable(),
                 TextColumn::make('created_at')

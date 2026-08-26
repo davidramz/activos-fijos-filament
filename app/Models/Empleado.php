@@ -33,7 +33,7 @@ class Empleado extends Model
 
     public function activosActuales()
     {
-        return $this->hasMany(Activo::class, 'current_empleado_id');
+        return $this->hasMany(Activo::class, 'empleado_actual_id');
     }
 
     public function movimientos()

@@ -24,9 +24,9 @@ class DevolucionInfolist
                             ->copyable(),
                         TextEntry::make('tipo.nombre')
                             ->label('Tipo de Resguardo'),
-                        TextEntry::make('empleado.nombre')
+                        TextEntry::make('empleadoOrigen.nombre')
                             ->label('Empleado'),
-                        TextEntry::make('empleado.numero')
+                        TextEntry::make('empleadoOrigen.numero')
                             ->label('Número de Empleado'),
                         TextEntry::make('user.name')
                             ->label('Creado por'),
