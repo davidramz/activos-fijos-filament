@@ -25,31 +25,30 @@ class DevolucionesTable
                     ->label('Empleado')
                     ->searchable(['nombre', 'numero'])
                     ->sortable(),
-                TextColumn::make('empleadoOrigen.numero')
-                    ->label('No. Empleado')
-                    ->sortable(),
-                TextColumn::make('tipo.nombre')
-                    ->label('Tipo')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('activos_count')
-                    ->label('Activos')
-                    ->counts('activos')
-                    ->sortable(),
+                // TextColumn::make('empleadoOrigen.numero')
+                //     ->label('No. Empleado')
+                //     ->sortable(),
+                // TextColumn::make('tipo.nombre')
+                //     ->label('Tipo')
+                //     ->searchable()
+                //     ->sortable(),
+                // TextColumn::make('activos_count')
+                //     ->label('Activos')
+                //     ->counts('activos'),
                 TextColumn::make('created_at')
                     ->label('Fecha')
                     ->dateTime('d/m/Y H:i')
                     ->sortable(),
-                TextColumn::make('user.name')
-                    ->label('Creado por')
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                // TextColumn::make('user.name')
+                //     ->label('Creado por')
+                //     ->searchable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                // ViewAction::make(),
+                ViewAction::make(),
                 // EditAction::make(),
             ])
             ->toolbarActions([

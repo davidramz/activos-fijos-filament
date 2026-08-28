@@ -21,21 +21,25 @@ class ResguardoEntreEmpleadosTable
                     ->label('Folio')
                     ->searchable(['folio', 'anio'])
                     ->sortable(),
-                TextColumn::make('empleado.nombre')
-                    ->label('Empleado')
+                TextColumn::make('empleadoOrigen.nombre')
+                    ->label('Empleado Origen')
                     ->searchable(['nombre', 'numero'])
                     ->sortable(),
-                TextColumn::make('empleado.numero')
-                    ->label('No. Empleado')
+                TextColumn::make('empleadoDestino.nombre')
+                    ->label('Empleado Destino')
+                    ->searchable(['nombre', 'numero'])
                     ->sortable(),
-                TextColumn::make('tipo.nombre')
-                    ->label('Tipo')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('activos_count')
-                    ->label('Cantidad de Activos')
-                    ->counts('activos')
-                    ->sortable(),
+                // TextColumn::make('empleadoDestino.numero')
+                //     ->label('No. Empleado')
+                //     ->sortable(),
+                // TextColumn::make('tipo.nombre')
+                //     ->label('Tipo')
+                //     ->searchable()
+                //     ->sortable(),
+                // TextColumn::make('activos_count')
+                //     ->label('Cantidad de Activos')
+                //     ->counts('activos')
+                //     ->sortable(),
                 TextColumn::make('created_at')
                     ->label('Fecha')
                     ->dateTime('d/m/Y H:i')
@@ -49,7 +53,7 @@ class ResguardoEntreEmpleadosTable
                 //
             ])
             ->recordActions([
-                // ViewAction::make(),
+                 ViewAction::make(),
                 // EditAction::make(),
             ])
             ->toolbarActions([

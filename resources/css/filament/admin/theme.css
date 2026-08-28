@@ -18,3 +18,20 @@
 .fi-fo-checkbox-list-option-label {
     font-size: 0.775rem;
 }
+
+.fi-fo-checkbox-list-option {
+    border-radius: 0.375rem;
+    padding: 0.375rem 0.5rem;
+    transition:
+        background-color 150ms ease,
+        transform 150ms ease;
+}
+
+.fi-fo-checkbox-list-option:hover {
+    background-color: color-mix(
+        in srgb,
+        var(--color-primary-500) 10%,
+        transparent
+    );
+    transform: translateX(0.125rem);
+}

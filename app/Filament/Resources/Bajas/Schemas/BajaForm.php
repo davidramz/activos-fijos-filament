@@ -3,11 +3,10 @@
 namespace App\Filament\Resources\Bajas\Schemas;
 
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Hidden;
 use Filament\Schemas\Schema;
-use Filament\Infolists\Components\TextEntry;
 
 class BajaForm
 {
@@ -21,42 +20,36 @@ class BajaForm
                     ->relationship('empleado', 'nombre')
                     ->searchable(['nombre', 'numero'])
                     ->required()
-                    ->columnSpan(1),
+                    ->columnSpan(1)
+                    ->reactive()
+                    ->afterStateUpdated(fn (callable $set) => $set('activos', [])),
                 Hidden::make('user_id')
                     ->default(fn() => auth()->id()),
                 Textarea::make('detalles')
                     ->label('Detalles de la Baja')
                     ->placeholder('Observaciones adicionales')
                     ->columnSpanFull(),
-                Select::make('activos')
+                CheckboxList::make('activos')
                     ->label('Activos a Dar de Baja')
-                    ->relationship('activos', 'numero_inventario')
-                    ->reorderable()
-                    ->multiple()
-                    ->getSearchResultsUsing(function(string $search): array {
-                        return \App\Models\Activo::query()
-                            ->where('status_id','!=', 3)
+                    ->relationship('activos', 'numero_inventario', function ($query, callable $get) {
+                        $empleadoId = $get('empleado_id');
+                        $query->where('status_id', 2)
                             ->with('material')
-                            ->where(function($q) use ($search) {
-                                $q->where('numero_inventario', 'like', "%{$search}%")
-                                    ->orWhere('numero_serie', 'like', "%{$search}%")
-                                    ->orWhereHas('material', fn($q) => $q->where('nombre', 'like', "%{$search}%"));
-                            })
-                            ->limit(20)
-                            ->get()
-                            ->mapWithKeys(fn($record) => [
-                                $record->id => "{$record->numero_inventario} - {$record->material?->nombre} ({$record->numero_serie})"
-                            ])
-                            ->toArray();
+                            ->when($empleadoId, function ($query) use ($empleadoId) {
+                                $query->where('empleado_actual_id', $empleadoId);
+                            }, function ($query) {
+                                $query->where('empleado_actual_id','empty');
+                            });
                     })
-                    ->getOptionLabelUsing(function($value) {
-                        $record = \App\Models\Activo::with('material')->find($value);
-                        return $record ? "{$record->numero_inventario} - {$record->material?->nombre} ({$record->numero_serie})" : $value;
+                    ->getOptionLabelFromRecordUsing(function ($record) {
+                        return "{$record->numero_inventario} - {$record->material?->nombre} ({$record->numero_serie})";
                     })
                     ->required()
+                    ->reactive()
+                    ->searchable()
+                    ->disabled(fn (callable $get) => !$get('empleado_id'))
                     ->columnSpanFull()
-                    ->helperText('Busca por número de inventario, serie o nombre del material')
-                    ->optionsLimit(20),
+                    ->helperText('Selecciona los activos a dar de baja.'),
             ]);
     }
 }

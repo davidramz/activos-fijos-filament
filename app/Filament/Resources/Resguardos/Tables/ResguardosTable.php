@@ -28,10 +28,10 @@ class ResguardosTable
                 // TextColumn::make('empleado.numero')
                 //     ->label('Número')
                 //     ->sortable(),
-                TextColumn::make('tipo.nombre')
-                    ->label('Tipo')
-                    ->searchable()
-                    ->sortable(),
+                // TextColumn::make('tipo.nombre')
+                //     ->label('Tipo')
+                //     ->searchable()
+                //     ->sortable(),
                 // TextColumn::make('activos_count')
                 //     ->label('Cantidad de Activos')
                 //     ->counts('activos')
@@ -50,7 +50,7 @@ class ResguardosTable
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make(),
+                // EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

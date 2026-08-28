@@ -36,12 +36,12 @@ class DevolucionForm
                     ->label('Observaciones')
                     ->placeholder('Observaciones adicionales')
                     ->columnSpanFull(),
-                TextInput::make('activos_search')
-                    ->label('Buscar Activos')
-                    ->placeholder('Número inventario, serie o nombre del material')
-                    ->reactive()
-                    ->disabled(fn (callable $get) => !$get('empleado_origen_id'))
-                    ->columnSpanFull(),
+                // TextInput::make('activos_search')
+                //     ->label('Buscar Activos')
+                //     ->placeholder('Número inventario, serie o nombre del material')
+                //     ->reactive()
+                //     ->disabled(fn (callable $get) => !$get('empleado_origen_id'))
+                //     ->columnSpanFull(),
 
                 CheckboxList::make('activos')
                     ->label('Activos a Devolver')
@@ -71,6 +71,7 @@ class DevolucionForm
                         return "{$record->numero_inventario} - {$record->material?->nombre} ({$record->numero_serie})";
                     })
                     ->reactive()
+                    ->searchable()
                     ->disabled(fn (callable $get) => !$get('empleado_origen_id'))
                     ->columnSpanFull()
                     ->helperText('Activos asignados al empleado. Selecciona uno o varios con las casillas.'),

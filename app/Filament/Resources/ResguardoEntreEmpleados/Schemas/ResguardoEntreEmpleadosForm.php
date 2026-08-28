@@ -20,10 +20,10 @@ class ResguardoEntreEmpleadosForm
             ->components([
                 Hidden::make('tipo_id')
                     ->default(3),
-                Select::make('empleado_id')
+                Select::make('empleado_origen_id')
                     ->label('Empleado Origen')                    
                     ->helperText('Busca por número de empleado o nombre')
-                    ->relationship('empleado', 'nombre')
+                    ->relationship('empleadoOrigen', 'nombre')
                     ->searchable(['nombre', 'numero'])
                     ->required()
                     ->columnSpan(1)
@@ -35,7 +35,7 @@ class ResguardoEntreEmpleadosForm
                 Select::make('empleado_destino_id')
                     ->label('Empleado Destino')
                     ->helperText('Busca por número de empleado o nombre')
-                    ->relationship('empleado', 'nombre')
+                    ->relationship('empleadoDestino', 'nombre')
                     ->searchable(['nombre', 'numero'])
                     ->required()
                     ->columnSpan(1)
@@ -62,9 +62,9 @@ class ResguardoEntreEmpleadosForm
                                     $query->where('status_id', 2)
                                         ->with('material');
 
-                                    $empleadoId = $get('empleado_id');
+                                    $empleadoId = $get('empleado_origen_id');
                                     if (!$empleadoId) {
-                                        $query->whereNull('empleado_actual_id');
+                                        $query->where('empleado_actual_id','empty');
                                     }else {
                                         $query->where('empleado_actual_id', $empleadoId);                            
                                     }
@@ -84,7 +84,7 @@ class ResguardoEntreEmpleadosForm
                             })
                             ->reactive()
                             ->searchable()
-                            ->disabled(fn (callable $get) => !$get('empleado_id'))
+                            ->disabled(fn (callable $get) => !$get('empleado_origen_id'))
                             ->columnSpanFull()
                             ]),
                 

@@ -23,7 +23,7 @@ class BajaResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArchiveBox;
 
-    protected static ?string $recordTitleAttribute = 'folio';
+    protected static ?string $recordTitleAttribute = 'folio_formateado';
     protected static ?string $pluralModelLabel = 'Bajas';
     protected static ?string $singular = 'Baja';
     protected static string | UnitEnum | null $navigationGroup = 'Movimientos';

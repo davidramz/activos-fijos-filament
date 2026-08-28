@@ -27,8 +27,6 @@ class CreateBaja extends CreateRecord
             ['nombre' => 'baja'],
             ['disponible' => true]
         );
-
-        foreach ($activos as $activo) {
             /* Actualizar el status_id = 3 (Baja) y empleado_id del activo
             
              * table:activo_status
@@ -41,9 +39,11 @@ class CreateBaja extends CreateRecord
              * 6 = Cancelado
              * 7 = Reparacion
              * *-------------------------------------*/
+        foreach ($activos as $activo) {
+            
             $activo->update([
                 'status_id' => 3,
-                'empleado_actual_id' => $Baja->empleado_id,
+                'empleado_actual_id' => NULL,
             ]);
 
             // Registrar el movimiento
@@ -60,9 +60,8 @@ class CreateBaja extends CreateRecord
             ActivoMovimiento::create([
                 'activo_id' => $activo->id,
                 'user_id' => auth()->id(),
-                'empleado_origen_id' => NULL,
-                'empleado_destino_id' => $Baja->empleado_id,
-                // status_antes_id = 3 (Almacen), status_despues_id = 3 (Baja)
+                'empleado_origen_id' => $Baja->empleado_id,
+                'empleado_destino_id' => NULL,
                 'status_antes_id' => $activo->status_id,
                 'status_despues_id' => 3,
                 'tipo_id' => $movimientoTipo->id,

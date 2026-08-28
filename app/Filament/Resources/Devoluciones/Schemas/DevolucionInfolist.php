@@ -8,6 +8,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Infolist;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\FontWeight;
 
 class DevolucionInfolist
 {
@@ -16,47 +17,58 @@ class DevolucionInfolist
         return $schema
             ->components([
                 Section::make('Información de la Devolución')
+                    ->compact()
                     ->columnSpanFull()
-                    ->columns(2)
+                    ->columns(4)
                     ->schema([
                         TextEntry::make('folio_formateado')
                             ->label('Folio')
                             ->copyable(),
-                        TextEntry::make('tipo.nombre')
-                            ->label('Tipo de Resguardo'),
+                        // TextEntry::make('tipo.nombre')
+                        //     ->label('Tipo de Resguardo'),
                         TextEntry::make('empleadoOrigen.nombre')
                             ->label('Empleado'),
-                        TextEntry::make('empleadoOrigen.numero')
-                            ->label('Número de Empleado'),
-                        TextEntry::make('user.name')
-                            ->label('Creado por'),
+                        // TextEntry::make('empleadoOrigen.numero')
+                        //     ->label('Número de Empleado'),
                         TextEntry::make('created_at')
                             ->label('Fecha de Creación')
                             ->dateTime(),
+                        TextEntry::make('user.name')
+                            ->label('Creado por'),
                     ]),
-                Section::make('Activos Devueltos')                
+                Section::make('Activos Devueltos')         
+                    ->compact()       
                     ->columnSpanFull()
                     ->schema([
                         RepeatableEntry::make('activos')
+                            ->hiddenLabel()
                             ->schema([
                                 TextEntry::make('material.nombre')
-                                    ->label('Material')
+                                    ->hiddenLabel()                                    
+                                    ->weight(FontWeight::Bold)
                                     ->columnSpanFull(),
                                 TextEntry::make('numero_inventario')
-                                    ->label('Número de Inventario'),
+                                    ->label('Inventario'),
                                 TextEntry::make('numero_serie')
                                     ->label('Número de Serie'),
+                                TextEntry::make('material.marca')
+                                    ->label('Marca'),
+                                TextEntry::make('material.modelo')
+                                    ->label('Modelo'),
+                                TextEntry::make('material.codigo')
+                                    ->label('Código'),
                                 TextEntry::make('costo')
                                     ->label('Costo')
                                     ->money('MXN'),
                             ])
-                            ->columns(4),
+                            ->columns(6)
                     ]),
-                Section::make('')
+                Section::make('Observaciones')
                     ->columnSpanFull()
+                    ->compact()
                     ->schema([
                         TextEntry::make('observaciones')
-                            ->label('')
+                            ->hiddenLabel()
                     ]),                    
             ]);
     }
