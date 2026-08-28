@@ -35,3 +35,11 @@
     );
     transform: translateX(0.125rem);
 }
+
+.fi-in-table-repeatable > table > tbody > tr:hover {
+    background-color: color-mix(
+        in srgb,
+        var(--color-primary-500) 10%,
+        transparent
+    );
+}

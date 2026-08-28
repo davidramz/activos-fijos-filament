@@ -64,4 +64,8 @@ class Activo extends Model
     {
         return $this->belongsTo(ActivoStatus::class, 'status_id');
     }
+    public function getCostoAttribute($value)
+    {
+        return number_format($value, 2, '.', ',');
+    }
 }

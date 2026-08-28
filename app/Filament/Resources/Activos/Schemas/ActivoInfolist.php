@@ -16,7 +16,7 @@ class ActivoInfolist
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(3)
+            ->columns(4)
             ->components([
                 TextEntry::make('material.nombre')
                     ->label('Material')
@@ -36,8 +36,7 @@ class ActivoInfolist
                     ->label('Código del Material'),
 
                 TextEntry::make('costo')
-                    ->label('Costo')
-                    ->money('MXN'),
+                    ->label('Costo'),
 
                 TextEntry::make('garantia')
                     ->label('Garantía')
