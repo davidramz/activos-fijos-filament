@@ -47,7 +47,7 @@ class BajaResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ActivosRelationManager::class,
         ];
     }
 

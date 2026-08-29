@@ -38,33 +38,33 @@ class ResguardoEntreEmpleadosInfolist
                         TextEntry::make('user.name')
                             ->label('Creado por'),
                     ]),
-                Section::make('Activos Transferidos')                
-                    ->columnSpanFull()
-                    ->compact()
-                    ->schema([
-                        RepeatableEntry::make('activos')                        
-                            ->hiddenLabel()
-                            ->schema([
-                                TextEntry::make('material.nombre')
-                                    ->weight(FontWeight::Bold)
-                                    ->hiddenLabel()
-                                    ->columnSpanFull(),
-                                TextEntry::make('numero_inventario')
-                                    ->label('Inventario'),
-                                TextEntry::make('numero_serie')
-                                    ->label('Número de Serie'),
-                                TextEntry::make('material.marca')
-                                    ->label('Marca'),
-                                TextEntry::make('material.modelo')
-                                    ->label('Modelo'),
-                                TextEntry::make('material.codigo')
-                                    ->label('Código'),
-                                TextEntry::make('costo')
-                                    ->label('Costo')
-                                    ->money('MXN'),
-                            ])
-                            ->columns(6)
-                    ]),
+                // Section::make('Activos Transferidos')                
+                //     ->columnSpanFull()
+                //     ->compact()
+                //     ->schema([
+                //         RepeatableEntry::make('activos')                        
+                //             ->hiddenLabel()
+                //             ->schema([
+                //                 TextEntry::make('material.nombre')
+                //                     ->weight(FontWeight::Bold)
+                //                     ->hiddenLabel()
+                //                     ->columnSpanFull(),
+                //                 TextEntry::make('numero_inventario')
+                //                     ->label('Inventario'),
+                //                 TextEntry::make('numero_serie')
+                //                     ->label('Número de Serie'),
+                //                 TextEntry::make('material.marca')
+                //                     ->label('Marca'),
+                //                 TextEntry::make('material.modelo')
+                //                     ->label('Modelo'),
+                //                 TextEntry::make('material.codigo')
+                //                     ->label('Código'),
+                //                 TextEntry::make('costo')
+                //                     ->label('Costo')
+                //                     ->money('MXN'),
+                //             ])
+                //             ->columns(6)
+                //     ]),
                 Section::make('Observaciones')
                     ->columnSpanFull()
                     ->compact()

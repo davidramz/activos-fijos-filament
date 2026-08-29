@@ -32,31 +32,31 @@ class EmpleadoInfolist
                         TextEntry::make('campus.nombre')
                             ->label('Campus')
                     ]),           
-                Section::make('Activos Asignados')
-                    ->compact()
-                    ->schema([
-                        RepeatableEntry::make('activosActuales')
-                        ->hiddenLabel()
-                            ->table([
-                                TableColumn::make('No.Inventario'),
-                                TableColumn::make('Material'),
-                                TableColumn::make('Número de Serie'),
-                                TableColumn::make('Marca'),
-                                TableColumn::make('Modelo'),
-                                TableColumn::make('Costo')
-                                    ->alignment(Alignment::Center)
-                                    ->width('150px'),
-                            ])
-                            ->schema([
-                                TextEntry::make('numero_inventario'),
-                                TextEntry::make('material.nombre'),
-                                TextEntry::make('numero_serie'),
-                                TextEntry::make('material.marca'),
-                                TextEntry::make('material.modelo'),
-                                TextEntry::make('costo')                         
-                                    ->alignment(Alignment::End)
-                            ])
-                    ])
+                // Section::make('Activos Asignados')
+                //     ->compact()
+                //     ->schema([
+                //         RepeatableEntry::make('activosActuales')
+                //         ->hiddenLabel()
+                //             ->table([
+                //                 TableColumn::make('No.Inventario'),
+                //                 TableColumn::make('Material'),
+                //                 TableColumn::make('Número de Serie'),
+                //                 TableColumn::make('Marca'),
+                //                 TableColumn::make('Modelo'),
+                //                 TableColumn::make('Costo')
+                //                     ->alignment(Alignment::Center)
+                //                     ->width('150px'),
+                //             ])
+                //             ->schema([
+                //                 TextEntry::make('numero_inventario'),
+                //                 TextEntry::make('material.nombre'),
+                //                 TextEntry::make('numero_serie'),
+                //                 TextEntry::make('material.marca'),
+                //                 TextEntry::make('material.modelo'),
+                //                 TextEntry::make('costo')                         
+                //                     ->alignment(Alignment::End)
+                //             ])
+                //     ])
             ]);
     }
 }
