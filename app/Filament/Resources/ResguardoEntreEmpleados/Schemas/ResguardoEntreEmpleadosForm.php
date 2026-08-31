@@ -26,6 +26,9 @@ class ResguardoEntreEmpleadosForm
                     ->relationship('empleadoOrigen', 'nombre')
                     ->searchable(['nombre', 'numero'])
                     ->required()
+                    ->validationMessages([
+                            'required' => 'El :attribute es requerido.',
+                        ])
                     ->columnSpan(1)
                     ->reactive()
                     ->afterStateUpdated(function ($state, callable $set) {
@@ -38,6 +41,9 @@ class ResguardoEntreEmpleadosForm
                     ->relationship('empleadoDestino', 'nombre')
                     ->searchable(['nombre', 'numero'])
                     ->required()
+                    ->validationMessages([
+                            'required' => 'El :attribute es requerido.',
+                        ])
                     ->columnSpan(1)
                     ->reactive(),
                 Hidden::make('user_id')
@@ -56,6 +62,10 @@ class ResguardoEntreEmpleadosForm
                     ->columnSpanFull()
                     ->schema([
                         CheckboxList::make('activos')
+                            ->required()
+                            ->validationMessages([
+                                    'required' => 'Campo requerido. Debes seleccionar al menos un activo.',
+                                ])
                             ->label('Selecciona uno o varios con las casillas.')
                             ->relationship('activos', 'numero_inventario', function ($query, callable $get) {
                                     $search = $get('activos_search') ?? '';

@@ -34,7 +34,11 @@ class ResguardoInfolist
                         TextEntry::make('created_at')
                             ->label('Fecha de Creación')
                             ->dateTime(),
-                        TextEntry::make('user.name')->label('Creado por')
+                        TextEntry::make('user.name')->label('Creado por'),
+                        TextEntry::make('observaciones')
+                            ->label('Observaciones')
+                            ->columnSpanFull()
+                            ->hidden(fn ($record) => empty($record->observaciones)),
                     ]),
                 // Section::make('Activos Resguardados')                
                 //     ->columnSpanFull()
@@ -63,12 +67,12 @@ class ResguardoInfolist
                 //             ])
                 //             ->columns(6)
                 //     ]),
-                Section::make('Observaciones')
-                    ->columnSpanFull()
-                    ->compact()
-                    ->schema([
-                        TextEntry::make('observaciones')->hiddenLabel()
-                    ]),                            
+                // Section::make('Observaciones')
+                //     ->columnSpanFull()
+                //     ->compact()
+                //     ->schema([
+                //         TextEntry::make('observaciones')->hiddenLabel()
+                //     ]),                            
             ]);
     }
 }

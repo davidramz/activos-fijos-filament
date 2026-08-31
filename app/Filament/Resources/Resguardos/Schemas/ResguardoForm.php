@@ -22,6 +22,9 @@ class ResguardoForm
                     ->relationship('empleadoOrigen', 'nombre')
                     ->searchable(['nombre', 'numero'])
                     ->required()
+                    ->validationMessages([
+                            'required' => 'El :attribute es requerido.',
+                        ])
                     ->columnSpan(1),
                 Hidden::make('user_id')
                     ->default(fn() => auth()->id()),
@@ -55,6 +58,9 @@ class ResguardoForm
                         return $record ? "{$record->numero_inventario} - {$record->material?->nombre} ({$record->numero_serie})" : $value;
                     })
                     ->required()
+                    ->validationMessages([
+                            'required' => 'El :attribute es requerido.',
+                        ])
                     ->columnSpanFull()
                     ->helperText('Busca por número de inventario, serie o nombre del material')
                     ->optionsLimit(20),

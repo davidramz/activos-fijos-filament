@@ -18,7 +18,7 @@ class ViewBaja extends ViewRecord
                 ->label('Volver al listado')
                 ->url(static::getResource()::getUrl('index'))
                 ->icon('heroicon-o-arrow-left'),
-            EditAction::make(),
+            //EditAction::make(),
         ];
     }
 }

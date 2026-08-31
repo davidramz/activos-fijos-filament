@@ -20,6 +20,9 @@ class BajaForm
                     ->relationship('empleado', 'nombre')
                     ->searchable(['nombre', 'numero'])
                     ->required()
+                    ->validationMessages([
+                            'required' => 'El :attribute es requerido.',
+                        ])
                     ->columnSpan(1)
                     ->reactive()
                     ->afterStateUpdated(fn (callable $set) => $set('activos', [])),
@@ -45,6 +48,9 @@ class BajaForm
                         return "{$record->numero_inventario} - {$record->material?->nombre} ({$record->numero_serie})";
                     })
                     ->required()
+                    ->validationMessages([
+                            'required' => 'Campo requerido. Debes seleccionar al menos un activo.',
+                        ])
                     ->reactive()
                     ->searchable()
                     ->disabled(fn (callable $get) => !$get('empleado_id'))

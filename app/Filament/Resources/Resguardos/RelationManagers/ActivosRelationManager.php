@@ -77,7 +77,7 @@ class ActivosRelationManager extends RelationManager
                 AttachAction::make(),
             ])
             ->recordActions([
-                EditAction::make(),
+                //EditAction::make(),
                 DetachAction::make(),
                 DeleteAction::make(),
                 ViewAction::make()

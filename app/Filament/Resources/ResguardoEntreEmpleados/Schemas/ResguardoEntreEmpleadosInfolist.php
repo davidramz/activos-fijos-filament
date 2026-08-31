@@ -37,6 +37,10 @@ class ResguardoEntreEmpleadosInfolist
                             ->dateTime(),
                         TextEntry::make('user.name')
                             ->label('Creado por'),
+                        TextEntry::make('observaciones')
+                            ->label('Observaciones')
+                            ->columnSpanFull()
+                            ->hidden(fn ($record) => empty($record->observaciones)),
                     ]),
                 // Section::make('Activos Transferidos')                
                 //     ->columnSpanFull()
@@ -65,13 +69,13 @@ class ResguardoEntreEmpleadosInfolist
                 //             ])
                 //             ->columns(6)
                 //     ]),
-                Section::make('Observaciones')
-                    ->columnSpanFull()
-                    ->compact()
-                    ->schema([
-                        TextEntry::make('observaciones')
-                            ->hiddenLabel()
-                    ]),                    
+                // Section::make('Observaciones')
+                //     ->columnSpanFull()
+                //     ->compact()
+                //     ->schema([
+                //         TextEntry::make('observaciones')
+                //             ->hiddenLabel()
+                //     ]),                    
             ]);
     }
 }

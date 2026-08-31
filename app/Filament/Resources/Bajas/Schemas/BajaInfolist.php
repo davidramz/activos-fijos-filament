@@ -34,6 +34,10 @@ class BajaInfolist
                             ->dateTime(),
                         TextEntry::make('user.name')
                             ->label('Creado por'),
+                        TextEntry::make('detalles')
+                            ->label('Observaciones')
+                            ->columnSpanFull()
+                            ->hidden(fn ($record) => empty($record->detalles)),
                     ]),
                 // Section::make('Activos Resguardados')                
                 //     ->columnSpanFull()
@@ -62,13 +66,13 @@ class BajaInfolist
                 //             ])
                 //             ->columns(6)
                 //     ]),
-                Section::make('Observaciones')
-                    ->columnSpanFull()
-                    ->compact()
-                    ->schema([
-                        TextEntry::make('detalles')
-                            ->hiddenLabel()
-                    ]),                    
+                // Section::make('Observaciones')
+                //     ->columnSpanFull()
+                //     ->compact()
+                //     ->schema([
+                //         TextEntry::make('detalles')
+                //             ->hiddenLabel()
+                //     ]),                    
             ]);
     }
 }

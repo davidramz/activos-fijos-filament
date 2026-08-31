@@ -24,6 +24,9 @@ class DevolucionForm
                     ->relationship('empleadoOrigen', 'nombre')
                     ->searchable(['nombre', 'numero'])
                     ->required()
+                    ->validationMessages([
+                            'required' => 'El :attribute es requerido.',
+                        ])
                     ->columnSpan(1)
                     ->reactive()
                     ->afterStateUpdated(function ($state, callable $set) {
@@ -45,6 +48,10 @@ class DevolucionForm
 
                 CheckboxList::make('activos')
                     ->label('Activos a Devolver')
+                    ->required()
+                    ->validationMessages([
+                            'required' => 'Campo requerido. Debes seleccionar al menos un activo.',
+                        ])
                     ->relationship('activos', 'numero_inventario', function ($query, callable $get) {
                         $search = $get('activos_search') ?? '';
                         $query->where('status_id', 2)

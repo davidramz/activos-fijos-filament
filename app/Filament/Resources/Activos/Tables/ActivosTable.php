@@ -53,41 +53,41 @@ class ActivosTable
                     ->label('Serie')
                     ->searchable(),
 
-                TextColumn::make('costo')
-                    ->label('Costo')
-                    ->money('MXN'),
+                // TextColumn::make('costo')
+                //     ->label('Costo')
+                //     ->money('MXN'),
 
-                TextColumn::make('garantia')
-                    ->label('Garantía')
-                    ->dateTime('d/m/Y'),
+                // TextColumn::make('garantia')
+                //     ->label('Garantía')
+                //     ->dateTime('d/m/Y'),
 
                 
 
-                TextColumn::make('empleadoActual.nombre')
-                    ->label('Asignado a')
-                    ->searchable(),
+                // TextColumn::make('empleadoActual.nombre')
+                //     ->label('Asignado a')
+                //     ->searchable(),
 
-                TextColumn::make('detalles')
-                    ->label('Detalles')
-                    ->limit(50)
-                    ->tooltip(fn(Activo $record) => $record->detalles),
+                // TextColumn::make('detalles')
+                //     ->label('Detalles')
+                //     ->limit(50)
+                //     ->tooltip(fn(Activo $record) => $record->detalles),
 
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                // TextColumn::make('created_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
 
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                IconColumn::make('imagenes_exists')
-                    ->label('Imagen')
-                    ->getStateUsing(fn ($record) => $record->imagenes[0] ?? null)
-                    ->icon(fn (bool $state) => $state
-                        ? 'heroicon-o-photo'
-                        : 'heroicon-o-x-circle'
-                    ),
+                // TextColumn::make('updated_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+                // IconColumn::make('imagenes_exists')
+                //     ->label('Imagen')
+                //     ->getStateUsing(fn ($record) => $record->imagenes[0] ?? null)
+                //     ->icon(fn (bool $state) => $state
+                //         ? 'heroicon-o-photo'
+                //         : 'heroicon-o-x-circle'
+                //     ),
                    
                 // ImageColumn::make('imagenes')
                 //     ->label('Imágenes')
