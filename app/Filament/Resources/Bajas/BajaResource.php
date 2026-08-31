@@ -21,7 +21,7 @@ class BajaResource extends Resource
 {
     protected static ?string $model = Baja::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArchiveBox;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArchiveBoxXMark;
 
     protected static ?string $recordTitleAttribute = 'folio_formateado';
     protected static ?string $pluralModelLabel = 'Bajas';

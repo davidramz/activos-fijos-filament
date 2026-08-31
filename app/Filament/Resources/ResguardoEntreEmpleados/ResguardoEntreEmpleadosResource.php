@@ -21,7 +21,7 @@ class ResguardoEntreEmpleadosResource extends Resource
 {
     protected static ?string $model = Resguardo::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArchiveBoxArrowDown;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArrowsRightLeft;
 
     protected static ?string $recordTitleAttribute = 'folio_formateado';
     protected static ?string $pluralModelLabel = 'Resg/Empleados';
