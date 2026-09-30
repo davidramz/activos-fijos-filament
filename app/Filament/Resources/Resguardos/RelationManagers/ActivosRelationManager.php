@@ -67,7 +67,8 @@ class ActivosRelationManager extends RelationManager
                     ->searchable(),
 
                 TextColumn::make('costo')
-                    ->label('Costo'),
+                    ->label('Costo')
+                    ->alignRight(),
             ])
             ->filters([
                 //

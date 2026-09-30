@@ -54,7 +54,7 @@ class ProveedorsTable
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
-                ]),
+                ])
             ]);
     }
 }

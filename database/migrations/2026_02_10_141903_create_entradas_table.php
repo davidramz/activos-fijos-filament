@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('tipo_compra_id')->constrained('tipo_compras');
 
-            $table->string('folio')->unique();
+            $table->string('consecutivo')->unique();
+            $table->string('factura')->unique();
             $table->string('requisicion');
 
             $table->date('fecha_factura');

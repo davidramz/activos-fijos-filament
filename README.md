@@ -15,6 +15,9 @@ Al subir imagenes a los Activos manda error:
   agregar:
   -- upload_tmp_dir = "C:/laragon/tmp"
 
+- Estilos personalizados son cargados en:
+  -- resources/css/filament/admin/theme.css
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:

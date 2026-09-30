@@ -28,7 +28,8 @@ return new class extends Migration
             //Nunca cambiar status sin crear movimiento.
             $table->foreignId('status_id')
                 ->constrained('activo_status')
-                ->default(1); // Asumiendo que '1' es el ID del estado "En Almacén"
+                ->default(1); 
+            // Asumiendo que '1' es el ID del estado "En Almacén"
             //empleado_actual_id Null = ALMACEN
             //Si no es null → status debe ser RESGUARDADO
             $table->foreignId('empleado_actual_id')

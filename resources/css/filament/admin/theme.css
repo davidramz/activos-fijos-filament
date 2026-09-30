@@ -43,3 +43,30 @@
         transparent
     );
 }
+
+/* Limita el contenedor de registros y activa el scroll vertical, da una altura fija a la tabla */
+.fi-ta-content-ctn {
+    max-height: 55vh !important;
+    overflow-y: auto !important;
+}
+/* Hace que la cabecera se mantenga fija en la parte superior */
+.fi-ta-content-ctn table thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    /* Evita que los registros se trasluzcan por debajo del fondo de la cabecera */
+    /*background-color: rgb(249, 250, 251);*/
+}
+
+/* 3. Compatibilidad con el Modo Oscuro de Filament */
+.dark .fi-ta-content-ctn table thead {
+    background-color: #1c2433;
+}
+/* Elimina el padding del contenedor principal del encabezado de la página donde se muestra el breadcrumb */
+.fi-page-header-main-ctn {
+    padding-block: 5px;
+}
+/* Elimina el padding del contenedor principal de los botones de acción del encabezado de la página */
+.fi-header-actions-ctn {
+    margin-top: 3px;
+}

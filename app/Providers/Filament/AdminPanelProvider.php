@@ -48,9 +48,9 @@ class AdminPanelProvider extends PanelProvider
                 'dev_proveedor' => Color::Sky,
                 'almacen' => Color::Lime,
             ])
-            //->font('Poppins')
+            ->font('Poppins')
             //->font('Roboto Mono', provider: GoogleFontProvider::class)
-            ->font('Azeret Mono', provider: GoogleFontProvider::class)
+            //->font('Azeret Mono', provider: GoogleFontProvider::class)
             //->font('Roboto', provider: GoogleFontProvider::class)
             ->maxContentWidth(Width::Full)
             ->subNavigationPosition(SubNavigationPosition::End)

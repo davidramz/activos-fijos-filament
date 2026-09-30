@@ -68,7 +68,7 @@ class ActivosRelationManager extends RelationManager
 
                 TextColumn::make('costo')
                     ->label('Costo')
-                    ->money('MXN'),
+                    ->alignRight()
             ])
             ->filters([
                 //
