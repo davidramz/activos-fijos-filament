@@ -20,7 +20,7 @@ class EntradaForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(2)
+            ->inlineLabel()
             ->components([
                 Select::make('proveedor_id')
                     ->label('Proveedor')
@@ -107,7 +107,8 @@ class EntradaForm
                     ]),
 
                 Repeater::make('activos')
-                    ->label('Activos')
+                    ->inlineLabel(false)
+                    ->hiddenLabel()
                     ->itemLabel(fn($state): string => is_array($state) && filled($state['material_id']) ? optional(Material::find($state['material_id']))->nombre : 'Seleccionar Activo')
                     ->required()
                     ->validationMessages([
@@ -116,7 +117,8 @@ class EntradaForm
                     ->relationship('activos')
                     ->columnSpanFull()
                     ->schema([
-                        Select::make('material_id')
+                        Select::make('material_id')                        
+                            ->inlineLabel()
                             ->label('Material')
                             ->required()
                             ->relationship('material', 'nombre')
@@ -126,18 +128,23 @@ class EntradaForm
                             ->live(onBlur: true),
 
                         TextInput::make('numero_inventario')
+                            ->inlineLabel()
+                            ->columns(2)
                             ->label('Número de Inventario')
                             ->required(),
 
                         TextInput::make('numero_serie')
+                            ->inlineLabel()
                             ->label('Número de Serie'),
 
                         TextInput::make('costo')
+                            ->inlineLabel()
                             ->label('Costo')
                             ->numeric()
                             ->prefix('$'),
 
                         DatePicker::make('garantia')
+                            ->inlineLabel()
                             ->label('Garantía'),
 
                         Textarea::make('detalles')
