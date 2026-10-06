@@ -8,6 +8,15 @@ class Activo extends Model
 {
     protected $table = 'activos';
 
+    protected static function booted(): void
+    {
+        static::created(function (Activo $activo): void {
+            $activo->forceFill([
+                'numero_inventario' => sprintf('UNPA/INT/%05d', $activo->getKey()),
+            ])->saveQuietly();
+        });
+    }
+
     protected $fillable = [
         'material_id', 
         'entrada_id',

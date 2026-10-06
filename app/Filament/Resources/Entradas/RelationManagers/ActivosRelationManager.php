@@ -48,10 +48,6 @@ class ActivosRelationManager extends RelationManager
                             ->getOptionLabelFromRecordUsing(fn($record) => "{$record->nombre} - {$record->marca} ({$record->modelo})")
                             ->columnSpanFull(),
 
-                        TextInput::make('numero_inventario')
-                            ->label('Número de Inventario')
-                            ->required(),
-
                         TextInput::make('numero_serie')
                             ->label('Número de Serie'),
 

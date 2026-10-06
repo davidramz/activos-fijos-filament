@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Entradas\Schemas;
 
+use App\Models\Activo;
+use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
@@ -10,8 +12,10 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Hidden;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Unique;
 use Filament\Schemas\Components\Grid;
 
 
@@ -19,18 +23,70 @@ class EntradaForm
 {
     public static function configure(Schema $schema): Schema
     {
+        $activoSchema = static fn (): array => [
+            Select::make('material_id')
+                ->label('Material')
+                ->required()
+                ->relationship('material', 'nombre')
+                ->searchable(['nombre', 'codigo', 'marca'])                
+                ->placeholder('Buscar un material')
+                ->searchPrompt('Buscar por Código o Nombre')
+                ->getOptionLabelFromRecordUsing(fn($record) => "{$record->codigo} - {$record->nombre} - {$record->marca} - {$record->modelo}")
+                ->columnSpanFull()
+                ->live(onBlur: true),
+
+            TextInput::make('numero_serie')
+                ->inlineLabel()
+                ->label('Número de Serie'),
+
+            TextInput::make('costo')
+                ->inlineLabel()
+                ->label('Costo')
+                ->numeric()
+                ->prefix('$'),
+
+            DatePicker::make('garantia')
+                ->inlineLabel()
+                ->label('Garantía'),
+
+            Textarea::make('detalles')
+                ->inlineLabel()
+                ->label('Detalles'),
+
+            FileUpload::make('imagenes')
+                ->label('Imágenes')
+                ->multiple()
+                ->appendFiles()
+                ->reorderable()
+                ->disk('public')
+                ->directory('activos')
+                ->visibility('public')
+                ->image()
+                ->getUploadedFileNameForStorageUsing(function ($file) {
+                    return Str::uuid() . '.' . $file->getClientOriginalExtension();
+                })
+                ->maxSize(5120)
+                ->columnSpanFull(),
+
+            Hidden::make('status_id')
+                ->default(1),
+        ];
+
         return $schema
-            ->inlineLabel()
+            ->columns(4)
             ->components([
                 Select::make('proveedor_id')
+                    ->inlineLabel(false)
                     ->label('Proveedor')
+                    ->placeholder('Buscar un proveedor')
+                    ->searchPrompt('Buscar por Código o Nombre')
                     ->required()
                     ->validationMessages([
                         'required' => 'Se requiere un proveedor.',
                     ])
                     ->relationship('proveedor', 'nombre')
                     ->searchable(['nombre', 'codigo', 'rfc'])
-                    ->columnSpan(2)
+                    ->columnSpanFull()
                     ->createOptionForm([
                         Grid::make(2)
                             ->schema([
@@ -77,12 +133,16 @@ class EntradaForm
                             ])
                     ]),
 
-                TextInput::make('folio')
+                TextInput::make('factura')
+                    ->label('No. Factura')
                     ->required()
-                    ->unique(ignoreRecord: true)
+                    ->unique(
+                        ignoreRecord: true,
+                        modifyRuleUsing: fn (Unique $rule, Get $get) => $rule->where('fecha_factura', $get('fecha_factura')),
+                    )
                     ->validationMessages([
                         'required' => 'Se requiere un folio.',
-                        'unique' => 'El folio ya existe.',
+                        'unique' => 'Ya existe una entrada con esta factura en esa fecha.',
                     ]),
 
                 TextInput::make('requisicion')
@@ -116,67 +176,39 @@ class EntradaForm
                     ])
                     ->relationship('activos')
                     ->columnSpanFull()
-                    ->schema([
-                        Select::make('material_id')                        
-                            ->inlineLabel()
-                            ->label('Material')
-                            ->required()
-                            ->relationship('material', 'nombre')
-                            ->searchable(['nombre', 'codigo', 'marca'])
-                            ->getOptionLabelFromRecordUsing(fn($record) => "{$record->nombre} - {$record->marca} ({$record->modelo})")
-                            ->columnSpanFull()
-                            ->live(onBlur: true),
-
-                        TextInput::make('numero_inventario')
-                            ->inlineLabel()
-                            ->columns(2)
-                            ->label('Número de Inventario')
-                            ->required(),
-
-                        TextInput::make('numero_serie')
-                            ->inlineLabel()
-                            ->label('Número de Serie'),
-
-                        TextInput::make('costo')
-                            ->inlineLabel()
-                            ->label('Costo')
-                            ->numeric()
-                            ->prefix('$'),
-
-                        DatePicker::make('garantia')
-                            ->inlineLabel()
-                            ->label('Garantía'),
-
-                        Textarea::make('detalles')
-                            ->label('Detalles')
-                            ->columnSpanFull(),
-
-                        FileUpload::make('imagenes')
-                            ->label('Imágenes')
-                            ->multiple()
-                            ->appendFiles()
-                            ->reorderable()
-                            ->disk('public')
-                            ->directory('activos')
-                            ->visibility('public')
-                            ->image()
-                            ->getUploadedFileNameForStorageUsing(function ($file) {
-                                return Str::uuid() . '.' . $file->getClientOriginalExtension();
-                            })
-                            ->maxSize(5120)
-                            ->columnSpanFull(),
-
-                        Hidden::make('status_id')
-                            //->label('Estado')
-                            //->relationship('status', 'nombre')
-                            ->default(1) // Asumiendo que '1' es el ID del estado "En Almacén"
-                    ])
+                    ->schema($activoSchema())
                     ->columns(2)
                     ->minItems(1)
                     ->defaultItems(0)
                     ->collapsible()
                     ->collapsed()
-                    ->addActionLabel('Agregar Activo'),
+                    ->addAction(fn (Action $action) => $action
+                        ->model(Activo::class)
+                        ->schema($activoSchema())
+                        ->modalHeading('Agregar Activo a la Entrada')
+                        ->modalSubmitActionLabel('Agregar Activo')
+                        ->color('success')
+                        ->action(function (array $data, Repeater $component, Action $action): void {
+                            $items = $component->getRawState() ?? [];
+                            $uuid = $component->generateUuid();
+
+                            if ($uuid) {
+                                $items[$uuid] = $data;
+                            } else {
+                                $items[] = $data;
+                            }
+
+                            $component->rawState($items);
+                            //$component->collapsed(false, shouldMakeComponentCollapsible: false);
+                            $component->callAfterStateUpdated();
+
+                            if ($component->shouldPartiallyRenderAfterActionsCalled()) {
+                                $component->partiallyRender();
+                            }
+
+                            $action->halt();
+                        }))
+                    ->addActionLabel('Agregar Activo')
             ]);
     }
 }

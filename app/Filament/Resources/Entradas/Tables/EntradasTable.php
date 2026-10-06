@@ -15,7 +15,12 @@ class EntradasTable
     {
         return $table
             ->columns([
-                TextColumn::make('folio')
+                TextColumn::make('consecutivo')
+                    ->label('Consecutivo')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('factura')
+                    ->label('Factura')
                     ->searchable()
                     ->sortable(),
 
@@ -26,7 +31,7 @@ class EntradasTable
                 TextColumn::make('requisicion')
                     ->searchable(),
 
-                TextColumn::make('tipo_compra')
+                TextColumn::make('tipoCompra.nombre')
                     ->label('Tipo de Compra'),
 
                 TextColumn::make('fecha_factura')
@@ -48,6 +53,7 @@ class EntradasTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+             ->defaultSort('id', 'desc') // Aplica el orden aquí
             ->filters([
                 //
             ])

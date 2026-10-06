@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->longText('detalles')->nullable();
             $table->json('imagenes')->nullable();
-            $table->decimal('costo', 9, 2)->nullable();
+            $table->decimal('costo', 9, 4)->nullable();
 
             $table->string('numero_inventario',50)->unique();
             $table->string('numero_serie')->nullable();

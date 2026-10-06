@@ -20,7 +20,7 @@ use Filament\Tables\Table;
 class EntradaResource extends Resource
 {
     protected static ?string $model = Entrada::class;
-
+   
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
     protected static ?string $pluralModelLabel = 'Entradas';
     protected static ?string $recordTitleAttribute = 'folio';

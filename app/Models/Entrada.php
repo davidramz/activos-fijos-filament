@@ -8,8 +8,17 @@ class Entrada extends Model
 {
     protected $table = 'entradas';
 
+    protected static function booted(): void
+    {
+        static::created(function (Entrada $entrada): void {
+            $entrada->forceFill([
+                'consecutivo' => sprintf('A%05d', $entrada->getKey()),
+            ])->saveQuietly();
+        });
+    }
+
     protected $fillable = [
-        'proveedor_id', 'user_id', 'tipo_compra_id', 'folio',
+        'proveedor_id', 'user_id', 'tipo_compra_id', 'factura','consecutivo',
         'requisicion', 'fecha_factura',
     ];
 
