@@ -23,7 +23,7 @@ class EntradaResource extends Resource
    
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
     protected static ?string $pluralModelLabel = 'Entradas';
-    protected static ?string $recordTitleAttribute = 'folio';
+    protected static ?string $recordTitleAttribute = 'consecutivo';
 
     public static function form(Schema $schema): Schema
     {

@@ -3,12 +3,19 @@
 namespace App\Filament\Resources\Entradas\Pages;
 
 use App\Filament\Resources\Entradas\EntradaResource;
+use Filament\Actions\Action;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 
 class CreateEntrada extends CreateRecord
 {
     protected static string $resource = EntradaResource::class;
+
+    protected function getCreateFormAction(): Action
+    {
+        return parent::getCreateFormAction()
+            ->label('Guardar Entrada');
+    }
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
@@ -19,4 +26,5 @@ class CreateEntrada extends CreateRecord
     {
         return false;
     }
+    
 }

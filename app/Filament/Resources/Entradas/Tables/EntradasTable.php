@@ -39,9 +39,9 @@ class EntradasTable
                     ->dateTime('d/m/Y')
                     ->sortable(),
 
-                TextColumn::make('activos_count')
-                    ->label('Activos')
-                    ->counts('activos'),
+                // TextColumn::make('activos_count')
+                //     ->label('Activos')
+                //     ->counts('activos'),
 
                 TextColumn::make('created_at')
                     ->dateTime()

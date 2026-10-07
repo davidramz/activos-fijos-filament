@@ -17,7 +17,7 @@ class EmpleadoInfolist
         return $schema        
             ->columns(1)
             ->components([
-                Section::make('Información de Empleado')
+                Section::make('')
                     ->columns(5)
                     ->compact()
                     ->schema([

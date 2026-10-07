@@ -33,6 +33,11 @@ class ActivosRelationManager extends RelationManager
     {
         return 'Activos';
     }
+    /* Elimina el titulo de la Tabla de Activos Relacionados, sino aparecería arriba del buscador */
+    protected function getTableHeading(): ?string
+    {
+        return '';
+    }
 
     public function table(Table $table): Table
     {

@@ -7,6 +7,7 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Repeater\TableColumn;
 use App\Models\Material;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -27,6 +28,9 @@ class EntradaForm
             Select::make('material_id')
                 ->label('Material')
                 ->required()
+                    ->validationMessages([
+                        'required' => 'Se requiere un material.',
+                    ])
                 ->relationship('material', 'nombre')
                 ->searchable(['nombre', 'codigo', 'marca'])                
                 ->placeholder('Buscar un material')
@@ -176,6 +180,15 @@ class EntradaForm
                     ])
                     ->relationship('activos')
                     ->columnSpanFull()
+                    ->table([
+                        TableColumn::make('Material')->markAsRequired(),
+                        TableColumn::make('No. Serie'),
+                        TableColumn::make('Costo'),
+                        TableColumn::make('Garantía'),
+                        // TableColumn::make('Detalles'),
+                        // TableColumn::make('Imágenes'),
+                    ])
+                    ->compact()
                     ->schema($activoSchema())
                     ->columns(2)
                     ->minItems(1)

@@ -25,29 +25,30 @@ class EmpleadoForm
                     ->numeric(),
                 Select::make('area_id')
                     ->label('Área')
-                    //->options(Area::query()->pluck('nombre', 'id'))
                     ->relationship('area', 'nombre')
                     ->searchable('nombre')
                     ->required()
+                    ->createOptionModalHeading('Nueva Area')
                     ->createOptionForm([
                         TextInput::make('nombre')
-                            ->placeholder('Nombre del área')
+                            ->placeholder('Nombre de la nueva área')
                             ->required()
                             ->afterStateUpdated(function ($state, $set) {
                                 $set('nombre', preg_replace('/\s+/', ' ', trim($state)));
                             })
                             ->unique(ignoreRecord: true)
                             ->validationMessages([
-                                'unique' => 'Ya se encuentra registrado.',
+                                'unique' => 'Ya se encuentra registrada.',
                             ]),
                     ])
                     ->preload(),
                 Select::make('puesto_id')
                     ->label('Puesto')
                     ->relationship('puesto', 'nombre')
+                    ->createOptionModalHeading('Nuevo Puesto')
                     ->createOptionForm([
                         TextInput::make('nombre')
-                            ->placeholder('Nombre del pusto')
+                            ->placeholder('Nombre del nuevo puesto')
                             ->required()
                             ->afterStateUpdated(function ($state, $set) {
                                 $set('nombre', preg_replace('/\s+/', ' ', trim($state)));
