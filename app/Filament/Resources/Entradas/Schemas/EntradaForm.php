@@ -8,25 +8,41 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Repeater\TableColumn;
+use Filament\Infolists\Components\TextEntry;
 use App\Models\Material;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Hidden;
+use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Unique;
 use Filament\Schemas\Components\Grid;
-
+use Filament\Schemas\Components\Section;
+use Filament\Support\RawJs;
+use Filament\Support\Enums\Alignment;
 
 class EntradaForm
 {
     public static function configure(Schema $schema): Schema
     {
-        $activoSchema = static fn (): array => [
+        $subtotal = static function (Get $get): float {
+            return collect($get('activos') ?? [])
+                ->sum(function (array $activo): float {
+                    $costo = str_replace(',', '', (string) ($activo['costo'] ?? 0));
+
+                    return is_numeric($costo) ? (float) $costo : 0;
+                });
+        };
+        $ivaPorcentaje = (float) config('app.iva', 16);
+        $ivaTasa = $ivaPorcentaje / 100;
+
+        $activoSchema = static fn (bool $hideLabels = false): array => [
             Select::make('material_id')
                 ->label('Material')
+                ->hiddenLabel($hideLabels)
                 ->required()
                     ->validationMessages([
                         'required' => 'Se requiere un material.',
@@ -35,30 +51,36 @@ class EntradaForm
                 ->searchable(['nombre', 'codigo', 'marca'])                
                 ->placeholder('Buscar un material')
                 ->searchPrompt('Buscar por Código o Nombre')
-                ->getOptionLabelFromRecordUsing(fn($record) => "{$record->codigo} - {$record->nombre} - {$record->marca} - {$record->modelo}")
+                //->getOptionLabelFromRecordUsing(fn ($record) => "{$record->codigo} - {$record->nombre} - {$record->marca} - {$record->modelo}")
                 ->columnSpanFull()
                 ->live(onBlur: true),
 
             TextInput::make('numero_serie')
-                ->inlineLabel()
+                ->inlineLabel(! $hideLabels)
+                ->hiddenLabel($hideLabels)
                 ->label('Número de Serie'),
 
             TextInput::make('costo')
-                ->inlineLabel()
-                ->label('Costo')
-                ->numeric()
-                ->prefix('$'),
+                ->inlineLabel(! $hideLabels)
+                ->hiddenLabel($hideLabels)
+                ->mask(RawJs::make('$money($input, \'.\', \',\', 4)'))
+                ->live(onBlur: true)
+                ->dehydrateStateUsing(fn ($state) => is_string($state) ? str_replace(',', '', $state) : $state),
+                // Parámetros: ($input, separador_decimal, separador_miles, cantidad_decimales),
 
             DatePicker::make('garantia')
-                ->inlineLabel()
+                ->inlineLabel(! $hideLabels)
+                ->hiddenLabel($hideLabels)
                 ->label('Garantía'),
 
             Textarea::make('detalles')
-                ->inlineLabel()
+                ->inlineLabel(! $hideLabels)
+                ->hiddenLabel($hideLabels)
                 ->label('Detalles'),
 
             FileUpload::make('imagenes')
                 ->label('Imágenes')
+                ->hiddenLabel($hideLabels)
                 ->multiple()
                 ->appendFiles()
                 ->reorderable()
@@ -76,6 +98,19 @@ class EntradaForm
                 ->default(1),
         ];
 
+        $activoTableSchema = $activoSchema(true);
+        array_splice($activoTableSchema, 1, 0, [
+            TextEntry::make('material_codigo')
+                ->hiddenLabel()
+                ->state(fn (Get $get): string => Material::find($get('material_id'))?->codigo ?? '—'),
+            TextEntry::make('material_marca')
+                ->hiddenLabel()
+                ->state(fn (Get $get): string => Material::find($get('material_id'))?->marca ?? '—'),
+            TextEntry::make('material_modelo')
+                ->hiddenLabel()
+                ->state(fn (Get $get): string => Material::find($get('material_id'))?->modelo ?? '—'),
+        ]);
+
         return $schema
             ->columns(4)
             ->components([
@@ -83,7 +118,8 @@ class EntradaForm
                     ->inlineLabel(false)
                     ->label('Proveedor')
                     ->placeholder('Buscar un proveedor')
-                    ->searchPrompt('Buscar por Código o Nombre')
+                    ->searchPrompt('Buscar por Nombre o por RFC')
+                    ->getOptionLabelFromRecordUsing(fn($record) => "{$record->rfc} - {$record->nombre}")
                     ->required()
                     ->validationMessages([
                         'required' => 'Se requiere un proveedor.',
@@ -91,6 +127,7 @@ class EntradaForm
                     ->relationship('proveedor', 'nombre')
                     ->searchable(['nombre', 'codigo', 'rfc'])
                     ->columnSpanFull()
+                    ->createOptionModalHeading('Nuevo Proveedor')
                     ->createOptionForm([
                         Grid::make(2)
                             ->schema([
@@ -136,6 +173,13 @@ class EntradaForm
                         TextInput::make('giro'),
                             ])
                     ]),
+                
+                DatePicker::make('fecha_factura')
+                    ->label('Fecha Factura')
+                    ->required()
+                    ->validationMessages([
+                        'required' => 'Se requiere una fecha de factura.',
+                    ]),
 
                 TextInput::make('factura')
                     ->label('No. Factura')
@@ -146,7 +190,7 @@ class EntradaForm
                     )
                     ->validationMessages([
                         'required' => 'Se requiere un folio.',
-                        'unique' => 'Ya existe una entrada con esta factura en esa fecha.',
+                        'unique' => 'Ya existe una entrada con esta factura y fecha.',
                     ]),
 
                 TextInput::make('requisicion')
@@ -161,14 +205,22 @@ class EntradaForm
                     ->required()
                     ->validationMessages([
                         'required' => 'Seleccione una opción tipo de compra.',
-                    ]) ->native(false),
-
-                DatePicker::make('fecha_factura')
-                    ->label('Fecha de Factura')
-                    ->required()
-                    ->validationMessages([
-                        'required' => 'Se requiere una fecha de factura.',
+                    ]) ->native(false)                    
+                    ->createOptionModalHeading('Nuevo Tipo de Compra')
+                    ->createOptionForm([
+                        TextInput::make('nombre')
+                            ->placeholder('Nombre de la tipo de compra')
+                            ->required()
+                            ->afterStateUpdated(function ($state, $set) {
+                                $set('nombre', preg_replace('/\s+/', ' ', trim($state)));
+                            })
+                            ->unique(ignoreRecord: true)
+                            ->validationMessages([
+                                'unique' => 'Ya se encuentra registrada.',
+                            ]),
                     ]),
+
+                
 
                 Repeater::make('activos')
                     ->inlineLabel(false)
@@ -176,20 +228,27 @@ class EntradaForm
                     ->itemLabel(fn($state): string => is_array($state) && filled($state['material_id']) ? optional(Material::find($state['material_id']))->nombre : 'Seleccionar Activo')
                     ->required()
                     ->validationMessages([
-                        'required' => 'Se requiere un activo.',
+                        'required' => 'Necesita agregar al menos un activo a la entrada.',
                     ])
                     ->relationship('activos')
                     ->columnSpanFull()
                     ->table([
-                        TableColumn::make('Material')->markAsRequired(),
-                        TableColumn::make('No. Serie'),
-                        TableColumn::make('Costo'),
-                        TableColumn::make('Garantía'),
-                        // TableColumn::make('Detalles'),
+                        TableColumn::make('Material')->width('660px'),
+                        TableColumn::make('Código')->width('160px'),
+                        TableColumn::make('Marca')->width('160px'),
+                        TableColumn::make('Modelo')->width('160px'),
+                        TableColumn::make('No. Serie')->width('160px'),
+                        TableColumn::make('Costo')->width('120px'),
+                        TableColumn::make('Garantía')->width('150px'),
+                        //TableColumn::make('Detalles'),
                         // TableColumn::make('Imágenes'),
                     ])
                     ->compact()
-                    ->schema($activoSchema())
+                    ->schema($activoTableSchema)
+                    ->live()
+                    ->extraAttributes(['class' => 'entrada-activos-repeater'])
+                    //->live() hace la tabla reactiva, actualizando los datos en tiempo real sin necesidad de recargar la página.
+                    //->extraAttributes(['class' => 'text-start'])
                     ->columns(2)
                     ->minItems(1)
                     ->defaultItems(0)
@@ -199,8 +258,8 @@ class EntradaForm
                         ->model(Activo::class)
                         ->schema($activoSchema())
                         ->modalHeading('Agregar Activo a la Entrada')
-                        ->modalSubmitActionLabel('Agregar Activo')
-                        ->color('success')
+                        ->modalSubmitActionLabel('Agregar')
+                        ->color('info')
                         ->action(function (array $data, Repeater $component, Action $action): void {
                             $items = $component->getRawState() ?? [];
                             $uuid = $component->generateUuid();
@@ -219,9 +278,35 @@ class EntradaForm
                                 $component->partiallyRender();
                             }
 
+                            Notification::make()
+                                ->title('Activo agregado correctamente a la Entrada.')
+                                ->success()
+                                ->send();
+
                             $action->halt();
                         }))
-                    ->addActionLabel('Agregar Activo')
+                    ->addActionLabel('Agregar Activos'),
+
+                Section::make('Resumen')
+                    ->columnSpanFull()
+                    ->columns(1)
+                    ->schema([
+                        TextEntry::make('subtotal')
+                            ->label('Subtotal')->inlineLabel()->alignment(Alignment::End)
+                            ->state(fn (Get $get): string => '$ ' . number_format($subtotal($get), 4, '.', ','))
+                            ->columnSpan(6)
+                            ->columnStart(3),
+                        TextEntry::make('iva')
+                            ->label('IVA (' . rtrim(rtrim(number_format($ivaPorcentaje, 2, '.', ''), '0'), '.') . '%)')->inlineLabel()->alignment(Alignment::End)
+                            ->state(fn (Get $get): string => '$ ' . number_format($subtotal($get) * $ivaTasa, 4, '.', ','))
+                            ->columnSpan(6)
+                            ->columnStart(3),
+                        TextEntry::make('total')
+                            ->label('Total')->inlineLabel()->alignment(Alignment::End)
+                            ->state(fn (Get $get): string => '$ ' . number_format($subtotal($get) * (1 + $ivaTasa), 4, '.', ','))
+                            ->columnSpan(6)
+                            ->columnStart(3),
+                    ]),
             ]);
     }
 }

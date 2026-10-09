@@ -84,6 +84,8 @@ return [
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
+    'iva' => env('IVA', 16),
+
     /*
     |--------------------------------------------------------------------------
     | Encryption Key

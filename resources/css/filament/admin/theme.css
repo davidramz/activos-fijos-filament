@@ -70,3 +70,15 @@
 .fi-header-actions-ctn {
     margin-top: 3px;
 }
+.fi-page-header-main-ctn {
+    row-gap: calc(var(--spacing) * 2);
+}
+
+.entrada-activos-repeater {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.entrada-activos-repeater > table {
+    min-width: 1200px;
+}
