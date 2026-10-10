@@ -18,13 +18,16 @@ return new class extends Migration
             $table->foreignId('tipo_compra_id')->constrained('tipo_compras');
 
             $table->string('consecutivo')->unique();
-            $table->string('factura')->unique();
+            $table->string('factura');
             $table->string('requisicion');
+            $table->boolean('iva')->default(true);
+            $table->boolean('isr')->default(false);
 
             $table->date('fecha_factura');
 
             $table->timestamps();
 
+            $table->unique(['factura', 'fecha_factura']);
             $table->index('fecha_factura');
         });
     }

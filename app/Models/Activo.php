@@ -75,6 +75,6 @@ class Activo extends Model
     }
     public function getCostoAttribute($value)
     {
-        return number_format($value, 2, '.', ',');
+        return number_format($value, 4, '.', ',');
     }
 }

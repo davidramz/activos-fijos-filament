@@ -23,6 +23,7 @@ use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Support\RawJs;
 use Filament\Support\Enums\Alignment;
+use Filament\Forms\Components\Checkbox;
 
 class EntradaForm
 {
@@ -38,6 +39,10 @@ class EntradaForm
         };
         $ivaPorcentaje = (float) config('app.iva', 16);
         $ivaTasa = $ivaPorcentaje / 100;
+        $isrPorcentaje = (float) config('app.isr', 1.25);
+        $isrTasa = $isrPorcentaje / 100;
+        $ivaImporte = static fn (Get $get): float => $get('iva') ? $subtotal($get) * $ivaTasa : 0;
+        $isrImporte = static fn (Get $get): float => $get('isr') ? $subtotal($get) * $isrTasa : 0;
 
         $activoSchema = static fn (bool $hideLabels = false): array => [
             Select::make('material_id')
@@ -99,6 +104,8 @@ class EntradaForm
         ];
 
         $activoTableSchema = $activoSchema(true);
+        [$costoField] = array_splice($activoTableSchema, 2, 1);
+        array_splice($activoTableSchema, 3, 0, [$costoField]);
         array_splice($activoTableSchema, 1, 0, [
             TextEntry::make('material_codigo')
                 ->hiddenLabel()
@@ -112,9 +119,10 @@ class EntradaForm
         ]);
 
         return $schema
-            ->columns(4)
+            ->columns(8)
             ->components([
                 Select::make('proveedor_id')
+                    ->columnSpan(6)
                     ->inlineLabel(false)
                     ->label('Proveedor')
                     ->placeholder('Buscar un proveedor')
@@ -126,7 +134,6 @@ class EntradaForm
                     ])
                     ->relationship('proveedor', 'nombre')
                     ->searchable(['nombre', 'codigo', 'rfc'])
-                    ->columnSpanFull()
                     ->createOptionModalHeading('Nuevo Proveedor')
                     ->createOptionForm([
                         Grid::make(2)
@@ -172,9 +179,21 @@ class EntradaForm
                             ->maxLength(10),
                         TextInput::make('giro'),
                             ])
-                    ]),
+                ]),
+
+                Checkbox::make('iva')
+                    ->label('Con IVA')
+                    ->inline(false)
+                    ->live()
+                    ->default(true),
+                Checkbox::make('isr')
+                    ->label('Retener ISR')
+                    ->inline(false)
+                    ->live()
+                    ->default(false),
                 
                 DatePicker::make('fecha_factura')
+                ->columnSpan(2)
                     ->label('Fecha Factura')
                     ->required()
                     ->validationMessages([
@@ -182,6 +201,7 @@ class EntradaForm
                     ]),
 
                 TextInput::make('factura')
+                    ->columnSpan(2)
                     ->label('No. Factura')
                     ->required()
                     ->unique(
@@ -194,6 +214,7 @@ class EntradaForm
                     ]),
 
                 TextInput::make('requisicion')
+                    ->columnSpan(2)
                     ->label('Requisición')
                     ->required()
                     ->validationMessages([
@@ -201,6 +222,7 @@ class EntradaForm
                     ]),
 
                 Select::make('tipo_compra_id')
+                ->columnSpan(2)
                     ->relationship('tipoCompra', 'nombre')
                     ->required()
                     ->validationMessages([
@@ -238,8 +260,8 @@ class EntradaForm
                         TableColumn::make('Marca')->width('160px'),
                         TableColumn::make('Modelo')->width('160px'),
                         TableColumn::make('No. Serie')->width('160px'),
-                        TableColumn::make('Costo')->width('120px'),
                         TableColumn::make('Garantía')->width('150px'),
+                        TableColumn::make('Costo')->width('120px'),
                         //TableColumn::make('Detalles'),
                         // TableColumn::make('Imágenes'),
                     ])
@@ -289,23 +311,28 @@ class EntradaForm
 
                 Section::make('Resumen')
                     ->columnSpanFull()
-                    ->columns(1)
+                    //->columnSpan(8)
                     ->schema([
                         TextEntry::make('subtotal')
                             ->label('Subtotal')->inlineLabel()->alignment(Alignment::End)
                             ->state(fn (Get $get): string => '$ ' . number_format($subtotal($get), 4, '.', ','))
-                            ->columnSpan(6)
-                            ->columnStart(3),
-                        TextEntry::make('iva')
-                            ->label('IVA (' . rtrim(rtrim(number_format($ivaPorcentaje, 2, '.', ''), '0'), '.') . '%)')->inlineLabel()->alignment(Alignment::End)
-                            ->state(fn (Get $get): string => '$ ' . number_format($subtotal($get) * $ivaTasa, 4, '.', ','))
-                            ->columnSpan(6)
-                            ->columnStart(3),
+                            ->columnSpan(1)
+                            ->columnStart(9),
+                        TextEntry::make('iva_importe')
+                            ->label('IVA ' . rtrim(rtrim(number_format($ivaPorcentaje, 2, '.', ''), '0'), '.') . ' %')->inlineLabel()->alignment(Alignment::End)
+                            ->state(fn (Get $get): string => '$ ' . number_format($ivaImporte($get), 4, '.', ','))
+                            ->columnSpan(1)
+                            ->columnStart(9),
+                        TextEntry::make('retencion_isr')
+                            ->label('ISR ' . rtrim(rtrim(number_format($isrPorcentaje, 2, '.', ''), '0'), '.') . ' %')->inlineLabel()->alignment(Alignment::End)
+                            ->state(fn (Get $get): string => '$ ' . number_format($isrImporte($get), 4, '.', ','))
+                            ->columnSpan(1)
+                            ->columnStart(9),
                         TextEntry::make('total')
                             ->label('Total')->inlineLabel()->alignment(Alignment::End)
-                            ->state(fn (Get $get): string => '$ ' . number_format($subtotal($get) * (1 + $ivaTasa), 4, '.', ','))
-                            ->columnSpan(6)
-                            ->columnStart(3),
+                            ->state(fn (Get $get): string => '$ ' . number_format($subtotal($get) + $ivaImporte($get) - $isrImporte($get), 4, '.', ','))
+                            ->columnSpan(1)
+                            ->columnStart(9),
                     ]),
             ]);
     }

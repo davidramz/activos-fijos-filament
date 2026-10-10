@@ -19,11 +19,13 @@ class Entrada extends Model
 
     protected $fillable = [
         'proveedor_id', 'user_id', 'tipo_compra_id', 'factura','consecutivo',
-        'requisicion', 'fecha_factura',
+        'requisicion', 'fecha_factura', 'iva', 'isr',
     ];
 
     protected $casts = [
         'fecha_factura' => 'date',
+        'iva' => 'boolean',
+        'isr' => 'boolean',
     ];
 
     public function proveedor()

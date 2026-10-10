@@ -18,11 +18,11 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        DB::table('material_tipos')->insert([
-            ['nombre' => 'Activo Fijo', 'disponible' => true],
-            ['nombre' => 'Consumible', 'disponible' => true],
-            ['nombre' => 'Pendiente', 'disponible' => true],
-        ]);
+        // DB::table('material_tipos')->insert([
+        //     ['nombre' => 'Activo Fijo', 'disponible' => true],
+        //     ['nombre' => 'Consumible', 'disponible' => true],
+        //     ['nombre' => 'Pendiente', 'disponible' => true],
+        // ]);
     }
 
     /**
