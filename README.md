@@ -9,6 +9,12 @@
 
 ## Notas Importantes
 
+Para usar el Export de las tablas:
+-El fallo está en la configuración de PHP que usa el servidor web. Configura sys_temp_dir en el php.ini activo para apuntar a una carpeta escribible, por ejemplo C:\laragon\tmp, y reinicia Laragon. La configuración de PHP por consola sí apunta a esa carpeta, pero la del servidor web está usando C:\Windows\Temp.
+-php.ini distinto al de consola. En el activo, zip estaba deshabilitado; sin esa extensión, Filament no puede generar archivos .xlsx.
+
+Habilité extension=zip en php.ini de PHP 8.5.1 y reinicié el proceso FastCGI para que cargara la configuración. Verifiqué que la aplicación responde y que OpenSpout ya puede crear un .xlsx.
+
 Al subir imagenes a los Activos manda error:
 
 - en el archivo php.ini

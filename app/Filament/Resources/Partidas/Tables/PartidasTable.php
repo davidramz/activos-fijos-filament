@@ -2,9 +2,12 @@
 
 namespace App\Filament\Resources\Partidas\Tables;
 
+use App\Filament\Exports\PartidaExporter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportAction;
+use Filament\Actions\Exports\Enums\ExportFormat;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -48,6 +51,11 @@ class PartidasTable
                 EditAction::make(),
             ])
             ->toolbarActions([
+                ExportAction::make('exportar')
+                    ->label('Exportar a Excel')
+                    ->exporter(PartidaExporter::class)
+                    ->formats([ExportFormat::Xlsx])
+                    ->columnMapping(false),
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

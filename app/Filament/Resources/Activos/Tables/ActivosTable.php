@@ -2,9 +2,12 @@
 
 namespace App\Filament\Resources\Activos\Tables;
 
+use App\Filament\Exports\ActivoExporter;
 use App\Models\Activo;
 //use Filament\Tables\Actions\EditAction;
 //use Filament\Tables\Actions\ViewAction;
+use Filament\Actions\ExportAction;
+use Filament\Actions\Exports\Enums\ExportFormat;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\ImageColumn;
@@ -29,14 +32,19 @@ class ActivosTable
                 ->badge()
                 ->color(fn(string $state): string => match ($state) {
                     'Almacen' => 'almacen',
-                    'Resguardado' => 'success',
+                    'Resguardo' => 'success',
                     'Baja' => 'baja',
-                    'Dev. proveedor' => 'dev_proveedor',
+                    'Dev.proveedor' => 'dev_proveedor',
                     'Suceptible' => 'suceptible',
                     'Cancelado' => 'danger',
                     'Reparacion' => 'warning',
                     default => 'gray',
                 }),
+
+                TextColumn::make('material.codigo')
+                    ->label('Código')
+                    ->searchable()
+                    ->sortable(),
 
                 TextColumn::make('material.nombre')
                     ->label('Material')
@@ -98,15 +106,22 @@ class ActivosTable
                 SelectFilter::make('status.nombre')
                     ->label('Estado')
                     ->options([
-                        '1' => 'Almacen',
+                        '1' => 'Baja',
                         '2' => 'Resguardado',
-                        '3' => 'Baja',
+                        '3' => 'Almacen',
                         '4' => 'Dev. proveedor',
                         '5' => 'Suceptible',
                         '6' => 'Cancelado',
                         '7' => 'Reparacion',
                     ])
                     ->attribute('status_id')
+            ])
+            ->toolbarActions([
+                ExportAction::make('exportar')
+                    ->label('Exportar a Excel')
+                    ->exporter(ActivoExporter::class)
+                    ->formats([ExportFormat::Xlsx])
+                    ->columnMapping(false),
             ])
             ->recordActions([
                 // ViewAction::make(),
