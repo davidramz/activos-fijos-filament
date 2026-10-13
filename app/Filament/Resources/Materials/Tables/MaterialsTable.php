@@ -2,9 +2,12 @@
 
 namespace App\Filament\Resources\Materials\Tables;
 
+use App\Filament\Exports\MaterialExporter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportAction;
+use Filament\Actions\Exports\Enums\ExportFormat;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -46,6 +49,11 @@ class MaterialsTable
                 // EditAction::make(),
             ])
             ->toolbarActions([
+                ExportAction::make('exportar')
+                    ->label('Exportar a Excel')
+                    ->exporter(MaterialExporter::class)
+                    ->formats([ExportFormat::Xlsx])
+                    ->columnMapping(false),
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
