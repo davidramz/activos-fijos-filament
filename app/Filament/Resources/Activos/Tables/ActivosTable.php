@@ -111,6 +111,8 @@ class ActivosTable
             ->toolbarActions([
                 ExportAction::make('exportar')
                     ->label('Exportar a Excel')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->extraAttributes(['class' => 'export-excel-action'])
                     ->exporter(ActivoExporter::class)
                     ->formats([ExportFormat::Xlsx])
                     ->columnMapping(false),

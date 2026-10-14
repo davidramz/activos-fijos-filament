@@ -60,6 +60,8 @@ class EmpleadosTable
             ->toolbarActions([
                 ExportAction::make('exportar')
                     ->label('Exportar a Excel')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->extraAttributes(['class' => 'export-excel-action'])
                     ->exporter(EmpleadoExporter::class)
                     ->formats([ExportFormat::Xlsx])
                     ->columnMapping(false),
