@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\Proveedors\Pages;
+namespace App\Filament\Resources\Proveedores\Pages;
 
-use App\Filament\Resources\Proveedors\ProveedorResource;
+use App\Filament\Resources\Proveedores\ProveedorResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListProveedors extends ListRecords
+class ListProveedores extends ListRecords
 {
     protected static string $resource = ProveedorResource::class;
 

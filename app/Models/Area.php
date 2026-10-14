@@ -26,8 +26,12 @@ class Area extends Model
         });
     }
 
-    //Accesor
+    //Accesor Minusculas Capitalizado
+    // public function getNombreAttribute($value){
+    //     return ucwords(strtolower($value));
+    // }
+    //Accesor Mayusculas
     public function getNombreAttribute($value){
-        return ucwords(strtolower($value));
+        return strtoupper($value);
     }
 }

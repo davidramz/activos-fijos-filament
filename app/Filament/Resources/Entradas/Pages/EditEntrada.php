@@ -11,11 +11,16 @@ class EditEntrada extends EditRecord
 {
     protected static string $resource = EntradaResource::class;
 
+    public function getRelationManagers(): array
+    {
+        return [];
+    }
+
     protected function getHeaderActions(): array
     {
         return [
-            ViewAction::make(),
-            DeleteAction::make(),
+            //ViewAction::make(),
+            //DeleteAction::make(),
         ];
     }
 }

@@ -11,7 +11,8 @@ use Filament\Actions\Exports\Enums\ExportFormat;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 class EmpleadosTable
 {
     public static function configure(Table $table): Table
@@ -46,7 +47,15 @@ class EmpleadosTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('area_id')
+                    ->label('Área')
+                    ->relationship('area', 'nombre'),
+                SelectFilter::make('puesto_id')
+                    ->label('Puesto')
+                    ->relationship('puesto', 'nombre'),
+                SelectFilter::make('campus_id')
+                    ->label('Campus')
+                    ->relationship('campus', 'nombre'),
             ])
             ->toolbarActions([
                 ExportAction::make('exportar')
@@ -55,7 +64,7 @@ class EmpleadosTable
                     ->formats([ExportFormat::Xlsx])
                     ->columnMapping(false),
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    //DeleteBulkAction::make(),
                 ]),
             ])
             ->recordActions([

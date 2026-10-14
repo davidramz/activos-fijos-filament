@@ -16,7 +16,7 @@ class ViewResguardo extends ViewRecord
         return [
             Action::make('back')
                 ->label('Volver al listado')
-                ->url(static::getResource()::getUrl('index'))
+                ->alpineClickHandler('window.history.back()')
                 ->icon('heroicon-o-arrow-left'),
             //EditAction::make(),
         ];

@@ -17,19 +17,19 @@ class Proveedor extends Model
     {
         return $this->hasMany(Entrada::class);
     }
-    // public function getNombreAttribute($value){
-    //     return ucwords(strtolower($value));
-    // }
-    // public function getCalleAttribute($value){
-    //     return ucfirst(strtolower($value));
-    // }
-    // public function getColoniaAttribute($value){
-    //     return ucfirst(strtolower($value));
-    // }
-    // public function getCiudadAttribute($value){
-    //     return ucfirst(strtolower($value));
-    // }
-    // public function getGiroAttribute($value){
-    //     return ucfirst(strtolower($value));
-    // }
+    public function getNombreAttribute($value){
+        return strtoupper($value);
+    }
+    public function getCalleAttribute($value){
+        return strtoupper($value);
+    }
+    public function getColoniaAttribute($value){
+        return strtoupper($value);
+    }
+    public function getCiudadAttribute($value){
+        return strtoupper($value);
+    }
+    public function getGiroAttribute($value){
+        return strtoupper($value);
+    }
 }

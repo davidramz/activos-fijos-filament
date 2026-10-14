@@ -13,7 +13,6 @@ use App\Models\Material;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Hidden;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
@@ -67,6 +66,7 @@ class EntradaForm
 
             TextInput::make('costo')
                 ->inlineLabel(! $hideLabels)
+                ->required()
                 ->hiddenLabel($hideLabels)
                 ->mask(RawJs::make('$money($input, \'.\', \',\', 4)'))
                 ->live(onBlur: true)
@@ -99,8 +99,6 @@ class EntradaForm
                 ->maxSize(5120)
                 ->columnSpanFull(),
 
-            Hidden::make('status_id')
-                ->default(1),
         ];
 
         $activoTableSchema = $activoSchema(true);
@@ -241,9 +239,7 @@ class EntradaForm
                                 'unique' => 'Ya se encuentra registrada.',
                             ]),
                     ]),
-
                 
-
                 Repeater::make('activos')
                     ->inlineLabel(false)
                     ->hiddenLabel()
@@ -253,6 +249,18 @@ class EntradaForm
                         'required' => 'Necesita agregar al menos un activo a la entrada.',
                     ])
                     ->relationship('activos')
+                    ->mutateRelationshipDataBeforeCreateUsing(
+                        fn (array $data): array => [
+                            ...$data,
+                            'status_id' => 3,
+                        ],
+                    )
+                    ->deleteAction(fn (Action $action): Action => $action
+                        ->requiresConfirmation()
+                        ->modalHeading('¿Quitar activo de la entrada?')
+                        ->modalDescription('El activo se quitará de esta entrada al guardar los cambios.')
+                        ->modalSubmitActionLabel('Quitar activo')
+                        ->modalCancelActionLabel('Cancelar'))
                     ->columnSpanFull()
                     ->table([
                         TableColumn::make('Material')->width('660px'),
@@ -307,9 +315,9 @@ class EntradaForm
 
                             $action->halt();
                         }))
-                    ->addActionLabel('Agregar Activos'),
+                    ->addActionLabel('Agregar Activos a la Entrada'),
 
-                Section::make('Resumen')
+                Section::make('')
                     ->columnSpanFull()
                     //->columnSpan(8)
                     ->schema([

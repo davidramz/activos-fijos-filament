@@ -17,15 +17,16 @@ return new class extends Migration
             $table->boolean('disponible')->default(true);
             $table->timestamps();
         });
-        DB::table('tipo_compras')->insert([
-            ['nombre' => 'pendiente', 'disponible' => true],
-            ['nombre' => 'directa', 'disponible' => true],
-            ['nombre' => 'licitación', 'disponible' => true],
-            ['nombre' => 'donación', 'disponible' => true],
-            ['nombre' => 'consolidada', 'disponible' => true],
-            ['nombre' => 'promoción', 'disponible' => true],
-            ['nombre' => 'otra', 'disponible' => true],
-        ]);
+
+        // DB::table('tipo_compras')->insert([
+        //     ['nombre' => 'pendiente', 'disponible' => true],
+        //     ['nombre' => 'directa', 'disponible' => true],
+        //     ['nombre' => 'licitación', 'disponible' => true],
+        //     ['nombre' => 'donación', 'disponible' => true],
+        //     ['nombre' => 'consolidada', 'disponible' => true],
+        //     ['nombre' => 'promoción', 'disponible' => true],
+        //     ['nombre' => 'otra', 'disponible' => true],
+        // ]);
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Proveedors\Tables;
+namespace App\Filament\Resources\Proveedores\Tables;
 
 use App\Filament\Exports\ProveedorExporter;
 use Filament\Actions\BulkActionGroup;
@@ -12,7 +12,7 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class ProveedorsTable
+class ProveedoresTable
 {
     public static function configure(Table $table): Table
     {

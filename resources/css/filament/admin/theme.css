@@ -3,6 +3,28 @@
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
 
+html:not(.dark) .fi-body {
+    background-color: #f5fdfc;
+}
+html:not(.dark) .fi-topbar {
+    background-color: #dfeeec;
+}
+html:not(.dark) .fi-section {
+    background-color: #f8fdff;
+}
+html:not(.dark) .fi-ta-table > thead > tr {
+    background-color: #dae9e7;
+}
+html:not(.dark) .fi-sidebar-item.fi-active > .fi-sidebar-item-btn {
+    background-color: white;
+}
+/* html:not(.dark) .fi-btn {
+    background-color: #10b982;
+    color: white;
+}
+html:not(.dark) .fi-btn:hover {
+    background-color: #059669;
+} */
 .fi-size-sm {
     font-size: 0.775rem;
 }
@@ -14,6 +36,7 @@
 }
 .fi-header-heading {
     font-size: 0.975rem;
+    display: none;
 }
 .fi-fo-checkbox-list-option-label {
     font-size: 0.775rem;
@@ -68,10 +91,10 @@
 }
 /* Elimina el padding del contenedor principal de los botones de acción del encabezado de la página */
 .fi-header-actions-ctn {
-    margin-top: 3px;
+    margin-top: 1px;
 }
 .fi-page-header-main-ctn {
-    row-gap: calc(var(--spacing) * 2);
+    row-gap: calc(var(--spacing) * 1);
 }
 
 .entrada-activos-repeater {

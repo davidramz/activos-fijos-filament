@@ -16,37 +16,51 @@ class ActivoInfolist
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(4)
+            ->columns(5)
             ->components([
+                
+                TextEntry::make('material.codigo')
+                    ->label('Código')
+                    ->columnSpan(1),
+
                 TextEntry::make('material.nombre')
                     ->label('Material')
-                    ->columnSpanFull(),
+                    ->columnSpan(4),
+                    
                 TextEntry::make('numero_inventario')
-                    ->label('Número de Inventario'),
+                    ->label('Inventario'),
 
                 TextEntry::make('numero_serie')
-                    ->label('Número de Serie'),
+                    ->label('Serie'),
                 TextEntry::make('material.marca')
                     ->label('Marca'),
 
                 TextEntry::make('material.modelo')
-                    ->label('Modelo'),
-
-                TextEntry::make('material.codigo')
-                    ->label('Código del Material'),
+                    ->label('Modelo'),                
 
                 TextEntry::make('costo')
-                    ->label('Costo'),
+                    ->label('Costo')
+                    ->money('MXN', locale: 'es_MX'),
+
+                TextEntry::make('entrada.consecutivo')
+                    ->label('Consecutivo'),
 
                 TextEntry::make('garantia')
                     ->label('Garantía')
-                    ->dateTime('d/m/Y'),
+                    ->dateTime('d/m/Y'),               
 
+                TextEntry::make('entrada.factura')
+                    ->label('Factura'),
+
+                TextEntry::make('created_at')
+                    ->label('Fecha Factura')
+                    ->dateTime('d/m/Y H:i'),
+                
                 TextEntry::make('status.nombre')
                     ->label('Estado')
                     ->badge()
                     ->url(function (Activo $record): ?string {
-                        if ((int) $record->status_id !== 3) {
+                        if ((int) $record->status_id !== 1) {
                             return null;
                         }
 
@@ -57,25 +71,19 @@ class ActivoInfolist
                             : null;
                     })
                     ->color(fn(string $state): string => match ($state) {
-                        'Almacen' => 'info',
-                        'Resguardado' => 'success',
-                        'Baja' => 'danger',
-                        'Dev. proveedor' => 'orange',
-                        'Suceptible' => 'warning',
-                        'Cancelado' => 'danger',
-                        'Reparacion' => 'secondary',
+                        'ALMACEN' => 'almacen',
+                        'RESGUARDADO' => 'success',
+                        'BAJA' => 'baja',
+                        'DEV.PROVEEDOR' => 'dev_proveedor',
+                        'SUCEPTIBLE' => 'suceptible',
+                        'CANCELADO' => 'danger',
+                        'REPARACION' => 'warning',
                         default => 'gray',
                     }),
 
                 TextEntry::make('empleadoActual.nombre')
-                    ->label('Asignado a'),
-
-                TextEntry::make('entrada.folio')
-                    ->label('Entrada (Folio)'),
-
-                TextEntry::make('created_at')
-                    ->label('Creado')
-                    ->dateTime('d/m/Y H:i'),
+                    ->label('Asignado a')
+                    ->columnSpanFull(),
 
                 TextEntry::make('detalles')
                     ->label('Detalles')

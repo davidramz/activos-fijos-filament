@@ -31,12 +31,12 @@ class ActivosTable
                 ->label('Estado')
                 ->badge()
                 ->color(fn(string $state): string => match ($state) {
-                    'Almacen' => 'almacen',
-                    'Resguardo' => 'success',
-                    'Baja' => 'baja',
-                    'Dev.proveedor' => 'dev_proveedor',
-                    'Suceptible' => 'suceptible',
-                    'Cancelado' => 'danger',
+                    'ALMACEN' => 'almacen',
+                    'RESGUARDADO' => 'success',
+                    'BAJA' => 'baja',
+                    'DEV.PROVEEDOR' => 'dev_proveedor',
+                    'SUCEPTIBLE' => 'suceptible',
+                    'CANCELADO' => 'danger',
                     'Reparacion' => 'warning',
                     default => 'gray',
                 }),
@@ -48,6 +48,7 @@ class ActivosTable
 
                 TextColumn::make('material.nombre')
                     ->label('Material')
+                    ->limit(50)
                     ->searchable()
                     ->sortable(),
 
@@ -105,16 +106,7 @@ class ActivosTable
             ->filters([
                 SelectFilter::make('status.nombre')
                     ->label('Estado')
-                    ->options([
-                        '1' => 'Baja',
-                        '2' => 'Resguardado',
-                        '3' => 'Almacen',
-                        '4' => 'Dev. proveedor',
-                        '5' => 'Suceptible',
-                        '6' => 'Cancelado',
-                        '7' => 'Reparacion',
-                    ])
-                    ->attribute('status_id')
+                    ->relationship('status', 'nombre'),
             ])
             ->toolbarActions([
                 ExportAction::make('exportar')

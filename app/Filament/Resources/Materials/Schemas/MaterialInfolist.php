@@ -10,21 +10,30 @@ class MaterialInfolist
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(5)
             ->components([
+                
+                TextEntry::make('codigo')
+                    ->columnSpan(1),
+
+                TextEntry::make('nombre')
+                    ->label('Material')
+                    ->columnSpan(4),              
+
                 TextEntry::make('tipo.nombre')
-                    ->label('Tipo de material')
+                    ->label('Tipo')
                     ->placeholder('-'),
+
+                TextEntry::make('unidad.nombre')
+                    ->label('Unidad'),                
+                
+                TextEntry::make('marca'),
+
+                TextEntry::make('modelo'),                
+                
                 TextEntry::make('partida.descripcion')
                     ->label('Partida')
                     ->columnSpanFull(),
-                TextEntry::make('unidad.nombre')
-                    ->label('Unidad'),
-                TextEntry::make('codigo'),
-                TextEntry::make('nombre')
-                    ->label('Nombre del material')
-                    ->columnSpanFull(),
-                TextEntry::make('marca'),
-                TextEntry::make('modelo'),
                 // TextEntry::make('created_at')
                 //     ->dateTime()
                 //     ->placeholder('-'),

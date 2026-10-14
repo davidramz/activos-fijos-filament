@@ -12,11 +12,19 @@ class PartidaInfolist
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(6)
             ->components([
-                TextEntry::make('codigo')->label('Código'),
-                TextEntry::make('tipo.nombre')->label('Tipo de Partida'),
-                TextEntry::make('nombre')
+                
+                TextEntry::make('tipo.nombre')
+                    ->label('Tipo de Partida')
                     ->columnSpanFull(),
+
+                TextEntry::make('codigo')->label('Código')
+                    ->columnSpan(1),
+
+                TextEntry::make('nombre')
+                    ->columnSpan(5),
+                
                 TextEntry::make('detalle')
                     ->columnSpanFull()
                     ->placeholder('-'),

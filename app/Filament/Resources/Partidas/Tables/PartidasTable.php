@@ -21,18 +21,14 @@ class PartidasTable
         return $table
             ->columns([
                 TextColumn::make('tipo.nombre')->label('Tipo')
-                    // ->size(TextSize::ExtraSmall)    
-                    // ->weight(FontWeight::ExtraLight)
                     ->searchable(),
-                TextColumn::make('codigo')
-                    // ->size(TextSize::ExtraSmall)    
+                TextColumn::make('codigo') 
                     ->searchable(),
                 TextColumn::make('nombre')
-                    //->size(TextSize::ExtraSmall)    
+                    ->limit(50) 
                     ->searchable(),
                 TextColumn::make('detalle')
-                    // ->size(TextSize::ExtraSmall)    
-                    // ->weight(FontWeight::ExtraLight)
+                    ->limit(50) 
                     ->searchable(),
                 // TextColumn::make('created_at')
                 //     ->dateTime()

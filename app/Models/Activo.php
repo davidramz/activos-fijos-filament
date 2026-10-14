@@ -73,8 +73,21 @@ class Activo extends Model
     {
         return $this->belongsTo(ActivoStatus::class, 'status_id');
     }
-    public function getCostoAttribute($value)
-    {
-        return number_format($value, 4, '.', ',');
+    // public function getCostoAttribute($value)
+    // {
+    //     return $this->formatearDinamico($value);
+    // }
+    private function formatearDinamico($numero) {
+        //Elimina ceros a l derecha del número
+        $numero = rtrim(rtrim($numero, '0'), '.');
+        // Obtiene la parte decimal del número
+        $partes = explode('.', (string)$numero);
+        $cantDecimales = isset($partes[1]) ? strlen($partes[1]) : 0;
+
+        // Limita los decimales a un mínimo de 2 y un máximo de 4
+        $decimalesAEditar = max(2, min(4, $cantDecimales));
+
+        // Retorna el número formateado (puedes cambiar "," y "." según tu región)
+        return number_format($numero, $decimalesAEditar, '.', ',');
     }
 }

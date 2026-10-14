@@ -15,7 +15,11 @@ class Puesto extends Model
         return $this->hasMany(Empleado::class);
     }
     //Accesor
+    // public function getNombreAttribute($value){
+    //     return ucwords(strtolower($value));
+    // }
+    //Accesor Minusculas Capitalizado
     public function getNombreAttribute($value){
-        return ucwords(strtolower($value));
+        return strtoupper($value);
     }
 }

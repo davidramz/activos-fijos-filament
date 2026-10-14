@@ -23,11 +23,18 @@ class Partida extends Model
         return "{$this->codigo} | {$this->nombre}";
     }
     //Accesor
-    public function getNombreAttribute($value){
-        return ucwords(strtolower($value));
-    }
+    // public function getNombreAttribute($value){
+    //     return ucwords(strtolower($value));
+    // }
     //Accesor
-    public function getDetalleAttribute($value){
-        return ucfirst(strtolower($value));
+    // public function getDetalleAttribute($value){
+    //     return ucfirst(strtolower($value));
+    // }
+    public function getNombreAttribute($value){
+        return strtoupper($value);
     }
+    public function getDetalleAttribute($value){
+        return strtoupper($value);
+    }
+    
 }

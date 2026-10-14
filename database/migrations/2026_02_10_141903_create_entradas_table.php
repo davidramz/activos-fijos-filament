@@ -27,7 +27,7 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->unique(['factura', 'fecha_factura']);
+            $table->unique(['proveedor_id', 'factura', 'fecha_factura']);
             $table->index('fecha_factura');
         });
     }

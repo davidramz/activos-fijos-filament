@@ -43,7 +43,7 @@ class AreasTable
                     ->formats([ExportFormat::Xlsx])
                     ->columnMapping(false),
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    //DeleteBulkAction::make(),
                 ]),
             ]);
     }

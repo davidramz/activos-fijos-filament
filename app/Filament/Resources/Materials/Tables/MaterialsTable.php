@@ -21,8 +21,10 @@ class MaterialsTable
                 TextColumn::make('codigo')
                     ->searchable(),
                 TextColumn::make('nombre')
+                    ->limit(50)
                     ->searchable(),
                 TextColumn::make('partida.nombre')
+                    ->limit(50)
                     ->sortable(),
                 TextColumn::make('unidad.nombre')
                     ->sortable(),

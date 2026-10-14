@@ -18,15 +18,15 @@ return new class extends Migration
             $table->timestamps();
         });
         
-        DB::table('activo_status')->insert([
-            ['nombre' => 'almacen', 'disponible' => true],
-            ['nombre' => 'resguardado', 'disponible' => true],
-            ['nombre' => 'baja', 'disponible' => true],
-            ['nombre' => 'Dev. proveedor', 'disponible' => true],
-            ['nombre' => 'SUCEPTIBLE', 'disponible' => true],
-            ['nombre' => 'CANCELADO', 'disponible' => true],
-            ['nombre' => 'REPARACION', 'disponible' => true],
-        ]);
+        // DB::table('activo_status')->insert([
+        //     ['nombre' => 'almacen', 'disponible' => true],
+        //     ['nombre' => 'resguardado', 'disponible' => true],
+        //     ['nombre' => 'baja', 'disponible' => true],
+        //     ['nombre' => 'Dev. proveedor', 'disponible' => true],
+        //     ['nombre' => 'SUCEPTIBLE', 'disponible' => true],
+        //     ['nombre' => 'CANCELADO', 'disponible' => true],
+        //     ['nombre' => 'REPARACION', 'disponible' => true],
+        // ]);
     }
 
     /**

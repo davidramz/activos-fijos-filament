@@ -34,13 +34,13 @@ class EntradaInfolist
 
                         TextEntry::make('tipoCompra.nombre')
                             ->label('Tipo de Compra'),
-                            
-                        TextEntry::make('created_at')
-                            ->label('Fecha Entrada')
-                            ->dateTime('d/m/Y'),
 
                         TextEntry::make('fecha_factura')
                             ->label('Fecha Factura')
+                            ->dateTime('d/m/Y'),
+                            
+                        TextEntry::make('created_at')
+                            ->label('Fecha Entrada')
                             ->dateTime('d/m/Y'),
 
                         // TextEntry::make('user.name')

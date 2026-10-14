@@ -11,6 +11,11 @@ class EditEmpleado extends EditRecord
 {
     protected static string $resource = EmpleadoResource::class;
 
+     public function getRelationManagers(): array
+    {
+        return [];
+    }
+
     protected function getHeaderActions(): array
     {
         return [

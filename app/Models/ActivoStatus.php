@@ -17,7 +17,7 @@ class ActivoStatus extends Model
     {
         return $this->hasMany(ActivoMovimiento::class);
     }
-    public function getNombreAttribute($value){
-        return ucfirst(strtolower($value));
-    }
+    // public function getNombreAttribute($value){
+    //     return ucfirst(strtolower($value));
+    // }
 }

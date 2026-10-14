@@ -15,7 +15,10 @@ class Campus extends Model
         return $this->hasMany(Empleado::class);
     }
     //Accesor
+    // public function getNombreAttribute($value){
+    //     return ucwords(strtolower($value));
+    // }
     public function getNombreAttribute($value){
-        return ucwords(strtolower($value));
+        return strtoupper($value);
     }
 }
