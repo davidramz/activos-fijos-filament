@@ -14,7 +14,11 @@ class PartidaForm
         return $schema
             ->components([
                 TextInput::make('codigo')
-                    ->required(),
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->validationMessages([
+                        'unique' => 'El :attribute ya se encuentra registrado.',
+                    ]),
                 Select::make('tipo_id')
                     ->required()
                     ->relationship('tipo', 'nombre'),

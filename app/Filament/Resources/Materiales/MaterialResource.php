@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\Materials;
+namespace App\Filament\Resources\Materiales;
 
-use App\Filament\Resources\Materials\Pages\CreateMaterial;
-use App\Filament\Resources\Materials\Pages\EditMaterial;
-use App\Filament\Resources\Materials\Pages\ListMaterials;
-use App\Filament\Resources\Materials\Pages\ViewMaterial;
-use App\Filament\Resources\Materials\Schemas\MaterialForm;
-use App\Filament\Resources\Materials\Schemas\MaterialInfolist;
-use App\Filament\Resources\Materials\Tables\MaterialsTable;
+use App\Filament\Resources\Materiales\Pages\CreateMaterial;
+use App\Filament\Resources\Materiales\Pages\EditMaterial;
+use App\Filament\Resources\Materiales\Pages\ListMaterials;
+use App\Filament\Resources\Materiales\Pages\ViewMaterial;
+use App\Filament\Resources\Materiales\Schemas\MaterialForm;
+use App\Filament\Resources\Materiales\Schemas\MaterialInfolist;
+use App\Filament\Resources\Materiales\Tables\MaterialsTable;
 use App\Models\Material;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -19,7 +19,9 @@ use Filament\Tables\Table;
 class MaterialResource extends Resource
 {
     protected static ?string $model = Material::class;
-    protected static ?string $pluralModelLabel  = 'Materiales';
+    protected static ?string $slug = 'materiales';
+    protected static ?string $navigationLabel = 'Materiales';
+    protected static ?string $pluralModelLabel = 'Materiales';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedInboxStack;
 

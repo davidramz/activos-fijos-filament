@@ -46,9 +46,9 @@ class Empleado extends Model
     }
     
     //Accesor
-    // public function getNombreAttribute($value){
-    //     return ucwords(strtolower($value));
-    // }
+    public function getNombreAttribute($value){
+        return strtoupper($value);
+    }
 
     public function getNumeroNombreAttribute($value){
         return $this->numero . ' - ' . $this->nombre;

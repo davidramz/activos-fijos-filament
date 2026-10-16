@@ -17,6 +17,7 @@ class ProveedoresTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->paginated([10, 25, 50, 100, 200])
             ->columns([
                 TextColumn::make('codigo')
                     ->searchable(),
@@ -51,8 +52,8 @@ class ProveedoresTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
+                //ViewAction::make(),
+                //EditAction::make(),
             ])
             ->toolbarActions([
                 ExportAction::make('exportar')
@@ -63,7 +64,7 @@ class ProveedoresTable
                     ->formats([ExportFormat::Xlsx])
                     ->columnMapping(false),
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    //DeleteBulkAction::make(),
                 ]),
             ]);
     }

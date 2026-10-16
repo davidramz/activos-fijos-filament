@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Materials\Tables;
+namespace App\Filament\Resources\Materiales\Tables;
 
 use App\Filament\Exports\MaterialExporter;
 use Filament\Actions\BulkActionGroup;
@@ -17,6 +17,7 @@ class MaterialsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->paginated([10, 25, 50, 100, 200])
             ->columns([
                 TextColumn::make('codigo')
                     ->searchable(),
@@ -59,7 +60,7 @@ class MaterialsTable
                     ->formats([ExportFormat::Xlsx])
                     ->columnMapping(false),
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    //DeleteBulkAction::make(),
                 ]),
             ]);
     }

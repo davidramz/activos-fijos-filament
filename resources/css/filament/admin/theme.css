@@ -19,32 +19,46 @@ html:not(.dark) {
     --primary-50: #e6f4f1;
     --primary-100: #cce9e3;
     --primary-200: #99d3c7;
-    --primary-300: #66bdaa;
-    --primary-400: #33a78e;
+    --primary-300: #159c86;
+    /* --primary-400: #33a78e; */
+    --primary-400: #007e68;
     --primary-500: #008f75;
     --primary-600: #007e68;
     --primary-700: #006353;
     --primary-800: #004f43;
-    --primary-900: #003f36;
-    --primary-950: #002720;
+    --primary-900: #ecf5f3;
+    --primary-950: #ecf5f3;
 }
 
 html:not(.dark) .fi-body {
     background-color: #f7f6f0;
 }
-
+.fi-btn {
+    padding-block: calc(var(--spacing) * 1);
+    border-radius: 0.375rem;
+}
 html:not(.dark) .fi-topbar {
     background-color: #007e68;
     color: #f7fff4;
 }
 
 html:not(.dark) .fi-btn.export-excel-action,
-html:not(.dark) .fi-btn.export-excel-action:hover,
 html:not(.dark) .fi-btn.export-excel-action:focus-visible {
     background-color: #007e68;
     color: #fff;
 }
 
+html:not(.dark) .fi-btn.export-excel-action:hover {
+    background-color: #159c86;
+    color: #fff;
+}
+
+.fi-header .fi-breadcrumbs {
+    margin-bottom: calc(var(--spacing) * 1);
+}
+.fi-main {
+    padding-inline: calc(var(--spacing) * 3);
+}
 html:not(.dark) .fi-topbar .fi-topbar-item-label,
 html:not(.dark) .fi-topbar .fi-icon,
 html:not(.dark) .fi-topbar .fi-logo {
@@ -89,13 +103,7 @@ html:not(.dark) .fi-theme-switcher-btn.fi-active {
     background-color: #84cd86;
     color: #178317;
 }
-/* html:not(.dark) .fi-btn {
-    background-color: #10b982;
-    color: white;
-}
-html:not(.dark) .fi-btn:hover {
-    background-color: #059669;
-} */
+
 .fi-size-sm {
     font-size: 0.775rem;
 }

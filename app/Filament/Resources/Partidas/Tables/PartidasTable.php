@@ -19,14 +19,15 @@ class PartidasTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->paginated([10, 25, 50, 100, 200])
             ->columns([
                 TextColumn::make('tipo.nombre')->label('Tipo')
-                    ->searchable(),
+                    ->searchable()->sortable(),
                 TextColumn::make('codigo') 
-                    ->searchable(),
+                    ->searchable()->sortable(),
                 TextColumn::make('nombre')
                     ->limit(50) 
-                    ->searchable(),
+                    ->searchable()->sortable(),
                 TextColumn::make('detalle')
                     ->limit(50) 
                     ->searchable(),
@@ -43,8 +44,8 @@ class PartidasTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
+                //ViewAction::make(),
+                //EditAction::make(),
             ])
             ->toolbarActions([
                 ExportAction::make('exportar')
@@ -55,7 +56,7 @@ class PartidasTable
                     ->formats([ExportFormat::Xlsx])
                     ->columnMapping(false),
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    //DeleteBulkAction::make(),
                 ]),
             ]);
     }

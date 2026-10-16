@@ -17,11 +17,13 @@ class EntradasTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->paginated([10, 25, 50, 100, 200])
             ->columns([
                 TextColumn::make('consecutivo')
                     ->label('Consecutivo')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->grow(false),
                 TextColumn::make('factura')
                     ->label('Factura')
                     ->searchable()

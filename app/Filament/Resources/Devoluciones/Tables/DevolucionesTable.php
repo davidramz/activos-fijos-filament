@@ -15,6 +15,7 @@ class DevolucionesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->paginated([10, 25, 50, 100, 200])
             ->query(Resguardo::query()->where('tipo_id', 2))
             ->columns([
                 TextColumn::make('folio_formateado')
@@ -48,7 +49,7 @@ class DevolucionesTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
+                //ViewAction::make(),
                 // EditAction::make(),
             ])
             ->toolbarActions([

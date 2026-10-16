@@ -42,50 +42,50 @@ class ActivosRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->headerActions([
-                CreateAction::make()
-                    ->schema([
-                        Select::make('material_id')
-                            ->label('Material')
-                            ->required()
-                            ->relationship('material', 'nombre')
-                            ->searchable(['nombre', 'codigo', 'marca'])
-                            ->getOptionLabelFromRecordUsing(fn($record) => "{$record->nombre} - {$record->marca} ({$record->modelo})")
-                            ->columnSpanFull(),
+            //->headerActions([
+                // CreateAction::make()
+                //     ->schema([
+                //         Select::make('material_id')
+                //             ->label('Material')
+                //             ->required()
+                //             ->relationship('material', 'nombre')
+                //             ->searchable(['nombre', 'codigo', 'marca'])
+                //             ->getOptionLabelFromRecordUsing(fn($record) => "{$record->nombre} - {$record->marca} ({$record->modelo})")
+                //             ->columnSpanFull(),
 
-                        TextInput::make('numero_serie')
-                            ->label('Número de Serie'),
+                //         TextInput::make('numero_serie')
+                //             ->label('Número de Serie'),
 
-                        TextInput::make('costo')
-                            ->label('Costo')
-                            ->numeric()
-                            ->prefix('$'),
+                //         TextInput::make('costo')
+                //             ->label('Costo')
+                //             ->numeric()
+                //             ->prefix('$'),
 
-                        DatePicker::make('garantia')
-                            ->label('Garantía'),
+                //         DatePicker::make('garantia')
+                //             ->label('Garantía'),
 
-                        Textarea::make('detalles')
-                            ->label('Detalles')
-                            ->columnSpanFull(),
+                //         Textarea::make('detalles')
+                //             ->label('Detalles')
+                //             ->columnSpanFull(),
 
-                        FileUpload::make('imagenes')
-                            ->label('Imágenes')
-                            ->multiple()
-                            ->reorderable()
-                            ->disk('public')
-                            ->directory('activos')
-                            ->visibility('public')
-                            ->image()
-                            ->maxSize(5120)
-                            ->columnSpanFull(),
+                //         FileUpload::make('imagenes')
+                //             ->label('Imágenes')
+                //             ->multiple()
+                //             ->reorderable()
+                //             ->disk('public')
+                //             ->directory('activos')
+                //             ->visibility('public')
+                //             ->image()
+                //             ->maxSize(5120)
+                //             ->columnSpanFull(),
 
-                        Select::make('status_id')
-                            ->label('Estadox')
-                            ->relationship('status', 'nombre')
-                            //->default(1), // Asumiendo que '1' es el ID del estado "En Almacén"
-                    ])
+                //         Select::make('status_id')
+                //             ->label('Estadox')
+                //             ->relationship('status', 'nombre')
+                //             //->default(1), // Asumiendo que '1' es el ID del estado "En Almacén"
+                //     ])
                 //->columns(2),
-            ])
+            //])
             ->columns([
                 TextColumn::make('numero_inventario')
                     ->label('Inventario')
@@ -151,7 +151,6 @@ class ActivosRelationManager extends RelationManager
             ->recordActions([
                 ViewAction::make()
                     ->label('Ver')
-                    ->icon('heroicon-o-eye')
                     ->infolist(function (Activo $record): array {
                         return [
                             ComponentsSection::make('Información del Activo')

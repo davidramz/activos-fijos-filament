@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Materials\Schemas;
+namespace App\Filament\Resources\Materiales\Schemas;
 
 use App\Models\Partida;
 use Filament\Forms\Components\TextInput;

@@ -12,7 +12,11 @@ class ProveedorForm
         return $schema
             ->components([
                 TextInput::make('codigo')
-                    ->required(),
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->validationMessages([
+                        'unique' => 'El :attribute ya se encuentra registrado.',
+                    ]),
                 TextInput::make('nombre')
                     ->required(),
                 TextInput::make('rfc'),
