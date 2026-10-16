@@ -20,7 +20,7 @@ export default defineConfig({
         },
         host: true,
         hmr: {
-            host: "192.168.15.19", // <-- Pon aquí la IP de tu PC
+            host: "http://192.168.15.19/activos-fijos/public", // <-- Pon aquí la IP de tu PC
         },
     },
 });

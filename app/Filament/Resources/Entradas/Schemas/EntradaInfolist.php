@@ -18,7 +18,7 @@ class EntradaInfolist
                     ->compact()
                     ->schema([           
                         TextEntry::make('consecutivo')
-                            ->label('No. Entrada'),
+                            ->label('Entrada'),
 
                         TextEntry::make('proveedor.nombre')
                             ->label('Proveedor'),
@@ -33,7 +33,7 @@ class EntradaInfolist
                             ->label('Requisición'),
 
                         TextEntry::make('tipoCompra.nombre')
-                            ->label('Tipo de Compra'),
+                            ->label('Compra'),
 
                         TextEntry::make('fecha_factura')
                             ->label('Fecha Factura')

@@ -3,11 +3,11 @@
 namespace App\Filament\Resources\Proveedores\Tables;
 
 use App\Filament\Exports\ProveedorExporter;
+use App\Filament\Exports\Enums\NetworkExportFormat;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ExportAction;
-use Filament\Actions\Exports\Enums\ExportFormat;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -61,7 +61,7 @@ class ProveedoresTable
                     ->icon('heroicon-o-arrow-down-tray')
                     ->extraAttributes(['class' => 'export-excel-action'])
                     ->exporter(ProveedorExporter::class)
-                    ->formats([ExportFormat::Xlsx])
+                    ->formats([NetworkExportFormat::Xlsx])
                     ->columnMapping(false),
                 BulkActionGroup::make([
                     //DeleteBulkAction::make(),

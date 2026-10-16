@@ -10,6 +10,7 @@
 ## Notas Importantes
 
 Para usar el Export de las tablas:
+- En instalaciones accesibles desde otras PCs en la red local y servidas desde una subcarpeta, configura `APP_URL` en `.env` con una URL que esas PCs puedan abrir, incluyendo la subcarpeta. Por ejemplo: `APP_URL=http://192.168.15.19/activos-fijos/public`. Después de cambiarlo, ejecuta `php artisan config:clear` y reinicia el worker de colas si está activo.
 -El fallo está en la configuración de PHP que usa el servidor web. Configura sys_temp_dir en el php.ini activo para apuntar a una carpeta escribible, por ejemplo C:\laragon\tmp, y reinicia Laragon. La configuración de PHP por consola sí apunta a esa carpeta, pero la del servidor web está usando C:\Windows\Temp.
 -php.ini distinto al de consola. En el activo, zip estaba deshabilitado; sin esa extensión, Filament no puede generar archivos .xlsx.
 

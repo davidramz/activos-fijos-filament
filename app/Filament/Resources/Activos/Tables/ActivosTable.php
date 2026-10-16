@@ -3,11 +3,11 @@
 namespace App\Filament\Resources\Activos\Tables;
 
 use App\Filament\Exports\ActivoExporter;
+use App\Filament\Exports\Enums\NetworkExportFormat;
 use App\Models\Activo;
 //use Filament\Tables\Actions\EditAction;
 //use Filament\Tables\Actions\ViewAction;
 use Filament\Actions\ExportAction;
-use Filament\Actions\Exports\Enums\ExportFormat;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\ImageColumn;
@@ -115,7 +115,7 @@ class ActivosTable
                     ->icon('heroicon-o-arrow-down-tray')
                     ->extraAttributes(['class' => 'export-excel-action'])
                     ->exporter(ActivoExporter::class)
-                    ->formats([ExportFormat::Xlsx])
+                    ->formats([NetworkExportFormat::Xlsx])
                     ->columnMapping(false),
             ])
             ->recordActions([
