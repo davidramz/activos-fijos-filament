@@ -22,7 +22,7 @@ class ResguardoEntreEmpleadosForm
                     ->default(3),
                 Select::make('empleado_origen_id')
                     ->label('Empleado Origen')                    
-                    ->helperText('Busca por número de empleado o nombre')
+                    ->placeHolder('Buscar por número o nombre')
                     ->relationship('empleadoOrigen', 'nombre')
                     ->searchable(['nombre', 'numero'])
                     ->required()
@@ -37,7 +37,7 @@ class ResguardoEntreEmpleadosForm
                     }),
                 Select::make('empleado_destino_id')
                     ->label('Empleado Destino')
-                    ->helperText('Busca por número de empleado o nombre')
+                    ->placeHolder('Buscar por número o nombre')
                     ->relationship('empleadoDestino', 'nombre')
                     ->searchable(['nombre', 'numero'])
                     ->required()
@@ -48,25 +48,24 @@ class ResguardoEntreEmpleadosForm
                     ->reactive(),
                 Hidden::make('user_id')
                     ->default(fn() => auth()->id()),
-                Textarea::make('observaciones')
-                    ->label('Observaciones')
-                    ->placeholder('Observaciones adicionales')
-                    ->columnSpanFull(),
+                
                 // TextInput::make('activos_search')
                 //     ->label('Buscar Activos')
                 //     ->placeholder('Número inventario, serie o nombre del material')
                 //     ->reactive()
                 //     ->disabled(fn (callable $get) => !$get('empleado_id'))
                 //     ->columnSpanFull(),
-                Section::make('Activos asignados al empleado Origen.')
-                    ->columnSpanFull()
+                Section::make()
+                    ->columnSpanFull()                    
+                    ->extraAttributes(['class'=>'section-movimientos'])
                     ->schema([
                         CheckboxList::make('activos')
+                            ->hiddenLabel()
                             ->required()
                             ->validationMessages([
                                     'required' => 'Campo requerido. Debes seleccionar al menos un activo.',
                                 ])
-                            ->label('Selecciona uno o varios con las casillas.')
+                            //->label('Selecciona uno o varios con las casillas.')
                             ->relationship('activos', 'numero_inventario', function ($query, callable $get) {
                                     $search = $get('activos_search') ?? '';
                                     $query->where('status_id', 2)
@@ -95,8 +94,12 @@ class ResguardoEntreEmpleadosForm
                             ->reactive()
                             ->searchable()
                             ->disabled(fn (callable $get) => !$get('empleado_origen_id'))
-                            ->columnSpanFull()
+                            ->columnSpanFull()                            
                             ]),
+                Textarea::make('observaciones')
+                    ->label('Observaciones')
+                    ->placeholder('Observaciones adicionales')
+                    ->columnSpanFull(),
                 
             ]);
     }
